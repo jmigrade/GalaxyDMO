@@ -324,7 +324,7 @@
 </head>
 <body>
 
-   <!-- SIDEBAR DE NAVEGAÇÃO -->
+    <!-- SIDEBAR DE NAVEGAÇÃO -->
     <aside class="sidebar">
         <div class="sidebar-title">Digimon Galaxy</div>
         <ul class="nav-menu">
@@ -384,7 +384,6 @@
                         <option value="14">Lv. 14</option>
                         <option value="15">Lv. 15</option>
                         <option value="16">Complete Goggles</option>
-                        <option value="17">Holy Blade / Bulwark / Phoenix (Especiais)</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -405,9 +404,9 @@
                         <option value="14">Lv. 14</option>
                         <option value="15">Lv. 15</option>
                         <option value="16">Complete Goggles</option>
-                        <option value="17" selected>Holy Blade (Especiais)</option>
-						<option value="18" selected>Bulwark (Especiais)</option>
-						<option value="19" selected>Phoenix (Especiais)</option>
+                        <option value="17">Holy Blade (Especial)</option>
+                        <option value="18">Unstoppable Bulwark (Especial)</option>
+                        <option value="19">Incandescent Phoenix (Especial)</option>
                     </select>
                 </div>
             </div>
@@ -451,7 +450,6 @@
     </main>
 
     <script>
-        // Mapeamento de Ícones dos Materiais Especiais
         const itemIcons = {
             "Essence of Deva": "Icons/Essence_of_Deva.png",
             "Essence of Four Holy Beasts": "Icons/Essence_of_Deva.png",
@@ -479,10 +477,10 @@
             { lvl: 15, name: "Tamer's Goggles Lv. 15", prev: "Tamer's Goggles Lv.14", stats: "Attack +80~400 | Exp +16%~60%, Tamer HP +140~700", digizoid: 2750, shinjuku: 75, specials: [{qty: 16, name: "Essence of Four Holy Beasts"}], icon: "Icons/Tamer’s_Goggles_Lv.11-15.png", badgeClass: "tier-purple" },
             { lvl: 16, name: "Complete Tamer's Goggles", prev: "Tamer's Goggles Lv.15", stats: "Attack +100~500 | Exp +20%~100%, Tamer HP +200~1000", digizoid: 3000, shinjuku: 150, specials: [{qty: 20, name: "Essence of Four Holy Beasts"}], icon: "Icons/Tamer’s_Goggles_Lv.Max.png", badgeClass: "tier-orange" },
             
-            // 3 Opções Especiais Finais
-            { lvl: 17, name: "Holy Blade Goggles", prev: "Complete Tamer's Goggles", stats: "Attack 1500 Increase, Hit Rate 1000 Increase, EXP 100 % Increase", digizoid: 5000, shinjuku: 225, specials: [{qty: 50, name: "Essence of Deva"}, {qty: 30, name: "Essence of Four Holy Beasts"}, {qty: 150, name: "Vajramon's leather"}, {qty: 20, name: "Megidora fire"}], icon: "Icons/Holy_Blade_Goggles.png", badgeClass: "tier-orange" },
-            { lvl: 17, name: "Unstoppable Bulwark Visor", prev: "Complete Tamer's Goggles", stats: "Max HP 3000 Increase, Defense 1000 Increase, EXP 100 % Increase", digizoid: 5000, shinjuku: 225, specials: [{qty: 50, name: "Essence of Deva"}, {qty: 30, name: "Essence of Four Holy Beasts"}, {qty: 100, name: "Vikaramon hair"}, {qty: 20, name: "Megidora fire"}], icon: "Icons/Unstoppable_Bulwark_Vision.png", badgeClass: "tier-orange" },
-            { lvl: 17, name: "Incandescent Phoenix Lense", prev: "Complete Tamer's Goggles", stats: "Skill Damage 25 % Increase, Max DS 2500 Increase, EXP 100 % Increase", digizoid: 5000, shinjuku: 225, specials: [{qty: 50, name: "Essence of Deva"}, {qty: 30, name: "Essence of Four Holy Beasts"}, {qty: 75, name: "Part of the manifestation..."}, {qty: 20, name: "Megidora fire"}], icon: "Icons/Incandescent_Phoenix_Lense.png", badgeClass: "tier-orange" }
+            // Opções Especiais Finais (Índices 16, 17, 18)
+            { lvl: 17, name: "Holy Blade Goggles", prev: "Complete Tamer's Goggles", stats: "Attack 1500 Increase, Hit Rate 1000 Increase, EXP 100% Increase", digizoid: 5000, shinjuku: 225, specials: [{qty: 50, name: "Essence of Deva"}, {qty: 30, name: "Essence of Four Holy Beasts"}, {qty: 150, name: "Vajramon's leather"}, {qty: 20, name: "Megidora fire"}], icon: "Icons/Holy_Blade_Goggles.png", badgeClass: "tier-orange" },
+            { lvl: 18, name: "Unstoppable Bulwark Visor", prev: "Complete Tamer's Goggles", stats: "Max HP 3000 Increase, Defense 1000 Increase, EXP 100% Increase", digizoid: 5000, shinjuku: 225, specials: [{qty: 50, name: "Essence of Deva"}, {qty: 30, name: "Essence of Four Holy Beasts"}, {qty: 100, name: "Vikaramon hair"}, {qty: 20, name: "Megidora fire"}], icon: "Icons/Unstoppable_Bulwark_Vision.png", badgeClass: "tier-orange" },
+            { lvl: 19, name: "Incandescent Phoenix Lense", prev: "Complete Tamer's Goggles", stats: "Skill Damage 25% Increase, Max DS 2500 Increase, EXP 100% Increase", digizoid: 5000, shinjuku: 225, specials: [{qty: 50, name: "Essence of Deva"}, {qty: 30, name: "Essence of Four Holy Beasts"}, {qty: 75, name: "Part of the manifestation"}, {qty: 20, name: "Megidora fire"}], icon: "Icons/Incandescent_Phoenix_Lense.png", badgeClass: "tier-orange" }
         ];
 
         function renderTable() {
@@ -524,26 +522,27 @@
         }
 
         function calculate() {
-            const current = parseInt(document.getElementById('current-lvl').value);
-            const target = parseInt(document.getElementById('target-lvl').value);
+            const currentSelect = document.getElementById('current-lvl');
+            const targetSelect = document.getElementById('target-lvl');
+            
+            let current = parseInt(currentSelect.value); // 1 a 16
+            let target = parseInt(targetSelect.value);   // 2 a 19
 
             if (current >= target) {
-                document.getElementById('res-digizoid').innerText = '0';
-                document.getElementById('res-shinjuku').innerText = '0';
-                document.getElementById('res-special').innerText = '-';
-                return;
+                target = Math.min(current + 1, 19);
+                if (current >= 19) current = 18;
+                targetSelect.value = target;
+                currentSelect.value = current;
             }
 
             let totalDigizoid = 0;
             let totalShinjuku = 0;
             let specialTotals = {};
 
-            let loopTarget = target;
-            if (target === 17) {
-                loopTarget = 16; 
-            }
+            // Se o target for uma das especiais (17, 18, 19), calculamos do 'current' até o 'Complete Goggles' (índice 15, que corresponde ao nível 16) + o item especial escolhido (índice target - 1)
+            let loopEnd = target <= 16 ? target - 1 : 16;
 
-            for (let i = current - 1; i < loopTarget; i++) {
+            for (let i = current - 1; i < loopEnd; i++) {
                 if (gogglesData[i]) {
                     totalDigizoid += gogglesData[i].digizoid;
                     totalShinjuku += gogglesData[i].shinjuku;
@@ -556,12 +555,16 @@
                 }
             }
 
-            if (target === 17) {
-                totalDigizoid += gogglesData[16].digizoid;
-                totalShinjuku += gogglesData[16].shinjuku;
-                gogglesData[16].specials.forEach(sp => {
-                    specialTotals[sp.name] = (specialTotals[sp.name] || 0) + sp.qty;
-                });
+            // Se o destino for um item especial (17, 18 ou 19), adiciona os custos específicos desse item final
+            if (target >= 17) {
+                const specialItemIndex = target - 1; // 17->16, 18->17, 19->18
+                if (gogglesData[specialItemIndex]) {
+                    totalDigizoid += gogglesData[specialItemIndex].digizoid;
+                    totalShinjuku += gogglesData[specialItemIndex].shinjuku;
+                    gogglesData[specialItemIndex].specials.forEach(sp => {
+                        specialTotals[sp.name] = (specialTotals[sp.name] || 0) + sp.qty;
+                    });
+                }
             }
 
             let specialTextArr = [];
