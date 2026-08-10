@@ -355,7 +355,7 @@
     <main class="main-content">
         <header>
             <div class="header-title-wrapper">
-                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Kaiser_Goggles.png" alt="Goggles Icon" class="header-icon" id="header-icon">
+                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Kaiser_Goggles.png" alt="Goggles Icon" class="header-icon" id="header-icon" onerror="this.style.display='none'">
                 <h1>Tamer's Goggles Upgrade</h1>
             </div>
             <p class="subtitle">Guia Completo de Status, Craft e Materiais (Lv. 1 ao Lv. 15 e Especiais)</p>
@@ -413,11 +413,11 @@
 
             <div class="summary-box">
                 <div class="summary-item">
-                    <span class="label"><img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Enhanced_Digizoid.png" class="item-icon" alt=""> Enhanced Digizoid:</span>
+                    <span class="label"><img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Enhanced_Digizoid.png" class="item-icon" alt="" onerror="this.style.display='none'"> Enhanced Digizoid:</span>
                     <span class="value" id="res-digizoid">0</span>
                 </div>
                 <div class="summary-item">
-                    <span class="label"><img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Digital_Data_Shinjuku.png" class="item-icon" alt=""> Digital Data - Shinjuku:</span>
+                    <span class="label"><img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Digital_Data_Shinjuku.png" class="item-icon" alt="" onerror="this.style.display='none'"> Digital Data - Shinjuku:</span>
                     <span class="value" id="res-shinjuku">0</span>
                 </div>
                 <div class="summary-item">
@@ -451,36 +451,35 @@
 
     <script>
         const itemIcons = {
-            "Essence of Deva": "Icons/Essence_of_Deva.png",
-            "Essence of Four Holy Beasts": "Icons/Essence_of_Deva.png",
-            "Vajramon's leather": "Icons/Vajra_Essence.png",
-            "Vikaramon hair": "Icons/Vika_Essence.png",
-            "Part of the manifestation": "Icons/Feet.png",
-            "Megidora fire": "Icons/Flame.png"
+            "Essence of Deva": "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Essence_of_Deva.png",
+            "Essence of Four Holy Beasts": "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Essence_of_Deva.png",
+            "Vajramon's leather": "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Vajra_Essence.png",
+            "Vikaramon hair": "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Vika_Essence.png",
+            "Part of the manifestation": "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Feet.png",
+            "Megidora fire": "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Flame.png"
         };
 
         const gogglesData = [
-            { lvl: 1, name: "Tamer's Goggles Lv.1", prev: "-", stats: "-", digizoid: 0, shinjuku: 0, specials: [], icon: "Icons/Tamer’s_Goggles_Lv1.png", badgeClass: "tier-green" },
-            { lvl: 2, name: "Tamer's Goggles Lv. 2", prev: "Tamer's Goggles Lv.1", stats: "Attack +10~50 | Exp +1%~5%", digizoid: 150, shinjuku: 0, specials: [], icon: "Icons/Tamer’s_Goggles_Lv.2-5.png", badgeClass: "tier-green" },
-            { lvl: 3, name: "Tamer's Goggles Lv. 3", prev: "Tamer's Goggles Lv.2", stats: "Attack +20~100 | Exp +2%~10%", digizoid: 350, shinjuku: 25, specials: [{qty: 6, name: "Essence of Deva"}], icon: "Icons/Tamer’s_Goggles_Lv.2-5.png", badgeClass: "tier-green" },
-            { lvl: 4, name: "Tamer's Goggles Lv. 4", prev: "Tamer's Goggles Lv.3", stats: "Attack +25~125 | Exp +3%~15%", digizoid: 550, shinjuku: 25, specials: [{qty: 6, name: "Essence of Deva"}], icon: "Icons/Tamer’s_Goggles_Lv.2-5.png", badgeClass: "tier-green" },
-            { lvl: 5, name: "Tamer's Goggles Lv. 5", prev: "Tamer's Goggles Lv.4", stats: "Attack +30~150 | Exp +4%~20%", digizoid: 850, shinjuku: 25, specials: [{qty: 6, name: "Essence of Deva"}], icon: "Icons/Tamer’s_Goggles_Lv.2-5.png", badgeClass: "tier-green" },
-            { lvl: 6, name: "Tamer's Goggles Lv. 6", prev: "Tamer's Goggles Lv.5", stats: "Attack +35~175 | Exp +5%~25%", digizoid: 950, shinjuku: 25, specials: [{qty: 6, name: "Essence of Deva"}], icon: "Icons/Tamer’s_Goggles_Lv.6-10.png", badgeClass: "tier-blue" },
-            { lvl: 7, name: "Tamer's Goggles Lv. 7", prev: "Tamer's Goggles Lv.6", stats: "Attack +40~200 | Exp +6%~30%", digizoid: 1150, shinjuku: 50, specials: [{qty: 12, name: "Essence of Deva"}], icon: "Icons/Tamer’s_Goggles_Lv.6-10.png", badgeClass: "tier-blue" },
-            { lvl: 8, name: "Tamer's Goggles Lv. 8", prev: "Tamer's Goggles Lv.7", stats: "Attack +45~225 | Exp +7%~35%", digizoid: 1350, shinjuku: 50, specials: [{qty: 12, name: "Essence of Deva"}], icon: "Icons/Tamer’s_Goggles_Lv.6-10.png", badgeClass: "tier-blue" },
-            { lvl: 9, name: "Tamer's Goggles Lv. 9", prev: "Tamer's Goggles Lv.8", stats: "Attack +50~250 | Exp +8%~40%", digizoid: 1550, shinjuku: 50, specials: [{qty: 12, name: "Essence of Deva"}], icon: "Icons/Tamer’s_Goggles_Lv.6-10.png", badgeClass: "tier-blue" },
-            { lvl: 10, name: "Tamer's Goggles Lv. 10", prev: "Tamer's Goggles Lv.9", stats: "Attack +55~275 | Exp +10%~50%", digizoid: 1750, shinjuku: 50, specials: [{qty: 12, name: "Essence of Deva"}], icon: "Icons/Tamer’s_Goggles_Lv.6-10.png", badgeClass: "tier-blue" },
-            { lvl: 11, name: "Tamer's Goggles Lv. 11", prev: "Tamer's Goggles Lv.10", stats: "Attack +60~300 | Exp +14%~70%, Tamer HP +20~100", digizoid: 1950, shinjuku: 50, specials: [{qty: 12, name: "Essence of Deva"}], icon: "Icons/Tamer’s_Goggles_Lv.6-10.png", badgeClass: "tier-blue" },
-            { lvl: 12, name: "Tamer's Goggles Lv. 12", prev: "Tamer's Goggles Lv.11", stats: "Attack +68~340 | Exp +14%~74%, Tamer HP +36~180", digizoid: 2150, shinjuku: 75, specials: [{qty: 4, name: "Essence of Four Holy Beasts"}], icon: "Icons/Tamer’s_Goggles_Lv.11-15.png", badgeClass: "tier-purple" },
-            { lvl: 13, name: "Tamer's Goggles Lv. 13", prev: "Tamer's Goggles Lv.12", stats: "Attack +72~360 | Exp +15%~76%, Tamer HP +50~250", digizoid: 2350, shinjuku: 75, specials: [{qty: 8, name: "Essence of Four Holy Beasts"}], icon: "Icons/Tamer’s_Goggles_Lv.11-15.png", badgeClass: "tier-purple" },
-            { lvl: 14, name: "Tamer's Goggles Lv. 14", prev: "Tamer's Goggles Lv.13", stats: "Attack +76~380 | Exp +15%~78%, Tamer HP +90~450", digizoid: 2500, shinjuku: 75, specials: [{qty: 12, name: "Essence of Four Holy Beasts"}], icon: "Icons/Tamer’s_Goggles_Lv.11-15.png", badgeClass: "tier-purple" },
-            { lvl: 15, name: "Tamer's Goggles Lv. 15", prev: "Tamer's Goggles Lv.14", stats: "Attack +80~400 | Exp +16%~60%, Tamer HP +140~700", digizoid: 2750, shinjuku: 75, specials: [{qty: 16, name: "Essence of Four Holy Beasts"}], icon: "Icons/Tamer’s_Goggles_Lv.11-15.png", badgeClass: "tier-purple" },
-            { lvl: 16, name: "Complete Tamer's Goggles", prev: "Tamer's Goggles Lv.15", stats: "Attack +100~500 | Exp +20%~100%, Tamer HP +200~1000", digizoid: 3000, shinjuku: 150, specials: [{qty: 20, name: "Essence of Four Holy Beasts"}], icon: "Icons/Tamer’s_Goggles_Lv.Max.png", badgeClass: "tier-orange" },
+            { lvl: 1, name: "Tamer's Goggles Lv.1", prev: "-", stats: "-", digizoid: 0, shinjuku: 0, specials: [], icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Tamer%E2%80%99s_Goggles_Lv1.png", badgeClass: "tier-green" },
+            { lvl: 2, name: "Tamer's Goggles Lv. 2", prev: "Tamer's Goggles Lv.1", stats: "Attack +10~50 | Exp +1%~5%", digizoid: 150, shinjuku: 0, specials: [], icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Tamer%E2%80%99s_Goggles_Lv.2-5.png", badgeClass: "tier-green" },
+            { lvl: 3, name: "Tamer's Goggles Lv. 3", prev: "Tamer's Goggles Lv.2", stats: "Attack +20~100 | Exp +2%~10%", digizoid: 350, shinjuku: 25, specials: [{qty: 6, name: "Essence of Deva"}], icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Tamer%E2%80%99s_Goggles_Lv.2-5.png", badgeClass: "tier-green" },
+            { lvl: 4, name: "Tamer's Goggles Lv. 4", prev: "Tamer's Goggles Lv.3", stats: "Attack +25~125 | Exp +3%~15%", digizoid: 550, shinjuku: 25, specials: [{qty: 6, name: "Essence of Deva"}], icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Tamer%E2%80%99s_Goggles_Lv.2-5.png", badgeClass: "tier-green" },
+            { lvl: 5, name: "Tamer's Goggles Lv. 5", prev: "Tamer's Goggles Lv.4", stats: "Attack +30~150 | Exp +4%~20%", digizoid: 850, shinjuku: 25, specials: [{qty: 6, name: "Essence of Deva"}], icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Tamer%E2%80%99s_Goggles_Lv.2-5.png", badgeClass: "tier-green" },
+            { lvl: 6, name: "Tamer's Goggles Lv. 6", prev: "Tamer's Goggles Lv.5", stats: "Attack +35~175 | Exp +5%~25%", digizoid: 950, shinjuku: 25, specials: [{qty: 6, name: "Essence of Deva"}], icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Tamer%E2%80%99s_Goggles_Lv.6-10.png", badgeClass: "tier-blue" },
+            { lvl: 7, name: "Tamer's Goggles Lv. 7", prev: "Tamer's Goggles Lv.6", stats: "Attack +40~200 | Exp +6%~30%", digizoid: 1150, shinjuku: 50, specials: [{qty: 12, name: "Essence of Deva"}], icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Tamer%E2%80%99s_Goggles_Lv.6-10.png", badgeClass: "tier-blue" },
+            { lvl: 8, name: "Tamer's Goggles Lv. 8", prev: "Tamer's Goggles Lv.7", stats: "Attack +45~225 | Exp +7%~35%", digizoid: 1350, shinjuku: 50, specials: [{qty: 12, name: "Essence of Deva"}], icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Tamer%E2%80%99s_Goggles_Lv.6-10.png", badgeClass: "tier-blue" },
+            { lvl: 9, name: "Tamer's Goggles Lv. 9", prev: "Tamer's Goggles Lv.8", stats: "Attack +50~250 | Exp +8%~40%", digizoid: 1550, shinjuku: 50, specials: [{qty: 12, name: "Essence of Deva"}], icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Tamer%E2%80%99s_Goggles_Lv.6-10.png", badgeClass: "tier-blue" },
+            { lvl: 10, name: "Tamer's Goggles Lv. 10", prev: "Tamer's Goggles Lv.9", stats: "Attack +55~275 | Exp +10%~50%", digizoid: 1750, shinjuku: 50, specials: [{qty: 12, name: "Essence of Deva"}], icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Tamer%E2%80%99s_Goggles_Lv.6-10.png", badgeClass: "tier-blue" },
+            { lvl: 11, name: "Tamer's Goggles Lv. 11", prev: "Tamer's Goggles Lv.10", stats: "Attack +60~300 | Exp +14%~70%, Tamer HP +20~100", digizoid: 1950, shinjuku: 50, specials: [{qty: 12, name: "Essence of Deva"}], icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Tamer%E2%80%99s_Goggles_Lv.6-10.png", badgeClass: "tier-blue" },
+            { lvl: 12, name: "Tamer's Goggles Lv. 12", prev: "Tamer's Goggles Lv.11", stats: "Attack +68~340 | Exp +14%~74%, Tamer HP +36~180", digizoid: 2150, shinjuku: 75, specials: [{qty: 4, name: "Essence of Four Holy Beasts"}], icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Tamer%E2%80%99s_Goggles_Lv.11-15.png", badgeClass: "tier-purple" },
+            { lvl: 13, name: "Tamer's Goggles Lv. 13", prev: "Tamer's Goggles Lv.12", stats: "Attack +72~360 | Exp +15%~76%, Tamer HP +50~250", digizoid: 2350, shinjuku: 75, specials: [{qty: 8, name: "Essence of Four Holy Beasts"}], icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Tamer%E2%80%99s_Goggles_Lv.11-15.png", badgeClass: "tier-purple" },
+            { lvl: 14, name: "Tamer's Goggles Lv. 14", prev: "Tamer's Goggles Lv.13", stats: "Attack +76~380 | Exp +15%~78%, Tamer HP +90~450", digizoid: 2500, shinjuku: 75, specials: [{qty: 12, name: "Essence of Four Holy Beasts"}], icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Tamer%E2%80%99s_Goggles_Lv.11-15.png", badgeClass: "tier-purple" },
+            { lvl: 15, name: "Tamer's Goggles Lv. 15", prev: "Tamer's Goggles Lv.14", stats: "Attack +80~400 | Exp +16%~60%, Tamer HP +140~700", digizoid: 2750, shinjuku: 75, specials: [{qty: 16, name: "Essence of Four Holy Beasts"}], icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Tamer%E2%80%99s_Goggles_Lv.11-15.png", badgeClass: "tier-purple" },
+            { lvl: 16, name: "Complete Tamer's Goggles", prev: "Tamer's Goggles Lv.15", stats: "Attack +100~500 | Exp +20%~100%, Tamer HP +200~1000", digizoid: 3000, shinjuku: 150, specials: [{qty: 20, name: "Essence of Four Holy Beasts"}], icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Tamer%E2%80%99s_Goggles_Lv.Max.png", badgeClass: "tier-orange" },
             
-            // Opções Especiais Finais (Índices 16, 17, 18)
-            { lvl: 17, name: "Holy Blade Goggles", prev: "Complete Tamer's Goggles", stats: "Attack 1500 Increase, Hit Rate 1000 Increase, EXP 100% Increase", digizoid: 5000, shinjuku: 225, specials: [{qty: 50, name: "Essence of Deva"}, {qty: 30, name: "Essence of Four Holy Beasts"}, {qty: 150, name: "Vajramon's leather"}, {qty: 20, name: "Megidora fire"}], icon: "Icons/Holy_Blade_Goggles.png", badgeClass: "tier-orange" },
-            { lvl: 18, name: "Unstoppable Bulwark Visor", prev: "Complete Tamer's Goggles", stats: "Max HP 3000 Increase, Defense 1000 Increase, EXP 100% Increase", digizoid: 5000, shinjuku: 225, specials: [{qty: 50, name: "Essence of Deva"}, {qty: 30, name: "Essence of Four Holy Beasts"}, {qty: 100, name: "Vikaramon hair"}, {qty: 20, name: "Megidora fire"}], icon: "Icons/Unstoppable_Bulwark_Vision.png", badgeClass: "tier-orange" },
-            { lvl: 19, name: "Incandescent Phoenix Lense", prev: "Complete Tamer's Goggles", stats: "Skill Damage 25% Increase, Max DS 2500 Increase, EXP 100% Increase", digizoid: 5000, shinjuku: 225, specials: [{qty: 50, name: "Essence of Deva"}, {qty: 30, name: "Essence of Four Holy Beasts"}, {qty: 75, name: "Part of the manifestation"}, {qty: 20, name: "Megidora fire"}], icon: "Icons/Incandescent_Phoenix_Lense.png", badgeClass: "tier-orange" }
+            { lvl: 17, name: "Holy Blade Goggles", prev: "Complete Tamer's Goggles", stats: "Attack 1500 Increase, Hit Rate 1000 Increase, EXP 100% Increase", digizoid: 5000, shinjuku: 225, specials: [{qty: 50, name: "Essence of Deva"}, {qty: 30, name: "Essence of Four Holy Beasts"}, {qty: 150, name: "Vajramon's leather"}, {qty: 20, name: "Megidora fire"}], icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Holy_Blade_Goggles.png", badgeClass: "tier-orange" },
+            { lvl: 18, name: "Unstoppable Bulwark Visor", prev: "Complete Tamer's Goggles", stats: "Max HP 3000 Increase, Defense 1000 Increase, EXP 100% Increase", digizoid: 5000, shinjuku: 225, specials: [{qty: 50, name: "Essence of Deva"}, {qty: 30, name: "Essence of Four Holy Beasts"}, {qty: 100, name: "Vikaramon hair"}, {qty: 20, name: "Megidora fire"}], icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Unstoppable_Bulwark_Vision.png", badgeClass: "tier-orange" },
+            { lvl: 19, name: "Incandescent Phoenix Lense", prev: "Complete Tamer's Goggles", stats: "Skill Damage 25% Increase, Max DS 2500 Increase, EXP 100% Increase", digizoid: 5000, shinjuku: 225, specials: [{qty: 50, name: "Essence of Deva"}, {qty: 30, name: "Essence of Four Holy Beasts"}, {qty: 75, name: "Part of the manifestation"}, {qty: 20, name: "Megidora fire"}], icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Incandescent_Phoenix_Lense.png", badgeClass: "tier-orange" }
         ];
 
         function renderTable() {
@@ -491,8 +490,8 @@
                 let specialsHtml = '-';
                 if (item.specials && item.specials.length > 0) {
                     specialsHtml = `<div class="special-list">` + item.specials.map(s => {
-                        let iconSrc = itemIcons[s.name] || 'Icons/Feet.png';
-                        return `<div class="special-item"><img src="${iconSrc}" class="item-icon" alt=""> ${s.qty}x ${s.name}</div>`;
+                        let iconSrc = itemIcons[s.name] || 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Feet.png';
+                        return `<div class="special-item"><img src="${iconSrc}" class="item-icon" alt="" onerror="this.style.display='none'"> ${s.qty}x ${s.name}</div>`;
                     }).join('') + `</div>`;
                 }
 
@@ -500,19 +499,19 @@
                 row.innerHTML = `
                     <td>
                         <div class="tier-cell">
-                            <img src="${item.icon}" class="item-icon" alt="">
+                            <img src="${item.icon}" class="item-icon" alt="" onerror="this.style.display='none'">
                             <span class="badge-tier ${item.badgeClass}">${item.name}</span>
                         </div>
                     </td>
                     <td style="font-size: 0.85rem; color: var(--text-muted);">${item.stats}</td>
                     <td>
                         <div class="item-with-icon">
-                            <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Enhanced_Digizoid.png" class="item-icon" alt=""> ${item.digizoid > 0 ? item.digizoid.toLocaleString() : '-'}
+                            <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Enhanced_Digizoid.png" class="item-icon" alt="" onerror="this.style.display='none'"> ${item.digizoid > 0 ? item.digizoid.toLocaleString() : '-'}
                         </div>
                     </td>
                     <td>
                         <div class="item-with-icon">
-                            <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Digital_Data_Shinjuku.png" class="item-icon" alt=""> ${item.shinjuku > 0 ? item.shinjuku : '-'}
+                            <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Digital_Data_Shinjuku.png" class="item-icon" alt="" onerror="this.style.display='none'"> ${item.shinjuku > 0 ? item.shinjuku : '-'}
                         </div>
                     </td>
                     <td>${specialsHtml}</td>
@@ -539,7 +538,6 @@
             let totalShinjuku = 0;
             let specialTotals = {};
 
-            // Se o target for uma das especiais (17, 18, 19), calculamos do 'current' até o 'Complete Goggles' (índice 15, que corresponde ao nível 16) + o item especial escolhido (índice target - 1)
             let loopEnd = target <= 16 ? target - 1 : 16;
 
             for (let i = current - 1; i < loopEnd; i++) {
@@ -555,9 +553,8 @@
                 }
             }
 
-            // Se o destino for um item especial (17, 18 ou 19), adiciona os custos específicos desse item final
             if (target >= 17) {
-                const specialItemIndex = target - 1; // 17->16, 18->17, 19->18
+                const specialItemIndex = target - 1; 
                 if (gogglesData[specialItemIndex]) {
                     totalDigizoid += gogglesData[specialItemIndex].digizoid;
                     totalShinjuku += gogglesData[specialItemIndex].shinjuku;
@@ -569,8 +566,8 @@
 
             let specialTextArr = [];
             for (let [name, qty] of Object.entries(specialTotals)) {
-                let iconSrc = itemIcons[name] || 'Icons/Feet.png';
-                specialTextArr.push(`<div style="display: flex; align-items: center; gap: 6px; margin-bottom: 2px;"><img src="${iconSrc}" class="item-icon" alt=""> ${qty.toLocaleString()}x ${name}</div>`);
+                let iconSrc = itemIcons[name] || 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Feet.png';
+                specialTextArr.push(`<div style="display: flex; align-items: center; gap: 6px; margin-bottom: 2px;"><img src="${iconSrc}" class="item-icon" alt="" onerror="this.style.display='none'"> ${qty.toLocaleString()}x ${name}</div>`);
             }
 
             document.getElementById('res-digizoid').innerText = totalDigizoid.toLocaleString();
