@@ -109,7 +109,7 @@
 
         header {
             text-align: center;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             padding: 18px 12px;
             background: linear-gradient(135deg, #1f293d, #111827);
             border-radius: 12px;
@@ -126,28 +126,25 @@
         }
 
         .header-icon {
-            width: 36px;
-            height: 36px;
+            width: 30px;
+            height: 30px;
             object-fit: contain;
-            border-radius: 6px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--border-color);
-            padding: 2px;
+            border-radius: 4px;
         }
 
         h1 {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             color: var(--accent-color);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
         p.subtitle {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
         }
 
-        /* --- ABAS DE EQUIPAMENTO (Ring, Necklace, Earring) --- */
+        /* --- ABAS DE EQUIPAMENTO --- */
         .equipment-tabs {
             display: flex;
             gap: 10px;
@@ -159,13 +156,13 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 10px 18px;
+            padding: 8px 16px;
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 8px;
             color: var(--text-muted);
             cursor: pointer;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 600;
             transition: all 0.2s;
         }
@@ -182,8 +179,8 @@
         }
 
         .tab-btn img {
-            width: 22px;
-            height: 22px;
+            width: 20px;
+            height: 20px;
             object-fit: contain;
         }
 
@@ -196,12 +193,10 @@
         }
 
         .card-title {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 600;
             color: var(--accent-orange);
             margin-bottom: 14px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 8px;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -294,7 +289,6 @@
         }
 
         th {
-            background: rgba(255, 255, 255, 0.03);
             color: var(--accent-color);
             font-weight: 600;
             white-space: nowrap;
@@ -315,28 +309,24 @@
         }
 
         .item-icon {
-            width: 34px;
-            height: 34px;
+            width: 26px;
+            height: 26px;
             object-fit: contain;
-            border-radius: 4px;
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid var(--border-color);
-            padding: 1px;
             flex-shrink: 0;
         }
 
         .badge-tier {
             display: inline-block;
-            padding: 4px 8px;
-            border-radius: 6px;
+            padding: 3px 8px;
+            border-radius: 4px;
             font-weight: bold;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
         }
 
-        .tier-green { background: rgba(35, 134, 54, 0.2); color: #56d364; border: 1px solid rgba(35, 134, 54, 0.4); }
-        .tier-blue { background: rgba(0, 210, 255, 0.15); color: #58a6ff; border: 1px solid rgba(0, 210, 255, 0.3); }
-        .tier-purple { background: rgba(168, 85, 247, 0.2); color: #d2a8ff; border: 1px solid rgba(168, 85, 247, 0.4); }
-        .tier-orange { background: rgba(255, 123, 0, 0.2); color: #ffa657; border: 1px solid rgba(255, 123, 0, 0.4); }
+        .tier-green { background: rgba(35, 134, 54, 0.3); color: #56d364; }
+        .tier-blue { background: rgba(0, 210, 255, 0.2); color: #58a6ff; }
+        .tier-purple { background: rgba(168, 85, 247, 0.3); color: #d2a8ff; }
+        .tier-orange { background: rgba(255, 123, 0, 0.3); color: #ffa657; }
 
         .item-with-icon {
             display: flex;
@@ -383,8 +373,8 @@
     <main class="main-content">
         <header>
             <div class="header-title-wrapper">
-                <img src="Icons/Xuanwumon's_Shiny_Ring.png" alt="Equipment Icon" class="header-icon" id="header-icon">
-                <h1 id="header-title">Four Holy Beast Ring</h1>
+                <img src="Icons/Xuanwumon's_Shiny_Ring.png" alt="" class="header-icon" id="header-icon" onerror="this.style.display='none'">
+                <h1 id="header-title">FOUR HOLY BEAST RING</h1>
             </div>
             <p class="subtitle" id="header-subtitle">Guia de Craft e Materiais (Lv. 1 ao Lv. 5)</p>
         </header>
@@ -392,19 +382,19 @@
         <!-- ABAS DE SELEÇÃO DE EQUIPAMENTO -->
         <div class="equipment-tabs">
             <button class="tab-btn active" onclick="switchEquipment('ring')">
-                <img src="Icons/Xuanwumon's_Shiny_Ring.png" alt=""> Ring
+                <img src="Icons/Xuanwumon's_Shiny_Ring.png" alt="" onerror="this.style.display='none'"> Ring
             </button>
             <button class="tab-btn" onclick="switchEquipment('necklace')">
-                <img src="Icons/Zhuqiaomon's_Shiny_Necklace.png" alt=""> Necklace
+                <img src="Icons/Zhuqiaomon's_Shiny_Necklace.png" alt="" onerror="this.style.display='none'"> Necklace
             </button>
             <button class="tab-btn" onclick="switchEquipment('earring')">
-                <img src="Icons/Baihumon's_Shiny_Earring.png" alt=""> Earring
+                <img src="Icons/Baihumon's_Shiny_Earring.png" alt="" onerror="this.style.display='none'"> Earring
             </button>
         </div>
 
         <!-- CALCULADORA DE MATERIAIS -->
         <div class="card">
-            <div class="card-title">🧮 Calculadora de Materiais Necessários</div>
+            <div class="card-title">📊 Calculadora de Materiais Necessários</div>
             <div class="calc-grid">
                 <div class="form-group">
                     <label for="current-lvl">Nível Atual:</label>
@@ -452,10 +442,9 @@
     </main>
 
     <script>
-        // Dados para cada tipo de equipamento dos Quatro Monstros Sagrados
         const equipmentData = {
             ring: {
-                title: "Four Holy Beast Ring",
+                title: "FOUR HOLY BEAST RING",
                 subtitle: "Guia de Craft e Materiais (Lv. 1 ao Lv. 5)",
                 headerIcon: "Icons/Xuanwumon's_Shiny_Ring.png",
                 mat1Name: "Xuanwumon's Shiny Ring",
@@ -463,43 +452,43 @@
                 mat2Name: "Jack Frost of Water Crystal",
                 mat2Icon: "Icons/Jack_Frost_of_Water_Crystal.png",
                 levels: [
-                    { lvl: 1, name: "Ring of Four Holy Beasts [Lv 1]", prev: "-", mat1: 1, mat2: 5, bits: 500000000, badge: "tier-green", icon: "Icons/Xuanwumon's_Shiny_Ring.png" },
-                    { lvl: 2, name: "Ring of Four Holy Beasts [Lv 2]", prev: "Ring of Four Holy Beasts [Lv 1]", mat1: 1, mat2: 10, bits: 500000000, badge: "tier-green", icon: "Icons/Xuanwumon's_Shiny_Ring.png" },
-                    { lvl: 3, name: "Ring of Four Holy Beasts [Lv 3]", prev: "Ring of Four Holy Beasts [Lv 2]", mat1: 1, mat2: 15, bits: 800000000, badge: "tier-blue", icon: "Icons/Xuanwumon's_Shiny_Ring.png" },
-                    { lvl: 4, name: "Ring of Four Holy Beasts [Lv 4]", prev: "Ring of Four Holy Beasts [Lv 3]", mat1: 2, mat2: 20, bits: 1000000000, badge: "tier-purple", icon: "Icons/Xuanwumon's_Shiny_Ring.png" },
-                    { lvl: 5, name: "Ring of Four Holy Beasts [Lv 5]", prev: "Ring of Four Holy Beasts [Lv 4]", mat1: 2, mat2: 25, bits: 1500000000, badge: "tier-orange", icon: "Icons/Xuanwumon's_Shiny_Ring.png" }
+                    { lvl: 1, name: "-", mat1: 1, mat2: 5, bits: 500000000, badge: "tier-green", icon: "Icons/Xuanwumon's_Shiny_Ring.png" },
+                    { lvl: 2, name: "Ring of Four Holy Beasts [Lv 1]", mat1: 1, mat2: 10, bits: 500000000, badge: "tier-green", icon: "Icons/Xuanwumon's_Shiny_Ring.png" },
+                    { lvl: 3, name: "Ring of Four Holy Beasts [Lv 2]", mat1: 1, mat2: 15, bits: 800000000, badge: "tier-blue", icon: "Icons/Xuanwumon's_Shiny_Ring.png" },
+                    { lvl: 4, name: "Ring of Four Holy Beasts [Lv 3]", mat1: 2, mat2: 20, bits: 1000000000, badge: "tier-purple", icon: "Icons/Xuanwumon's_Shiny_Ring.png" },
+                    { lvl: 5, name: "Ring of Four Holy Beasts [Lv 4]", mat1: 2, mat2: 25, bits: 1500000000, badge: "tier-orange", icon: "Icons/Xuanwumon's_Shiny_Ring.png" }
                 ]
             },
             necklace: {
-                title: "Four Holy Beast Necklace",
+                title: "FOUR HOLY BEAST NECKLACE",
                 subtitle: "Guia de Craft e Materiais (Lv. 1 ao Lv. 5)",
                 headerIcon: "Icons/Zhuqiaomon's_Shiny_Necklace.png",
                 mat1Name: "Zhuqiaomon's Shiny Necklace",
                 mat1Icon: "Icons/Zhuqiaomon's_Shiny_Necklace.png",
-                mat2Name: "Flame of Fire Crystal", // Substitua pelo ícone/nome correto se houver
+                mat2Name: "Flame of Fire Crystal",
                 mat2Icon: "Icons/Flame.png",
                 levels: [
-                    { lvl: 1, name: "Necklace of Four Holy Beasts [Lv 1]", prev: "-", mat1: 1, mat2: 5, bits: 500000000, badge: "tier-green", icon: "Icons/Zhuqiaomon's_Shiny_Necklace.png" },
-                    { lvl: 2, name: "Necklace of Four Holy Beasts [Lv 2]", prev: "Necklace of Four Holy Beasts [Lv 1]", mat1: 1, mat2: 10, bits: 500000000, badge: "tier-green", icon: "Icons/Zhuqiaomon's_Shiny_Necklace.png" },
-                    { lvl: 3, name: "Necklace of Four Holy Beasts [Lv 3]", prev: "Necklace of Four Holy Beasts [Lv 2]", mat1: 1, mat2: 15, bits: 800000000, badge: "tier-blue", icon: "Icons/Zhuqiaomon's_Shiny_Necklace.png" },
-                    { lvl: 4, name: "Necklace of Four Holy Beasts [Lv 4]", prev: "Necklace of Four Holy Beasts [Lv 3]", mat1: 2, mat2: 20, bits: 1000000000, badge: "tier-purple", icon: "Icons/Zhuqiaomon's_Shiny_Necklace.png" },
-                    { lvl: 5, name: "Necklace of Four Holy Beasts [Lv 5]", prev: "Necklace of Four Holy Beasts [Lv 4]", mat1: 2, mat2: 25, bits: 1500000000, badge: "tier-orange", icon: "Icons/Zhuqiaomon's_Shiny_Necklace.png" }
+                    { lvl: 1, name: "-", mat1: 1, mat2: 5, bits: 500000000, badge: "tier-green", icon: "Icons/Zhuqiaomon's_Shiny_Necklace.png" },
+                    { lvl: 2, name: "Necklace of Four Holy Beasts [Lv 1]", mat1: 1, mat2: 10, bits: 500000000, badge: "tier-green", icon: "Icons/Zhuqiaomon's_Shiny_Necklace.png" },
+                    { lvl: 3, name: "Necklace of Four Holy Beasts [Lv 2]", mat1: 1, mat2: 15, bits: 800000000, badge: "tier-blue", icon: "Icons/Zhuqiaomon's_Shiny_Necklace.png" },
+                    { lvl: 4, name: "Necklace of Four Holy Beasts [Lv 3]", mat1: 2, mat2: 20, bits: 1000000000, badge: "tier-purple", icon: "Icons/Zhuqiaomon's_Shiny_Necklace.png" },
+                    { lvl: 5, name: "Necklace of Four Holy Beasts [Lv 4]", mat1: 2, mat2: 25, bits: 1500000000, badge: "tier-orange", icon: "Icons/Zhuqiaomon's_Shiny_Necklace.png" }
                 ]
             },
             earring: {
-                title: "Four Holy Beast Earring",
+                title: "FOUR HOLY BEAST EARRING",
                 subtitle: "Guia de Craft e Materiais (Lv. 1 ao Lv. 5)",
                 headerIcon: "Icons/Baihumon's_Shiny_Earring.png",
                 mat1Name: "Baihumon's Shiny Earring",
                 mat1Icon: "Icons/Baihumon's_Shiny_Earring.png",
-                mat2Name: "Steel Crystal", // Substitua pelo ícone/nome correto se houver
+                mat2Name: "Steel Crystal",
                 mat2Icon: "Icons/Feet.png",
                 levels: [
-                    { lvl: 1, name: "Earring of Four Holy Beasts [Lv 1]", prev: "-", mat1: 1, mat2: 5, bits: 500000000, badge: "tier-green", icon: "Icons/Baihumon's_Shiny_Earring.png" },
-                    { lvl: 2, name: "Earring of Four Holy Beasts [Lv 2]", prev: "Earring of Four Holy Beasts [Lv 1]", mat1: 1, mat2: 10, bits: 500000000, badge: "tier-green", icon: "Icons/Baihumon's_Shiny_Earring.png" },
-                    { lvl: 3, name: "Earring of Four Holy Beasts [Lv 3]", prev: "Earring of Four Holy Beasts [Lv 2]", mat1: 1, mat2: 15, bits: 800000000, badge: "tier-blue", icon: "Icons/Baihumon's_Shiny_Earring.png" },
-                    { lvl: 4, name: "Earring of Four Holy Beasts [Lv 4]", prev: "Earring of Four Holy Beasts [Lv 3]", mat1: 2, mat2: 20, bits: 1000000000, badge: "tier-purple", icon: "Icons/Baihumon's_Shiny_Earring.png" },
-                    { lvl: 5, name: "Earring of Four Holy Beasts [Lv 5]", prev: "Earring of Four Holy Beasts [Lv 4]", mat1: 2, mat2: 25, bits: 1500000000, badge: "tier-orange", icon: "Icons/Baihumon's_Shiny_Earring.png" }
+                    { lvl: 1, name: "-", mat1: 1, mat2: 5, bits: 500000000, badge: "tier-green", icon: "Icons/Baihumon's_Shiny_Earring.png" },
+                    { lvl: 2, name: "Earring of Four Holy Beasts [Lv 1]", mat1: 1, mat2: 10, bits: 500000000, badge: "tier-green", icon: "Icons/Baihumon's_Shiny_Earring.png" },
+                    { lvl: 3, name: "Earring of Four Holy Beasts [Lv 2]", mat1: 1, mat2: 15, bits: 800000000, badge: "tier-blue", icon: "Icons/Baihumon's_Shiny_Earring.png" },
+                    { lvl: 4, name: "Earring of Four Holy Beasts [Lv 3]", mat1: 2, mat2: 20, bits: 1000000000, badge: "tier-purple", icon: "Icons/Baihumon's_Shiny_Earring.png" },
+                    { lvl: 5, name: "Earring of Four Holy Beasts [Lv 4]", mat1: 2, mat2: 25, bits: 1500000000, badge: "tier-orange", icon: "Icons/Baihumon's_Shiny_Earring.png" }
                 ]
             }
         };
@@ -508,16 +497,15 @@
 
         function switchEquipment(type) {
             currentEquipmentType = type;
-            
-            // Atualizar classes dos botões das abas
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             event.currentTarget.classList.add('active');
 
-            // Atualizar Cabeçalho
             const data = equipmentData[type];
             document.getElementById('header-title').innerText = data.title;
             document.getElementById('header-subtitle').innerText = data.subtitle;
-            document.getElementById('header-icon').src = data.headerIcon;
+            const headerIcon = document.getElementById('header-icon');
+            headerIcon.src = data.headerIcon;
+            headerIcon.style.display = 'block';
 
             renderTable();
             calculate();
@@ -536,13 +524,12 @@
         function renderTable() {
             const data = equipmentData[currentEquipmentType];
             
-            // Renderizar cabeçalhos da tabela dinamicamente
             const headersTr = document.getElementById('table-headers');
             headersTr.innerHTML = `
                 <th>Nível</th>
                 <th>Item Anterior Requerido</th>
-                <th><div class="item-with-icon"><img src="${data.mat1Icon}" class="item-icon" alt=""> ${data.mat1Name}</div></th>
-                <th><div class="item-with-icon"><img src="${data.mat2Icon}" class="item-icon" alt=""> ${data.mat2Name}</div></th>
+                <th><div class="item-with-icon"><img src="${data.mat1Icon}" class="item-icon" alt="" onerror="this.style.display='none'"> ${data.mat1Name}</div></th>
+                <th><div class="item-with-icon"><img src="${data.mat2Icon}" class="item-icon" alt="" onerror="this.style.display='none'"> ${data.mat2Name}</div></th>
                 <th>Custo em Bits</th>
             `;
 
@@ -554,11 +541,11 @@
                 row.innerHTML = `
                     <td>
                         <div class="tier-cell">
-                            <img src="${item.icon}" class="item-icon" alt="">
-                            <span class="badge-tier ${item.badge}">${item.lvl}</span>
+                            <img src="${item.icon}" class="item-icon" alt="" onerror="this.style.display='none'">
+                            <span class="badge-tier ${item.badge}">Lv ${item.lvl}</span>
                         </div>
                     </td>
-                    <td style="font-size: 0.85rem; color: var(--text-muted);">${item.prev}</td>
+                    <td style="font-size: 0.85rem; color: var(--text-muted);">${item.name}</td>
                     <td>${item.mat1}</td>
                     <td>${item.mat2}</td>
                     <td style="font-weight: bold; color: var(--accent-orange);">${formatBits(item.bits)}</td>
@@ -572,8 +559,8 @@
             const currentSelect = document.getElementById('current-lvl');
             const targetSelect = document.getElementById('target-lvl');
             
-            let current = parseInt(currentSelect.value); // 0 a 4
-            let target = parseInt(targetSelect.value);   // 1 a 5
+            let current = parseInt(currentSelect.value);
+            let target = parseInt(targetSelect.value);
 
             if (current >= target) {
                 target = Math.min(current + 1, 5);
@@ -601,17 +588,16 @@
                     <span class="value" style="color: var(--accent-orange);">${formatBits(totalBits)}</span>
                 </div>
                 <div class="summary-item">
-                    <span class="label"><img src="${data.mat1Icon}" class="item-icon" alt=""> ${data.mat1Name}:</span>
+                    <span class="label"><img src="${data.mat1Icon}" class="item-icon" alt="" onerror="this.style.display='none'"> ${data.mat1Name}:</span>
                     <span class="value">${totalMat1}</span>
                 </div>
                 <div class="summary-item">
-                    <span class="label"><img src="${data.mat2Icon}" class="item-icon" alt=""> ${data.mat2Name}:</span>
+                    <span class="label"><img src="${data.mat2Icon}" class="item-icon" alt="" onerror="this.style.display='none'"> ${data.mat2Name}:</span>
                     <span class="value">${totalMat2}</span>
                 </div>
             `;
         }
 
-        // Inicializar com o Ring ao carregar a página
         renderTable();
         calculate();
     </script>
