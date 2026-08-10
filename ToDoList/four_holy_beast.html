@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digimon Galaxy - Four Holy Beast Equipment</title>
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --sidebar-bg: #11161d;
+            --accent-color: #00d2ff;
+            --accent-orange: #ff7b00;
+            --accent-purple: #a855f7;
+            --text-color: #f0f6fc;
+            --text-muted: #8b949e;
+            --border-color: #30363d;
+            --completed-color: #238636;
+            --sidebar-width: 260px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* --- MENU LATERAL (SIDEBAR) --- */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            padding: 20px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            flex-shrink: 0;
+        }
+
+        .sidebar-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            color: var(--text-color);
+            text-decoration: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid transparent;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--border-color);
+        }
+
+        .nav-link.active {
+            background: rgba(0, 210, 255, 0.1);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .nav-link.crafting-link {
+            background: rgba(168, 85, 247, 0.1);
+            border-color: rgba(168, 85, 247, 0.3);
+            color: #d2a8ff;
+        }
+
+        .nav-link.crafting-link:hover {
+            background: rgba(168, 85, 247, 0.2);
+            border-color: var(--accent-purple);
+        }
+
+        /* --- CONTEÚDO PRINCIPAL --- */
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+            max-width: 1200px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 24px;
+            padding: 18px 12px;
+            background: linear-gradient(135deg, #1f293d, #111827);
+            border-radius: 12px;
+            border: 1px solid var(--accent-color);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
+        }
+
+        .header-title-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 4px;
+        }
+
+        .header-icon {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+            border-radius: 6px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            padding: 2px;
+        }
+
+        h1 {
+            font-size: 1.4rem;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        p.subtitle {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* --- TABS SYSTEM --- */
+        .tabs-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-color);
+        }
+
+        .tab-btn.active {
+            background: var(--accent-color);
+            color: #0d1117;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent-orange);
+            margin-bottom: 14px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* --- TABELA --- */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: middle;
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--accent-color);
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .tier-cell {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .item-icon {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+            border-radius: 4px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            padding: 1px;
+        }
+
+        .badge-tier {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+
+        .tier-1, .tier-2 { background: rgba(35, 134, 54, 0.2); color: #56d364; border: 1px solid rgba(35, 134, 54, 0.4); }
+        .tier-3, .tier-4 { background: rgba(0, 210, 255, 0.15); color: #58a6ff; border: 1px solid rgba(0, 210, 255, 0.3); }
+        .tier-5 { background: rgba(168, 85, 247, 0.2); color: #d2a8ff; border: 1px solid rgba(168, 85, 247, 0.4); }
+
+        .item-with-icon {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* --- CALCULADORA --- */
+        .calc-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        @media (max-width: 600px) {
+            .calc-grid { grid-template-columns: 1fr; }
+            .tabs-container { flex-direction: column; }
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        select {
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-color);
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        select:focus {
+            border-color: var(--accent-color);
+        }
+
+        .summary-box {
+            background: rgba(0, 210, 255, 0.05);
+            border: 1px solid rgba(0, 210, 255, 0.2);
+            border-radius: 8px;
+            padding: 16px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+        }
+
+        .summary-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .summary-item .label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .summary-item .value {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            .sidebar { width: 100%; height: auto; position: relative; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SIDEBAR DE NAVEGAÇÃO -->
+    <aside class="sidebar">
+        <div class="sidebar-title">Digimon Galaxy</div>
+        <ul class="nav-menu">
+            <li>
+                <a href="index.html" class="nav-link">
+                    📋 Checklist Diário
+                </a>
+            </li>
+            <li>
+                <a href="true_digivice.html" class="nav-link crafting-link">
+                    ⚡ True Digivice Steps
+                </a>
+            </li>
+            <li>
+                <a href="four_holy_beast.html" class="nav-link active">
+                    💍 Four Holy Beast Equipment
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="main-content">
+        <header>
+            <div class="header-title-wrapper">
+                <img id="header-icon" src="Icons/Digitamamon.png" alt="Icon" class="header-icon">
+                <h1 id="header-title">Four Holy Beast Ring</h1>
+            </div>
+            <p class="subtitle">Guia de Craft e Materiais (Lv 1 ao Lv 5)</p>
+        </header>
+
+        <!-- NAVEGAÇÃO ENTRE ACESSÓRIOS -->
+        <div class="tabs-container">
+            <button class="tab-btn active" onclick="switchTab('ring')"><img src="Icons/Sealed_Ring_of_Four_Holy_Beasts.png" class="item-icon" alt=""> Ring</button>
+            <button class="tab-btn" onclick="switchTab('necklace')"><img src="Icons/Sealed_Necklace_of_Four_Holy_Beasts.png" class="item-icon" alt=""> Necklace</button>
+            <button class="tab-btn" onclick="switchTab('earring')"><img src="Icons/Earrings_of_Four_Holy_Beasts.png" class="item-icon" alt=""> Earring</button>
+        </div>
+
+        <!-- CALCULADORA DE MATERIAIS -->
+        <div class="card">
+            <div class="card-title">🧮 Calculadora de Materiais Necessários</div>
+            <div class="calc-grid">
+                <div class="form-group">
+                    <label for="current-lvl">Nível Atual:</label>
+                    <select id="current-lvl" onchange="calculate()">
+                        <option value="0">Nenhum (Começar do zero)</option>
+                        <option value="1">Lv 1</option>
+                        <option value="2">Lv 2</option>
+                        <option value="3">Lv 3</option>
+                        <option value="4">Lv 4</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="target-lvl">Nível Desejado:</label>
+                    <select id="target-lvl" onchange="calculate()">
+                        <option value="1">Lv 1</option>
+                        <option value="2">Lv 2</option>
+                        <option value="3">Lv 3</option>
+                        <option value="4">Lv 4</option>
+                        <option value="5" selected>Lv 5</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="summary-box">
+                <div class="summary-item">
+                    <span class="label">💰 Bits Totais:</span>
+                    <span class="value" id="res-bits">3 T 800 M</span>
+                </div>
+                <div class="summary-item">
+                    <span class="label" id="lbl-boss-item">🎁 Boss Item:</span>
+                    <span class="value" id="res-boss">7</span>
+                </div>
+                <div class="summary-item">
+                    <span class="label" id="lbl-sec-item">💎 Secondary Material:</span>
+                    <span class="value" id="res-sec">75</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- TABELA DE MATERIAIS -->
+        <div class="card">
+            <div class="card-title">📋 Requisitos por Nível (Crafting Table)</div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nível</th>
+                            <th>Item Anterior Requerido</th>
+                            <th id="th-boss-item">Boss Item</th>
+                            <th id="th-sec-item">Secondary Material</th>
+                            <th>Custo em Bits</th>
+                        </tr>
+                    </thead>
+                    <tbody id="craft-table-body">
+                        <!-- Gerado Dinamicamente via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let currentTab = 'ring';
+
+        const gearData = {
+            ring: {
+                title: "Four Holy Beast Ring",
+                icon: "Icons/Sealed_Ring_of_Four_Holy_Beasts.png",
+                bossItemName: "Xuanwumon's Shiny Ring",
+                bossItemIcon: "Icons/Xuanwumon_Sealed_Shiny_Ring.png", // Substitua pelo caminho correto do ícone se necessário
+                secItemName: "Jack Frost of Water Crystal",
+                secItemIcon: "Icons/Jack_Frost_of_Water_Crystal.png", // Substitua pelo caminho correto do ícone se necessário
+                baseItemName: "Ring of Four Holy Beasts",
+                tiers: [
+                    { lvl: 1, bits: 500, bossQty: 1, secQty: 5 },
+                    { lvl: 2, bits: 500, bossQty: 1, secQty: 10 },
+                    { lvl: 3, bits: 800, bossQty: 1, secQty: 15 },
+                    { lvl: 4, bits: 1000, bossQty: 2, secQty: 20 },
+                    { lvl: 5, bits: 1500, bossQty: 2, secQty: 25 }
+                ]
+            },
+            necklace: {
+                title: "Four Holy Beast Necklace",
+                icon: "Icons/Sealed_Necklace_of_Four_Holy_Beasts.png",
+                bossItemName: "Flame Necklace of Zhuqiaomon",
+                bossItemIcon: "Icons/Flame_Necklace_of_Sealed_Zhuqiamon.png",
+                secItemName: "Uprising Infernal Flame",
+                secItemIcon: "Icons/Uprising_Infernal_Flame_Crystal.png",
+                baseItemName: "Necklace of Four Holy Beasts",
+                tiers: [
+                    { lvl: 1, bits: 500, bossQty: 1, secQty: 5 },
+                    { lvl: 2, bits: 500, bossQty: 1, secQty: 10 },
+                    { lvl: 3, bits: 800, bossQty: 1, secQty: 15 },
+                    { lvl: 4, bits: 1000, bossQty: 2, secQty: 20 },
+                    { lvl: 5, bits: 1500, bossQty: 2, secQty: 25 }
+                ]
+            },
+            earring: {
+                title: "Four Holy Beast Earring",
+                icon: "Icons/Earrings_of_Four_Holy_Beasts.png",
+                bossItemName: "Aural Earring of Baihumon",
+                bossItemIcon: "Icons/Baihumon_Shiny_Earring.png",
+                secItemName: "Flawless Crystal of Trace",
+                secItemIcon: "Icons/Flawless_Crystal_of_Trace.png",
+                baseItemName: "Earrings of Four Holy Beasts",
+                tiers: [
+                    { lvl: 1, bits: 500, bossQty: 1, secQty: 5 },
+                    { lvl: 2, bits: 500, bossQty: 1, secQty: 10 },
+                    { lvl: 3, bits: 800, bossQty: 1, secQty: 15 },
+                    { lvl: 4, bits: 1000, bossQty: 2, secQty: 20 },
+                    { lvl: 5, bits: 1500, bossQty: 2, secQty: 25 }
+                ]
+            }
+        };
+
+        function switchTab(tabKey) {
+            currentTab = tabKey;
+            
+            // Atualiza botões ativos
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+
+            // Atualiza a Interface
+            renderGearData();
+            calculate();
+        }
+
+        function renderGearData() {
+            const data = gearData[currentTab];
+
+            // Título e Ícone do Cabeçalho
+            document.getElementById('header-title').innerText = data.title;
+            document.getElementById('header-icon').src = data.icon;
+            
+            // Labels do Resumo com Ícones
+            document.getElementById('lbl-boss-item').innerHTML = `<img src="${data.bossItemIcon}" class="item-icon" alt=""> ${data.bossItemName}:`;
+            document.getElementById('lbl-sec-item').innerHTML = `<img src="${data.secItemIcon}" class="item-icon" alt=""> ${data.secItemName}:`;
+
+            // Headings da Tabela com Ícones
+            document.getElementById('th-boss-item').innerHTML = `<div class="item-with-icon"><img src="${data.bossItemIcon}" class="item-icon" alt=""> ${data.bossItemName}</div>`;
+            document.getElementById('th-sec-item').innerHTML = `<div class="item-with-icon"><img src="${data.secItemIcon}" class="item-icon" alt=""> ${data.secItemName}</div>`;
+
+            // Renderizar Tabela
+            const tbody = document.getElementById('craft-table-body');
+            tbody.innerHTML = '';
+
+            data.tiers.forEach((tier, index) => {
+                const prevItem = index === 0 ? '-' : `${data.baseItemName} [Lv ${tier.lvl - 1}]`;
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>
+                        <div class="tier-cell">
+                            <img src="${data.icon}" class="item-icon" alt="">
+                            <span class="badge-tier tier-${tier.lvl}">Lv ${tier.lvl}</span>
+                        </div>
+                    </td>
+                    <td>${prevItem}</td>
+                    <td>${tier.bossQty}</td>
+                    <td>${tier.secQty}</td>
+                    <td>${formatBits(tier.bits)}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function formatBits(totalM) {
+            if (totalM >= 1000) {
+                const t = Math.floor(totalM / 1000);
+                const m = totalM % 1000;
+                return m > 0 ? `${t} T ${m} M` : `${t} T`;
+            }
+            return `${totalM} M`;
+        }
+
+        function calculate() {
+            const current = parseInt(document.getElementById('current-lvl').value);
+            const target = parseInt(document.getElementById('target-lvl').value);
+            const tiers = gearData[currentTab].tiers;
+
+            if (current >= target) {
+                document.getElementById('res-bits').innerText = '0 M';
+                document.getElementById('res-boss').innerText = '0';
+                document.getElementById('res-sec').innerText = '0';
+                return;
+            }
+
+            let totalBits = 0;
+            let totalBoss = 0;
+            let totalSec = 0;
+
+            for (let i = current; i < target; i++) {
+                totalBits += tiers[i].bits;
+                totalBoss += tiers[i].bossQty;
+                totalSec += tiers[i].secQty;
+            }
+
+            document.getElementById('res-bits').innerText = formatBits(totalBits);
+            document.getElementById('res-boss').innerText = totalBoss;
+            document.getElementById('res-sec').innerText = totalSec;
+        }
+
+        // Inicialização do documento
+        renderGearData();
+        calculate();
+    </script>
+</body>
+</html>
