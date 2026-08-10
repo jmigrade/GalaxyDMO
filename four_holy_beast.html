@@ -348,7 +348,7 @@
 </head>
 <body>
 
-   <!-- SIDEBAR DE NAVEGAÇÃO -->
+    <!-- SIDEBAR DE NAVEGAÇÃO -->
     <aside class="sidebar">
         <div class="sidebar-title">Digimon Galaxy</div>
         <ul class="nav-menu">
@@ -387,9 +387,9 @@
 
         <!-- NAVEGAÇÃO ENTRE ACESSÓRIOS -->
         <div class="tabs-container">
-            <button class="tab-btn active" onclick="switchTab('ring')"><img src="Icons/Sealed_Ring_of_Four_Holy_Beasts.png" class="item-icon" alt=""> Ring</button>
-            <button class="tab-btn" onclick="switchTab('necklace')"><img src="Icons/Sealed_Necklace_of_Four_Holy_Beasts.png" class="item-icon" alt=""> Necklace</button>
-            <button class="tab-btn" onclick="switchTab('earring')"><img src="Icons/Earrings_of_Four_Holy_Beasts.png" class="item-icon" alt=""> Earring</button>
+            <button class="tab-btn active" onclick="switchTab('ring', event)"><img src="Icons/Sealed_Ring_of_Four_Holy_Beasts.png" class="item-icon" alt=""> Ring</button>
+            <button class="tab-btn" onclick="switchTab('necklace', event)"><img src="Icons/Sealed_Necklace_of_Four_Holy_Beasts.png" class="item-icon" alt=""> Necklace</button>
+            <button class="tab-btn" onclick="switchTab('earring', event)"><img src="Icons/Earrings_of_Four_Holy_Beasts.png" class="item-icon" alt=""> Earring</button>
         </div>
 
         <!-- CALCULADORA DE MATERIAIS -->
@@ -464,9 +464,9 @@
                 title: "Four Holy Beast Ring",
                 icon: "Icons/Sealed_Ring_of_Four_Holy_Beasts.png",
                 bossItemName: "Xuanwumon's Shiny Ring",
-                bossItemIcon: "Icons/Xuanwumon_Sealed_Shiny_Ring.png", // Substitua pelo caminho correto do ícone se necessário
+                bossItemIcon: "Icons/Xuanwumon_Sealed_Shiny_Ring.png",
                 secItemName: "Jack Frost of Water Crystal",
-                secItemIcon: "Icons/Jack_Frost_of_Water_Crystal.png", // Substitua pelo caminho correto do ícone se necessário
+                secItemIcon: "Icons/Jack_Frost_of_Water_Crystal.png",
                 baseItemName: "Ring of Four Holy Beasts",
                 tiers: [
                     { lvl: 1, bits: 500, bossQty: 1, secQty: 5 },
@@ -510,14 +510,14 @@
             }
         };
 
-        function switchTab(tabKey) {
+        function switchTab(tabKey, event) {
             currentTab = tabKey;
             
-            // Atualiza botões ativos
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            event.currentTarget.classList.add('active');
+            if (event && event.currentTarget) {
+                event.currentTarget.classList.add('active');
+            }
 
-            // Atualiza a Interface
             renderGearData();
             calculate();
         }
@@ -525,19 +525,15 @@
         function renderGearData() {
             const data = gearData[currentTab];
 
-            // Título e Ícone do Cabeçalho
             document.getElementById('header-title').innerText = data.title;
             document.getElementById('header-icon').src = data.icon;
             
-            // Labels do Resumo com Ícones
             document.getElementById('lbl-boss-item').innerHTML = `<img src="${data.bossItemIcon}" class="item-icon" alt=""> ${data.bossItemName}:`;
             document.getElementById('lbl-sec-item').innerHTML = `<img src="${data.secItemIcon}" class="item-icon" alt=""> ${data.secItemName}:`;
 
-            // Headings da Tabela com Ícones
             document.getElementById('th-boss-item').innerHTML = `<div class="item-with-icon"><img src="${data.bossItemIcon}" class="item-icon" alt=""> ${data.bossItemName}</div>`;
             document.getElementById('th-sec-item').innerHTML = `<div class="item-with-icon"><img src="${data.secItemIcon}" class="item-icon" alt=""> ${data.secItemName}</div>`;
 
-            // Renderizar Tabela
             const tbody = document.getElementById('craft-table-body');
             tbody.innerHTML = '';
 
@@ -570,16 +566,20 @@
         }
 
         function calculate() {
-            const current = parseInt(document.getElementById('current-lvl').value);
-            const target = parseInt(document.getElementById('target-lvl').value);
-            const tiers = gearData[currentTab].tiers;
+            const currentSelect = document.getElementById('current-lvl');
+            const targetSelect = document.getElementById('target-lvl');
+            
+            let current = parseInt(currentSelect.value);
+            let target = parseInt(targetSelect.value);
 
             if (current >= target) {
-                document.getElementById('res-bits').innerText = '0 M';
-                document.getElementById('res-boss').innerText = '0';
-                document.getElementById('res-sec').innerText = '0';
-                return;
+                target = Math.min(current + 1, 5);
+                if (current >= 5) current = 4;
+                targetSelect.value = target;
+                currentSelect.value = current;
             }
+
+            const tiers = gearData[currentTab].tiers;
 
             let totalBits = 0;
             let totalBoss = 0;
@@ -596,7 +596,6 @@
             document.getElementById('res-sec').innerText = totalSec;
         }
 
-        // Inicialização do documento
         renderGearData();
         calculate();
     </script>
