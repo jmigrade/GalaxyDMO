@@ -18,358 +18,63 @@
             --sidebar-width: 260px;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; -webkit-tap-highlight-color: transparent; }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            display: flex;
-            min-height: 100vh;
-        }
+        body { background-color: var(--bg-color); color: var(--text-color); display: flex; min-height: 100vh; }
 
-        /* --- MENU LATERAL (SIDEBAR) --- */
-        .sidebar {
-            width: var(--sidebar-width);
-            background: var(--sidebar-bg);
-            border-right: 1px solid var(--border-color);
-            padding: 20px 14px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            height: 100vh;
-            position: sticky;
-            top: 0;
-            flex-shrink: 0;
-        }
+        .sidebar { width: var(--sidebar-width); background: var(--sidebar-bg); border-right: 1px solid var(--border-color); padding: 20px 14px; display: flex; flex-direction: column; gap: 16px; height: 100vh; position: sticky; top: 0; flex-shrink: 0; }
+        .sidebar-title { font-size: 1.1rem; font-weight: bold; color: var(--accent-color); border-bottom: 1px solid var(--border-color); padding-bottom: 12px; }
+        .nav-menu { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+        .nav-link { display: flex; align-items: center; gap: 10px; padding: 12px; color: var(--text-color); text-decoration: none; border-radius: 8px; background: rgba(255, 255, 255, 0.02); border: 1px solid transparent; font-size: 0.95rem; font-weight: 500; transition: all 0.2s; }
+        .nav-link:hover { background: rgba(255, 255, 255, 0.05); border-color: var(--border-color); }
+        .nav-link.active { background: rgba(0, 210, 255, 0.1); border-color: var(--accent-color); color: var(--accent-color); }
+        .nav-link.crafting-link { background: rgba(168, 85, 247, 0.1); border-color: rgba(168, 85, 247, 0.3); color: #d2a8ff; }
 
-        .sidebar-title {
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: var(--accent-color);
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 12px;
-        }
+        .main-content { flex-grow: 1; padding: 20px; max-width: 1350px; }
+        header { text-align: center; margin-bottom: 20px; padding: 18px 12px; background: linear-gradient(135deg, #1f293d, #111827); border-radius: 12px; border: 1px solid var(--accent-color); box-shadow: 0 0 15px rgba(0, 210, 255, 0.2); }
+        .header-title-wrapper { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 4px; }
+        .header-icon { width: 30px; height: 30px; object-fit: contain; border-radius: 4px; }
+        h1 { font-size: 1.3rem; color: var(--accent-color); text-transform: uppercase; letter-spacing: 1px; }
+        p.subtitle { font-size: 0.8rem; color: var(--text-muted); }
 
-        .nav-menu {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
+        .equipment-tabs { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .tab-btn { display: flex; align-items: center; gap: 8px; padding: 8px 16px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-muted); cursor: pointer; font-size: 0.9rem; font-weight: 600; transition: all 0.2s; }
+        .tab-btn:hover { border-color: var(--accent-color); color: var(--text-color); }
+        .tab-btn.active { background: rgba(0, 210, 255, 0.1); border-color: var(--accent-color); color: var(--accent-color); }
+        .tab-btn img { width: 20px; height: 20px; object-fit: contain; }
 
-        .nav-link {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px;
-            color: var(--text-color);
-            text-decoration: none;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid transparent;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
+        .card { background: var(--card-bg); border-radius: 10px; border: 1px solid var(--border-color); padding: 20px; margin-bottom: 24px; }
+        .card-title { font-size: 1rem; font-weight: 600; color: var(--accent-orange); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+        .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+        select { padding: 10px; background: rgba(0, 0, 0, 0.3); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-color); font-size: 0.95rem; outline: none; }
+        .summary-box { background: rgba(0, 210, 255, 0.05); border: 1px solid rgba(0, 210, 255, 0.2); border-radius: 8px; padding: 16px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+        .summary-item .label { font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
+        .summary-item .value { font-size: 1.1rem; font-weight: bold; color: var(--accent-color); }
 
-        .nav-link:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: var(--border-color);
-        }
-
-        .nav-link.active {
-            background: rgba(0, 210, 255, 0.1);
-            border-color: var(--accent-color);
-            color: var(--accent-color);
-        }
-
-        .nav-link.crafting-link {
-            background: rgba(168, 85, 247, 0.1);
-            border-color: rgba(168, 85, 247, 0.3);
-            color: #d2a8ff;
-        }
-
-        .nav-link.crafting-link:hover {
-            background: rgba(168, 85, 247, 0.2);
-            border-color: var(--accent-purple);
-        }
-
-        /* --- CONTEÚDO PRINCIPAL --- */
-        .main-content {
-            flex-grow: 1;
-            padding: 20px;
-            max-width: 1350px;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 20px;
-            padding: 18px 12px;
-            background: linear-gradient(135deg, #1f293d, #111827);
-            border-radius: 12px;
-            border: 1px solid var(--accent-color);
-            box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
-        }
-
-        .header-title-wrapper {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 4px;
-        }
-
-        .header-icon {
-            width: 30px;
-            height: 30px;
-            object-fit: contain;
-            border-radius: 4px;
-        }
-
-        h1 {
-            font-size: 1.3rem;
-            color: var(--accent-color);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        p.subtitle {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        /* --- ABAS DE EQUIPAMENTO --- */
-        .equipment-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        .tab-btn {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--text-muted);
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 600;
-            transition: all 0.2s;
-        }
-
-        .tab-btn:hover {
-            border-color: var(--accent-color);
-            color: var(--text-color);
-        }
-
-        .tab-btn.active {
-            background: rgba(0, 210, 255, 0.1);
-            border-color: var(--accent-color);
-            color: var(--accent-color);
-        }
-
-        .tab-btn img {
-            width: 20px;
-            height: 20px;
-            object-fit: contain;
-        }
-
-        .card {
-            background: var(--card-bg);
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            padding: 20px;
-            margin-bottom: 24px;
-        }
-
-        .card-title {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--accent-orange);
-            margin-bottom: 14px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        /* --- CALCULADORA --- */
-        .calc-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-bottom: 16px;
-        }
-
-        @media (max-width: 600px) {
-            .calc-grid { grid-template-columns: 1fr; }
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        label {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        select {
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--text-color);
-            font-size: 0.95rem;
-            outline: none;
-        }
-
-        select:focus {
-            border-color: var(--accent-color);
-        }
-
-        .summary-box {
-            background: rgba(0, 210, 255, 0.05);
-            border: 1px solid rgba(0, 210, 255, 0.2);
-            border-radius: 8px;
-            padding: 16px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-        }
-
-        .summary-item {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .summary-item .label {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .summary-item .value {
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: var(--accent-color);
-        }
-
-        /* --- TABELA --- */
-        .table-responsive {
-            width: 100%;
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-            font-size: 0.9rem;
-        }
-
-        th, td {
-            padding: 12px;
-            border-bottom: 1px solid var(--border-color);
-            vertical-align: middle;
-        }
-
-        th {
-            color: var(--accent-color);
-            font-weight: 600;
-            white-space: nowrap;
-        }
-
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        tr:hover td {
-            background: rgba(255, 255, 255, 0.02);
-        }
-
-        .tier-cell {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .item-icon {
-            width: 26px;
-            height: 26px;
-            object-fit: contain;
-            flex-shrink: 0;
-        }
-
-        .badge-tier {
-            display: inline-block;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-weight: bold;
-            font-size: 0.75rem;
-        }
-
+        .table-responsive { width: 100%; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
+        th, td { padding: 12px; border-bottom: 1px solid var(--border-color); vertical-align: middle; }
+        .item-icon { width: 26px; height: 26px; object-fit: contain; flex-shrink: 0; }
+        .badge-tier { display: inline-block; padding: 3px 8px; border-radius: 4px; font-weight: bold; font-size: 0.75rem; }
         .tier-green { background: rgba(35, 134, 54, 0.3); color: #56d364; }
         .tier-blue { background: rgba(0, 210, 255, 0.2); color: #58a6ff; }
         .tier-purple { background: rgba(168, 85, 247, 0.3); color: #d2a8ff; }
         .tier-orange { background: rgba(255, 123, 0, 0.3); color: #ffa657; }
-
-        .item-with-icon {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        @media (max-width: 768px) {
-            body { flex-direction: column; }
-            .sidebar { width: 100%; height: auto; position: relative; }
-        }
+        .item-with-icon { display: flex; align-items: center; gap: 6px; }
     </style>
 </head>
 <body>
 
-    <!-- SIDEBAR DE NAVEGAÇÃO -->
     <aside class="sidebar">
         <div class="sidebar-title">Digimon Galaxy</div>
         <ul class="nav-menu">
-            <li>
-                <a href="index.html" class="nav-link">
-                    📋 Checklist Diário
-                </a>
-            </li>
-            <li>
-                <a href="true_digivice.html" class="nav-link crafting-link">
-                    ⚡ True Digivice Steps
-                </a>
-            </li>
-            <li>
-                <a href="four_holy_beast.html" class="nav-link crafting-link active">
-                    💍 Four Holy Beast Ring
-                </a>
-            </li>
-            <li>
-                <a href="tamer_goggles.html" class="nav-link crafting-link">
-                    🥽 Tamer's Goggles
-                </a>
-            </li>
+            <li><a href="index.html" class="nav-link">📋 Checklist Diário</a></li>
+            <li><a href="true_digivice.html" class="nav-link crafting-link">⚡ True Digivice Steps</a></li>
+            <li><a href="four_holy_beast.html" class="nav-link crafting-link active">💍 Four Holy Beast Ring</a></li>
+            <li><a href="tamer_goggles.html" class="nav-link crafting-link">🥽 Tamer's Goggles</a></li>
         </ul>
     </aside>
 
-    <!-- CONTEÚDO PRINCIPAL -->
     <main class="main-content">
         <header>
             <div class="header-title-wrapper">
@@ -379,7 +84,6 @@
             <p class="subtitle" id="header-subtitle">Guia de Craft e Materiais (Lv. 1 ao Lv. 5)</p>
         </header>
 
-        <!-- ABAS DE SELEÇÃO DE EQUIPAMENTO -->
         <div class="equipment-tabs">
             <button class="tab-btn active" onclick="switchEquipment('ring')">
                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Xuanwumon_Sealed_Shiny_Ring.png" alt="" onerror="this.style.display='none'"> Ring
@@ -392,7 +96,6 @@
             </button>
         </div>
 
-        <!-- CALCULADORA DE MATERIAIS -->
         <div class="card">
             <div class="card-title">📊 Calculadora de Materiais Necessários</div>
             <div class="calc-grid">
@@ -417,78 +120,69 @@
                     </select>
                 </div>
             </div>
-
-            <div class="summary-box" id="summary-box">
-                <!-- Gerado Dinamicamente -->
-            </div>
+            <div class="summary-box" id="summary-box"></div>
         </div>
 
-        <!-- TABELA DE MATERIAIS E STATUS -->
         <div class="card">
-            <div class="card-title" id="table-card-title">📋 Requisitos por Nível (Crafting Table)</div>
+            <div class="card-title">📋 Requisitos por Nível (Crafting Table)</div>
             <div class="table-responsive">
                 <table>
-                    <thead>
-                        <tr id="table-headers">
-                            <!-- Gerado Dinamicamente -->
-                        </tr>
-                    </thead>
-                    <tbody id="craft-table-body">
-                        <!-- Gerado Dinamicamente -->
-                    </tbody>
+                    <thead><tr id="table-headers"></tr></thead>
+                    <tbody id="craft-table-body"></tbody>
                 </table>
             </div>
         </div>
     </main>
 
     <script>
+        const baseUrl = "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/";
         const equipmentData = {
             ring: {
                 title: "FOUR HOLY BEAST RING",
                 subtitle: "Guia de Craft e Materiais (Lv. 1 ao Lv. 5)",
-                headerIcon: "Icons/Xuanwumon_Sealed_Shiny_Ring.png",
+                headerIcon: baseUrl + "Xuanwumon_Sealed_Shiny_Ring.png",
                 mat1Name: "Xuanwumon's Shiny Ring",
-                mat1Icon: "Icons/Xuanwumon_Sealed_Shiny_Ring.png",
+                mat1Icon: baseUrl + "Xuanwumon_Sealed_Shiny_Ring.png",
                 mat2Name: "Jack Frost of Water Crystal",
-                mat2Icon: "Icons/Jack_Frost_of_Water_Crystal.png",
+                mat2Icon: baseUrl + "Jack_Frost_of_Water_Crystal.png",
                 levels: [
-                    { lvl: 1, name: "-", mat1: 1, mat2: 5, bits: 500000000, badge: "tier-green", icon: "Icons/Xuanwumon_Sealed_Shiny_Ring.png" },
-                    { lvl: 2, name: "Ring of Four Holy Beasts [Lv 1]", mat1: 1, mat2: 10, bits: 500000000, badge: "tier-green", icon: "Icons/Xuanwumon_Sealed_Shiny_Ring.png" },
-                    { lvl: 3, name: "Ring of Four Holy Beasts [Lv 2]", mat1: 1, mat2: 15, bits: 800000000, badge: "tier-blue", icon: "Icons/Xuanwumon_Sealed_Shiny_Ring.png" },
-                    { lvl: 4, name: "Ring of Four Holy Beasts [Lv 3]", mat1: 2, mat2: 20, bits: 1000000000, badge: "tier-purple", icon: "Icons/Xuanwumon_Sealed_Shiny_Ring.png" },
-                    { lvl: 5, name: "Ring of Four Holy Beasts [Lv 4]", mat1: 2, mat2: 25, bits: 1500000000, badge: "tier-orange", icon: "Icons/Xuanwumon_Sealed_Shiny_Ring.png" }
+                    { lvl: 1, name: "-", mat1: 1, mat2: 5, bits: 500000000, badge: "tier-green", icon: baseUrl + "Xuanwumon_Sealed_Shiny_Ring.png" },
+                    { lvl: 2, name: "Ring of Four Holy Beasts [Lv 1]", mat1: 1, mat2: 10, bits: 500000000, badge: "tier-green", icon: baseUrl + "Xuanwumon_Sealed_Shiny_Ring.png" },
+                    { lvl: 3, name: "Ring of Four Holy Beasts [Lv 2]", mat1: 1, mat2: 15, bits: 800000000, badge: "tier-blue", icon: baseUrl + "Xuanwumon_Sealed_Shiny_Ring.png" },
+                    { lvl: 4, name: "Ring of Four Holy Beasts [Lv 3]", mat1: 2, mat2: 20, bits: 1000000000, badge: "tier-purple", icon: baseUrl + "Xuanwumon_Sealed_Shiny_Ring.png" },
+                    { lvl: 5, name: "Ring of Four Holy Beasts [Lv 4]", mat1: 2, mat2: 25, bits: 1500000000, badge: "tier-orange", icon: baseUrl + "Xuanwumon_Sealed_Shiny_Ring.png" }
                 ]
             },
             necklace: {
                 title: "FOUR HOLY BEAST NECKLACE",
                 subtitle: "Guia de Craft e Materiais (Lv. 1 ao Lv. 5)",
-                headerIcon: "Icons/Flame_Necklace_of_Sealed_Zhuqiamon.png",
+                headerIcon: baseUrl + "Flame_Necklace_of_Sealed_Zhuqiamon.png",
                 mat1Name: "Zhuqiaomon's Shiny Necklace",
-                mat1Icon: "Icons/Flame_Necklace_of_Sealed_Zhuqiamon.png",
+                mat1Icon: baseUrl + "Flame_Necklace_of_Sealed_Zhuqiamon.png",
                 mat2Name: "Flame of Fire Crystal",
-                mat2Icon: "Icons/Flame.png",
+                mat2Icon: baseUrl + "Flame.png",
                 levels: [
-                    { lvl: 1, name: "-", mat1: 1, mat2: 5, bits: 500000000, badge: "tier-green", icon: "Icons/Flame_Necklace_of_Sealed_Zhuqiamon.png" },
-                    { lvl: 2, name: "Necklace of Four Holy Beasts [Lv 1]", mat1: 1, mat2: 10, bits: 500000000, badge: "tier-green", icon: "Icons/Flame_Necklace_of_Sealed_Zhuqiamon.png" },
-                    { lvl: 3, name: "Necklace of Four Holy Beasts [Lv 2]", mat1: 1, mat2: 15, bits: 800000000, badge: "tier-blue", icon: "Icons/Flame_Necklace_of_Sealed_Zhuqiamon.png" },
-                    { lvl: 4, name: "Necklace of Four Holy Beasts [Lv 3]", mat1: 2, mat2: 20, bits: 1000000000, badge: "tier-purple", icon: "Icons/Flame_Necklace_of_Sealed_Zhuqiamon.png" },
-                    { lvl: 5, name: "Necklace of Four Holy Beasts [Lv 4]", mat1: 2, mat2: 25, bits: 1500000000, badge: "tier-orange", icon: "Icons/Flame_Necklace_of_Sealed_Zhuqiamon.png" }
+                    { lvl: 1, name: "-", mat1: 1, mat2: 5, bits: 500000000, badge: "tier-green", icon: baseUrl + "Flame_Necklace_of_Sealed_Zhuqiamon.png" },
+                    { lvl: 2, name: "Necklace of Four Holy Beasts [Lv 1]", mat1: 1, mat2: 10, bits: 500000000, badge: "tier-green", icon: baseUrl + "Flame_Necklace_of_Sealed_Zhuqiamon.png" },
+                    { lvl: 3, name: "Necklace of Four Holy Beasts [Lv 2]", mat1: 1, mat2: 15, bits: 800000000, badge: "tier-blue", icon: baseUrl + "Flame_Necklace_of_Sealed_Zhuqiamon.png" },
+                    { lvl: 4, name: "Necklace of Four Holy Beasts [Lv 3]", mat1: 2, mat2: 20, bits: 1000000000, badge: "tier-purple", icon: baseUrl + "Flame_Necklace_of_Sealed_Zhuqiamon.png" },
+                    { lvl: 5, name: "Necklace of Four Holy Beasts [Lv 4]", mat1: 2, mat2: 25, bits: 1500000000, badge: "tier-orange", icon: baseUrl + "Flame_Necklace_of_Sealed_Zhuqiamon.png" }
                 ]
             },
             earring: {
                 title: "FOUR HOLY BEAST EARRING",
                 subtitle: "Guia de Craft e Materiais (Lv. 1 ao Lv. 5)",
-                headerIcon: "Icons/Baihumon_Shiny_Earring.png",
+                headerIcon: baseUrl + "Baihumon_Shiny_Earring.png",
                 mat1Name: "Baihumon's Shiny Earring",
-                mat1Icon: "Icons/Baihumon_Shiny_Earring.png",
+                mat1Icon: baseUrl + "Baihumon_Shiny_Earring.png",
                 mat2Name: "Steel Crystal",
-                mat2Icon: "Icons/Feet.png",
+                mat2Icon: baseUrl + "Feet.png",
                 levels: [
-                    { lvl: 1, name: "-", mat1: 1, mat2: 5, bits: 500000000, badge: "tier-green", icon: "Icons/Baihumon_Shiny_Earring.png" },
-                    { lvl: 2, name: "Earring of Four Holy Beasts [Lv 1]", mat1: 1, mat2: 10, bits: 500000000, badge: "tier-green", icon: "Icons/Baihumon_Shiny_Earring.png" },
-                    { lvl: 3, name: "Earring of Four Holy Beasts [Lv 2]", mat1: 1, mat2: 15, bits: 800000000, badge: "tier-blue", icon: "Icons/Baihumon_Shiny_Earring.png" },
-                    { lvl: 4, name: "Earring of Four Holy Beasts [Lv 3]", mat1: 2, mat2: 20, bits: 1000000000, badge: "tier-purple", icon: "Icons/Baihumon_Shiny_Earring.png" },
-                    { lvl: 5, name: "Earring of Four Holy Beasts [Lv 4]", mat1: 2, mat2: 25, bits: 1500000000, badge: "tier-orange", icon: "Icons/Baihumon_Shiny_Earring.png" }
+                    { lvl: 1, name: "-", mat1: 1, mat2: 5, bits: 500000000, badge: "tier-green", icon: baseUrl + "Baihumon_Shiny_Earring.png" },
+                    { lvl: 2, name: "Earring of Four Holy Beasts [Lv 1]", mat1: 1, mat2: 10, bits: 500000000, badge: "tier-green", icon: baseUrl + "Baihumon_Shiny_Earring.png" },
+                    { lvl: 3, name: "Earring of Four Holy Beasts [Lv 2]", mat1: 1, mat2: 15, bits: 800000000, badge: "tier-blue", icon: baseUrl + "Baihumon_Shiny_Earring.png" },
+                    { lvl: 4, name: "Earring of Four Holy Beasts [Lv 3]", mat1: 2, mat2: 20, bits: 1000000000, badge: "tier-purple", icon: baseUrl + "Baihumon_Shiny_Earring.png" },
+                    { lvl: 5, name: "Earring of Four Holy Beasts [Lv 4]", mat1: 2, mat2: 25, bits: 1500000000, badge: "tier-orange", icon: baseUrl + "Baihumon_Shiny_Earring.png" }
                 ]
             }
         };
@@ -499,16 +193,12 @@
             currentEquipmentType = type;
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             event.currentTarget.classList.add('active');
-
             const data = equipmentData[type];
             document.getElementById('header-title').innerText = data.title;
             document.getElementById('header-subtitle').innerText = data.subtitle;
             const headerIcon = document.getElementById('header-icon');
             headerIcon.src = data.headerIcon;
-            headerIcon.style.display = 'block';
-
-            renderTable();
-            calculate();
+            renderTable(); calculate();
         }
 
         function formatBits(bits) {
@@ -523,56 +213,22 @@
 
         function renderTable() {
             const data = equipmentData[currentEquipmentType];
-            
             const headersTr = document.getElementById('table-headers');
-            headersTr.innerHTML = `
-                <th>Nível</th>
-                <th>Item Anterior Requerido</th>
-                <th><div class="item-with-icon"><img src="${data.mat1Icon}" class="item-icon" alt="" onerror="this.style.display='none'"> ${data.mat1Name}</div></th>
-                <th><div class="item-with-icon"><img src="${data.mat2Icon}" class="item-icon" alt="" onerror="this.style.display='none'"> ${data.mat2Name}</div></th>
-                <th>Custo em Bits</th>
-            `;
-
+            headersTr.innerHTML = `<th>Nível</th><th>Item Anterior</th><th><div class="item-with-icon"><img src="${data.mat1Icon}" class="item-icon" alt="" onerror="this.style.display='none'"> ${data.mat1Name}</div></th><th><div class="item-with-icon"><img src="${data.mat2Icon}" class="item-icon" alt="" onerror="this.style.display='none'"> ${data.mat2Name}</div></th><th>Custo Bits</th>`;
             const tbody = document.getElementById('craft-table-body');
             tbody.innerHTML = '';
-
             data.levels.forEach(item => {
                 const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>
-                        <div class="tier-cell">
-                            <img src="${item.icon}" class="item-icon" alt="" onerror="this.style.display='none'">
-                            <span class="badge-tier ${item.badge}">Lv ${item.lvl}</span>
-                        </div>
-                    </td>
-                    <td style="font-size: 0.85rem; color: var(--text-muted);">${item.name}</td>
-                    <td>${item.mat1}</td>
-                    <td>${item.mat2}</td>
-                    <td style="font-weight: bold; color: var(--accent-orange);">${formatBits(item.bits)}</td>
-                `;
+                row.innerHTML = `<td><div class="tier-cell"><img src="${item.icon}" class="item-icon" alt="" onerror="this.style.display='none'"><span class="badge-tier ${item.badge}">Lv ${item.lvl}</span></div></td><td>${item.name}</td><td>${item.mat1}</td><td>${item.mat2}</td><td style="font-weight: bold; color: var(--accent-orange);">${formatBits(item.bits)}</td>`;
                 tbody.appendChild(row);
             });
         }
 
         function calculate() {
             const data = equipmentData[currentEquipmentType];
-            const currentSelect = document.getElementById('current-lvl');
-            const targetSelect = document.getElementById('target-lvl');
-            
-            let current = parseInt(currentSelect.value);
-            let target = parseInt(targetSelect.value);
-
-            if (current >= target) {
-                target = Math.min(current + 1, 5);
-                if (current >= 5) current = 4;
-                targetSelect.value = target;
-                currentSelect.value = current;
-            }
-
-            let totalMat1 = 0;
-            let totalMat2 = 0;
-            let totalBits = 0;
-
+            const current = parseInt(document.getElementById('current-lvl').value);
+            const target = parseInt(document.getElementById('target-lvl').value);
+            let totalMat1 = 0, totalMat2 = 0, totalBits = 0;
             for (let i = current; i < target; i++) {
                 if (data.levels[i]) {
                     totalMat1 += data.levels[i].mat1;
@@ -580,26 +236,13 @@
                     totalBits += data.levels[i].bits;
                 }
             }
-
-            const summaryBox = document.getElementById('summary-box');
-            summaryBox.innerHTML = `
-                <div class="summary-item">
-                    <span class="label">💰 Bits Totais:</span>
-                    <span class="value" style="color: var(--accent-orange);">${formatBits(totalBits)}</span>
-                </div>
-                <div class="summary-item">
-                    <span class="label"><img src="${data.mat1Icon}" class="item-icon" alt="" onerror="this.style.display='none'"> ${data.mat1Name}:</span>
-                    <span class="value">${totalMat1}</span>
-                </div>
-                <div class="summary-item">
-                    <span class="label"><img src="${data.mat2Icon}" class="item-icon" alt="" onerror="this.style.display='none'"> ${data.mat2Name}:</span>
-                    <span class="value">${totalMat2}</span>
-                </div>
+            document.getElementById('summary-box').innerHTML = `
+                <div class="summary-item"><span class="label">💰 Bits:</span><span class="value" style="color: var(--accent-orange);">${formatBits(totalBits)}</span></div>
+                <div class="summary-item"><span class="label"><img src="${data.mat1Icon}" class="item-icon" alt="" onerror="this.style.display='none'"> ${data.mat1Name}:</span><span class="value">${totalMat1}</span></div>
+                <div class="summary-item"><span class="label"><img src="${data.mat2Icon}" class="item-icon" alt="" onerror="this.style.display='none'"> ${data.mat2Name}:</span><span class="value">${totalMat2}</span></div>
             `;
         }
-
-        renderTable();
-        calculate();
+        renderTable(); calculate();
     </script>
 </body>
 </html>
