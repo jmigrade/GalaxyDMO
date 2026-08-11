@@ -203,11 +203,44 @@
             </div>
         </div>
         
-        <div class="npc-notice">
-            <span>ℹ️</span>
-            <div>O sistema de criação (Craft) e trocas é realizado diretamente com o NPC <strong>Nanomon</strong>, localizado no lado oeste do <strong>DATS Center</strong>.</div>
-        </div>
+        <style>
+    /* Adicione estas classes ao seu <style> existente */
+    .npc-section {
+        background: rgba(0, 210, 255, 0.05);
+        border: 1px solid rgba(0, 210, 255, 0.2);
+        border-radius: 8px;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .npc-visuals {
+        display: flex;
+        gap: 10px;
+    }
+
+    .npc-img, .map-img {
+        width: 80px;
+        height: 80px;
+        border-radius: 6px;
+        border: 1px solid var(--border-color);
+        background-color: #000;
+        object-fit: cover;
+    }
+</style>
+
+<div class="npc-section">
+    <div class="npc-visuals">
+        <!-- Substitua os URLs abaixo pelos links reais das imagens -->
+        <img src="URL_DA_IMAGEM_DO_NANOMON" alt="Nanomon" class="npc-img" onerror="this.src='https://via.placeholder.com/80?text=NPC'">
+        <img src="URL_DO_MAPA_DATS" alt="Mapa DATS" class="map-img" onerror="this.src='https://via.placeholder.com/80?text=Mapa'">
     </div>
+    <div class="npc-text">
+        <p style="margin: 0;">O sistema de criação (Craft) e trocas é realizado diretamente com o NPC <strong>Nanomon</strong>, localizado no lado oeste do <strong>DATS Center</strong>.</p>
+    </div>
+</div>
     
     <script>
         // Dados ajustados com os links diretos do GitHub para os ícones
