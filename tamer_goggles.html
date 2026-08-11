@@ -8,14 +8,12 @@
         :root {
             --bg-color: #0d1117;
             --card-bg: #161b22;
-            --sidebar-bg: #11161d;
             --accent-color: #00d2ff;
             --accent-orange: #ff7b00;
             --accent-purple: #a855f7;
             --text-color: #f0f6fc;
             --text-muted: #8b949e;
             --border-color: #30363d;
-            --sidebar-width: 260px;
         }
 
         * {
@@ -30,81 +28,45 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             display: flex;
+            flex-direction: column;
+            align-items: center;
             min-height: 100vh;
         }
 
-        /* --- MENU LATERAL (SIDEBAR) --- */
-        .sidebar {
-            width: var(--sidebar-width);
-            background: var(--sidebar-bg);
-            border-right: 1px solid var(--border-color);
-            padding: 20px 14px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            height: 100vh;
-            position: sticky;
-            top: 0;
-            flex-shrink: 0;
+        /* --- BOTÃO DE VOLTAR AO MENU --- */
+        .top-nav {
+            width: 100%;
+            max-width: 1350px;
+            padding: 20px 20px 0 20px;
         }
 
-        .sidebar-title {
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: var(--accent-color);
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 12px;
-        }
-
-        .nav-menu {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .nav-link {
-            display: flex;
+        .back-btn {
+            display: inline-flex;
             align-items: center;
-            gap: 10px;
-            padding: 12px;
+            gap: 8px;
+            padding: 8px 16px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
             color: var(--text-color);
             text-decoration: none;
             border-radius: 8px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid transparent;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 500;
             transition: all 0.2s;
         }
 
-        .nav-link:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: var(--border-color);
-        }
-
-        .nav-link.active {
-            background: rgba(0, 210, 255, 0.1);
+        .back-btn:hover {
             border-color: var(--accent-color);
             color: var(--accent-color);
-        }
-
-        .nav-link.crafting-link {
-            background: rgba(168, 85, 247, 0.1);
-            border-color: rgba(168, 85, 247, 0.3);
-            color: #d2a8ff;
-        }
-
-        .nav-link.crafting-link:hover {
-            background: rgba(168, 85, 247, 0.2);
-            border-color: var(--accent-purple);
+            background-color: rgba(0, 210, 255, 0.05);
         }
 
         /* --- CONTEÚDO PRINCIPAL --- */
         .main-content {
-            flex-grow: 1;
-            padding: 20px;
+            width: 100%;
             max-width: 1350px;
+            padding: 20px;
+            padding-bottom: 50px;
         }
 
         header {
@@ -315,41 +277,16 @@
             align-items: center;
             gap: 6px;
         }
-
-        @media (max-width: 768px) {
-            body { flex-direction: column; }
-            .sidebar { width: 100%; height: auto; position: relative; }
-        }
     </style>
 </head>
 <body>
 
-    <!-- SIDEBAR DE NAVEGAÇÃO -->
-    <aside class="sidebar">
-        <div class="sidebar-title">Digimon Galaxy</div>
-        <ul class="nav-menu">
-            <li>
-                <a href="index.html" class="nav-link">
-                    📋 Checklist Diário
-                </a>
-            </li>
-            <li>
-                <a href="true_digivice.html" class="nav-link crafting-link">
-                    ⚡ True Digivice Steps
-                </a>
-            </li>
-            <li>
-                <a href="four_holy_beast.html" class="nav-link crafting-link">
-                    💍 Four Holy Beast Ring
-                </a>
-            </li>
-            <li>
-                <a href="tamer_goggles.html" class="nav-link crafting-link active">
-                    🥽 Tamer's Goggles
-                </a>
-            </li>
-        </ul>
-    </aside>
+    <!-- BOTÃO DE VOLTAR AO MENU -->
+    <div class="top-nav">
+        <a href="index.html" class="back-btn">
+            ← Voltar ao Menu Principal
+        </a>
+    </div>
 
     <!-- CONTEÚDO PRINCIPAL -->
     <main class="main-content">
@@ -394,7 +331,7 @@
                         <option value="4">Lv. 4</option>
                         <option value="5">Lv. 5</option>
                         <option value="6">Lv. 6</option>
-                        <option value="7">Lv. 7</option>
+                        <option value="7" selected>Lv. 7</option>
                         <option value="8">Lv. 8</option>
                         <option value="9">Lv. 9</option>
                         <option value="10">Lv. 10</option>
@@ -524,8 +461,8 @@
             const currentSelect = document.getElementById('current-lvl');
             const targetSelect = document.getElementById('target-lvl');
             
-            let current = parseInt(currentSelect.value); // 1 a 16
-            let target = parseInt(targetSelect.value);   // 2 a 19
+            let current = parseInt(currentSelect.value); 
+            let target = parseInt(targetSelect.value);    
 
             if (current >= target) {
                 target = Math.min(current + 1, 19);
@@ -538,9 +475,11 @@
             let totalShinjuku = 0;
             let specialTotals = {};
 
-            let loopEnd = target <= 16 ? target - 1 : 16;
+            // CORREÇÃO: O índice do array para alcançar o nível X corresponde exatamente a (X - 1)
+            let startIndex = current; 
+            let loopEnd = target <= 16 ? target : 16;
 
-            for (let i = current - 1; i < loopEnd; i++) {
+            for (let i = startIndex; i < loopEnd; i++) {
                 if (gogglesData[i]) {
                     totalDigizoid += gogglesData[i].digizoid;
                     totalShinjuku += gogglesData[i].shinjuku;
