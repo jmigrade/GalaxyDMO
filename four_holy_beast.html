@@ -211,6 +211,14 @@
             padding: 1px;
         }
 
+        .currency-icon {
+            width: 16px;
+            height: 16px;
+            object-fit: contain;
+            vertical-align: middle;
+            margin: 0 2px;
+        }
+
         .badge-tier {
             display: inline-block;
             padding: 4px 8px;
@@ -308,7 +316,7 @@
     <main class="main-content">
         <header>
             <div class="header-title-wrapper">
-                <img id="header-icon" src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Digitamamon.png" alt="Icon" class="header-icon" onerror="this.style.display='none'">
+                <img id="header-icon" src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Digitamamon.png" alt="Icon" class="header-icon" onerror="this.style.display='none'">
                 <h1 id="header-title">Four Holy Beast Ring</h1>
             </div>
             <p class="subtitle">Guia de Craft e Materiais (Lv 1 ao Lv 5)</p>
@@ -395,11 +403,11 @@
                 secItemIcon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Jack_Frost_of_Water_Crystal.png",
                 baseItemName: "Ring of Four Holy Beasts",
                 tiers: [
-                    { lvl: 1, bits: 500, bossQty: 1, secQty: 5 },
-                    { lvl: 2, bits: 500, bossQty: 1, secQty: 10 },
-                    { lvl: 3, bits: 800, bossQty: 1, secQty: 15 },
-                    { lvl: 4, bits: 1000, bossQty: 2, secQty: 20 },
-                    { lvl: 5, bits: 1500, bossQty: 2, secQty: 25 }
+                    { lvl: 1, bits: 101, bossQty: 1, secQty: 5 },
+                    { lvl: 2, bits: 151, bossQty: 1, secQty: 10 },
+                    { lvl: 3, bits: 200, bossQty: 1, secQty: 15 },
+                    { lvl: 4, bits: 251, bossQty: 2, secQty: 20 },
+                    { lvl: 5, bits: 301, bossQty: 2, secQty: 25 }
                 ]
             },
             necklace: {
@@ -411,11 +419,11 @@
                 secItemIcon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Uprising_Infernal_Flame_Crystal.png",
                 baseItemName: "Necklace of Four Holy Beasts",
                 tiers: [
-                    { lvl: 1, bits: 500, bossQty: 1, secQty: 5 },
-                    { lvl: 2, bits: 500, bossQty: 1, secQty: 10 },
-                    { lvl: 3, bits: 800, bossQty: 1, secQty: 15 },
-                    { lvl: 4, bits: 1000, bossQty: 2, secQty: 20 },
-                    { lvl: 5, bits: 1500, bossQty: 2, secQty: 25 }
+                    { lvl: 1, bits: 101, bossQty: 1, secQty: 5 },
+                    { lvl: 2, bits: 151, bossQty: 1, secQty: 10 },
+                    { lvl: 3, bits: 200, bossQty: 1, secQty: 15 },
+                    { lvl: 4, bits: 251, bossQty: 2, secQty: 20 },
+                    { lvl: 5, bits: 301, bossQty: 2, secQty: 25 }
                 ]
             },
             earring: {
@@ -427,11 +435,11 @@
                 secItemIcon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Flawless_Crystal_of_Trace.png",
                 baseItemName: "Earrings of Four Holy Beasts",
                 tiers: [
-                    { lvl: 1, bits: 500, bossQty: 1, secQty: 5 },
-                    { lvl: 2, bits: 500, bossQty: 1, secQty: 10 },
-                    { lvl: 3, bits: 800, bossQty: 1, secQty: 15 },
-                    { lvl: 4, bits: 1000, bossQty: 2, secQty: 20 },
-                    { lvl: 5, bits: 1500, bossQty: 2, secQty: 25 }
+                    { lvl: 1, bits: 101, bossQty: 1, secQty: 5 },
+                    { lvl: 2, bits: 151, bossQty: 1, secQty: 10 },
+                    { lvl: 3, bits: 200, bossQty: 1, secQty: 15 },
+                    { lvl: 4, bits: 251, bossQty: 2, secQty: 20 },
+                    { lvl: 5, bits: 301, bossQty: 2, secQty: 25 }
                 ]
             }
         };
@@ -483,12 +491,20 @@
         }
 
         function formatBits(totalM) {
+            let str = "";
             if (totalM >= 1000) {
                 const t = Math.floor(totalM / 1000);
                 const m = totalM % 1000;
-                return m > 0 ? `${t} T ${m} M` : `${t} T`;
+                str = m > 0 ? `${t} T ${m} M` : `${t} T`;
+            } else {
+                str = `${totalM} M`;
             }
-            return `${totalM} M`;
+            
+            // Adicionar suporte automático para os ícones de Tera, Mega e Bit
+            return str
+                .replace(/T/g, '<img src="Icons/Currency_Tera.png" alt="Tera" class="currency-icon" onerror="this.style.display=\'none\'">')
+                .replace(/M/g, '<img src="Icons/Currency_Mega.png" alt="Mega" class="currency-icon" onerror="this.style.display=\'none\'">')
+                .replace(/B/g, '<img src="Icons/Currency_Bit.png" alt="Bit" class="currency-icon" onerror="this.style.display=\'none\'">') + ' 000 <img src="Icons/Currency_Bit.png" alt="Bit" class="currency-icon" onerror="this.style.display=\'none\'">';
         }
 
         function calculate() {
@@ -517,7 +533,7 @@
                 totalSec += tiers[i].secQty;
             }
 
-            document.getElementById('res-bits').innerText = formatBits(totalBits);
+            document.getElementById('res-bits').innerHTML = formatBits(totalBits);
             document.getElementById('res-boss').innerText = totalBoss;
             document.getElementById('res-sec').innerText = totalSec;
         }
