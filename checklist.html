@@ -3,305 +3,295 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digimon Galaxy - Checklist</title>
+    <title>GalaxyDMO - Lista de Tarefas Diárias</title>
     <style>
         :root {
             --bg-color: #0d1117;
-            --card-bg: #161b22;
-            --accent-color: #00d2ff;
-            --accent-orange: #ff7b00;
-            --accent-purple: #a855f7;
-            --text-color: #f0f6fc;
-            --text-muted: #8b949e;
+            --panel-bg: #161b22;
             --border-color: #30363d;
-            --completed-color: #238636;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            -webkit-tap-highlight-color: transparent;
+            --text-color: #c9d1d9;
+            --accent-color: #58a6ff;
+            --success-color: #2ea043;
+            --highlight-color: #1f6feb;
         }
 
         body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .top-nav {
-            width: 100%;
-            max-width: 1200px;
-            padding: 20px 20px 0 20px;
-        }
-
-        .back-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            color: var(--text-color);
-            text-decoration: none;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-
-        .back-btn:hover {
-            border-color: var(--accent-color);
-            color: var(--accent-color);
-            background-color: rgba(0, 210, 255, 0.05);
-        }
-
-        .main-content {
-            width: 100%;
-            max-width: 1200px;
+            margin: 0;
             padding: 20px;
-            padding-bottom: 90px;
         }
 
-        header {
-            text-align: center;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            display: inline-block;
             margin-bottom: 20px;
-            padding: 16px 12px;
-            background: linear-gradient(135deg, #1f293d, #111827);
-            border-radius: 12px;
-            border: 1px solid var(--accent-color);
-            box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
-        }
-
-        h1 {
-            font-size: 1.4rem;
             color: var(--accent-color);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 4px;
+            text-decoration: none;
+            font-weight: 600;
         }
 
-        p.subtitle {
-            font-size: 0.85rem;
-            color: var(--text-muted);
+        .back-link:hover {
+            text-decoration: underline;
         }
 
-        .dashboard-grid {
+        .header-box {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header-box h1 {
+            color: var(--accent-color);
+            margin: 0 0 10px 0;
+        }
+
+        .header-box p {
+            color: #8b949e;
+            margin: 0;
+        }
+
+        .checklist-grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 16px;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
         }
 
-        @media (min-width: 900px) {
-            .dashboard-grid {
-                grid-template-columns: 1fr 1fr;
-                align-items: start;
+        @media (max-width: 768px) {
+            .checklist-grid {
+                grid-template-columns: 1fr;
             }
         }
 
-        .column {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .category-card {
-            background: var(--card-bg);
-            border-radius: 10px;
+        .panel {
+            background-color: var(--panel-bg);
             border: 1px solid var(--border-color);
-            padding: 16px;
-        }
-
-        .category-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--accent-orange);
-            margin-bottom: 12px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 6px;
-        }
-
-        .todo-list {
-            list-style: none;
-            margin-top: 10px;
-        }
-
-        .todo-item {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.02);
             border-radius: 8px;
-            margin-bottom: 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            user-select: none;
-            border: 1px solid transparent;
+            padding: 20px;
         }
 
-        .todo-item:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .todo-item.completed {
-            background: rgba(35, 134, 54, 0.15);
-            border-color: rgba(35, 134, 54, 0.4);
-        }
-
-        .todo-item.completed .todo-text {
-            text-decoration: line-through;
-            color: var(--text-muted);
-        }
-
-        .checkbox {
-            width: 22px;
-            height: 22px;
-            border-radius: 6px;
-            border: 2px solid var(--accent-color);
-            margin-right: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .todo-item.completed .checkbox {
-            background-color: var(--completed-color);
-            border-color: var(--completed-color);
-        }
-
-        .checkbox::after {
-            content: '✓';
-            color: white;
-            font-size: 14px;
+        .panel-title {
+            font-size: 1.1rem;
             font-weight: bold;
-            display: none;
+            color: #f0883e;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
         }
 
-        .todo-item.completed .checkbox::after {
-            display: block;
-        }
-
-        .item-icon {
-            width: 34px;
-            height: 34px;
-            margin-right: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-        }
-
-        .todo-text {
-            font-size: 0.95rem;
-            flex-grow: 1;
-        }
-
-        .controls {
-            position: fixed;
-            bottom: 16px;
-            right: 16px;
+        /* Formulário para adicionar */
+        .add-form {
             display: flex;
             gap: 10px;
-            z-index: 10;
+            margin-bottom: 15px;
         }
 
-        .btn {
-            padding: 12px 20px;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
+        .add-input {
+            flex: 1;
+            padding: 10px;
+            background-color: #0d1117;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-color);
             font-size: 0.95rem;
+        }
+
+        .add-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .add-btn {
+            padding: 10px 20px;
+            background-color: var(--success-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .add-btn:hover {
+            opacity: 0.9;
+        }
+
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 15px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .task-item.completed {
+            border-color: var(--success-color);
+            background-color: rgba(46, 160, 67, 0.05);
+        }
+
+        .task-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .task-checkbox {
+            width: 22px;
+            height: 22px;
+            accent-color: var(--success-color);
             cursor: pointer;
         }
 
-        .btn-reset { background-color: var(--accent-orange); color: white; }
+        .task-text {
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .task-item.completed .task-text {
+            text-decoration: line-through;
+            color: #8b949e;
+        }
+
+        .delete-btn {
+            background: none;
+            border: none;
+            color: #f85149;
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .delete-btn:hover {
+            background-color: rgba(248, 81, 73, 0.1);
+        }
     </style>
 </head>
 <body>
 
-    <div class="top-nav">
-        <a href="index.html" class="back-btn">
-            ← Voltar ao Menu Principal
-        </a>
-    </div>
+    <div class="container">
+        <a href="index.html" class="back-link">← Voltar ao Menu Principal</a>
+        
+        <div class="header-box">
+            <h1>DIGIMON GALAXY</h1>
+            <p>Lista de Tarefas Diárias</p>
+        </div>
 
-    <main class="main-content">
-        <header>
-            <h1>Digimon Galaxy</h1>
-            <p class="subtitle">Lista de Tarefas Diárias</p>
-        </header>
-
-        <div class="dashboard-grid">
-            <div class="column">
-                <div class="category-card">
-                    <div class="category-title">Missões Especiais</div>
-                    <ul class="todo-list">
-                        <li class="todo-item" data-id="shinjuku">
-                            <div class="checkbox"></div>
-                            <span class="item-icon">👓</span>
-                            <span class="todo-text">Missões Shinjuku (Goggles)</span>
-                        </li>
-                    </ul>
+        <div class="checklist-grid">
+            <!-- Lado Esquerdo: Adicionar Tarefas -->
+            <div class="panel">
+                <div class="panel-title">Adicionar Nova Tarefa</div>
+                <form class="add-form" id="taskForm">
+                    <input type="text" id="taskInput" class="add-input" placeholder="Ex: Missões Shinjuku (Goggles)..." required>
+                    <button type="submit" class="add-btn">Adicionar</button>
+                </form>
+                <div style="font-size: 0.85rem; color: #8b949e; margin-top: 10px;">
+                    Escreve a atividade que pretendes realizar. Ela aparecerá automaticamente do lado direito para poderes dar check quando concluíres.
                 </div>
             </div>
 
-            <div class="column">
-                <div class="category-card">
-                    <div class="category-title">Coletar Passes</div>
-                    <ul class="todo-list">
-                        <li class="todo-item" data-id="mother">
-                            <div class="checkbox"></div>
-                            <span class="item-icon">🎟️</span>
-                            <span class="todo-text">Mother (D-Reaper)</span>
-                        </li>
-                        <li class="todo-item" data-id="rbn-rbh">
-                            <div class="checkbox"></div>
-                            <span class="item-icon">📜</span>
-                            <span class="todo-text">RBN e RBH</span>
-                        </li>
-                        <li class="todo-item" data-id="chaotic">
-                            <div class="checkbox"></div>
-                            <span class="item-icon">⚡</span>
-                            <span class="todo-text">Chaotic (Resting Area)</span>
-                        </li>
-                    </ul>
+            <!-- Lado Direito: A tua Checklist -->
+            <div class="panel">
+                <div class="panel-title">Minha Checklist Diária</div>
+                <div class="task-list" id="taskList">
+                    <!-- Preenchido dinamicamente -->
                 </div>
             </div>
         </div>
-    </main>
-
-    <div class="controls">
-        <button class="btn btn-reset" onclick="resetAll()">Reset Diário</button>
     </div>
 
     <script>
-        let state = JSON.parse(localStorage.getItem('digimon_todo_state')) || {};
+        // Carregar tarefas do localStorage ou usar algumas predefinidas
+        let tasks = JSON.parse(localStorage.getItem('galaxy_tasks')) || [
+            { id: 1, text: "Missões Shinjuku (Goggles)", completed: true },
+            { id: 2, text: "Mother (D-Reaper)", completed: true },
+            { id: 3, text: "RBN e RBH", completed: true },
+            { id: 4, text: "Chaotic (Resting Area)", completed: true }
+        ];
 
-        document.querySelectorAll('.todo-item').forEach(item => {
-            const id = item.getAttribute('data-id');
-            if (state[id]) item.classList.add('completed');
+        const taskForm = document.getElementById('taskForm');
+        const taskInput = document.getElementById('taskInput');
+        const taskList = document.getElementById('taskList');
 
-            item.addEventListener('click', () => {
-                state[id] = !state[id];
-                item.classList.toggle('completed', state[id]);
-                localStorage.setItem('digimon_todo_state', JSON.stringify(state));
+        function saveAndRender() {
+            localStorage.setItem('galaxy_tasks', JSON.stringify(tasks));
+            renderTasks();
+        }
+
+        function renderTasks() {
+            taskList.innerHTML = '';
+            
+            if (tasks.length === 0) {
+                taskList.innerHTML = `<div style="color: #8b949e; text-align: center; padding: 20px;">Ainda não tens tarefas adicionadas.</div>`;
+                return;
+            }
+
+            tasks.forEach(task => {
+                const item = document.createElement('div');
+                item.className = `task-item ${task.completed ? 'completed' : ''}`;
+                
+                item.innerHTML = `
+                    <div class="task-info" onclick="toggleTask(${task.id})">
+                        <input type="checkbox" class="task-checkbox" ${task.completed ? 'checked' : ''} onclick="event.stopPropagation(); toggleTask(${task.id})">
+                        <span class="task-text">${task.text}</span>
+                    </div>
+                    <button class="delete-btn" onclick="deleteTask(${task.id})" title="Remover">×</button>
+                `;
+                taskList.appendChild(item);
             });
+        }
+
+        // Adicionar nova tarefa
+        taskForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const text = taskInput.value.trim();
+            if (text) {
+                const newTask = {
+                    id: Date.now(),
+                    text: text,
+                    completed: false
+                };
+                tasks.push(newTask);
+                taskInput.value = '';
+                saveAndRender();
+            }
         });
 
-        function resetAll() {
-            if (confirm('Deseja desmarcar todas as tarefas?')) {
-                state = {};
-                document.querySelectorAll('.todo-item').forEach(i => i.classList.remove('completed'));
-                localStorage.removeItem('digimon_todo_state');
-            }
-        }
+        // Alternar estado de concluído
+        window.toggleTask = function(id) {
+            tasks = tasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t);
+            saveAndRender();
+        };
+
+        // Apagar tarefa
+        window.deleteTask = function(id) {
+            tasks = tasks.filter(t => t.id !== id);
+            saveAndRender();
+        };
+
+        // Renderizar inicial
+        renderTasks();
     </script>
 </body>
 </html>
