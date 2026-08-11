@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digimon Galaxy - Checklist</title>
+    <title>Digimon Galaxy - Hub</title>
     <style>
         :root {
             --bg-color: #0d1117;
             --card-bg: #161b22;
-            --sidebar-bg: #11161d;
-            --accent-color: #00d2ff;
-            --accent-orange: #ff7b00;
-            --accent-purple: #a855f7;
             --text-color: #f0f6fc;
             --text-muted: #8b949e;
             --border-color: #30363d;
-            --completed-color: #238636;
-            --sidebar-width: 260px;
+            
+            /* Cores customizadas por card */
+            --color-checklist: #238636;  /* Verde */
+            --color-digivice: #00d2ff;   /* Azul Ciano */
+            --color-beast: #a855f7;      /* Roxo */
+            --color-goggles: #ff7b00;    /* Laranja */
+            --color-spiral: #ec4899;     /* Rosa */
         }
 
         * {
@@ -31,345 +32,209 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             display: flex;
+            flex-direction: column;
+            align-items: center;
             min-height: 100vh;
+            padding: 30px 20px;
         }
 
-        /* --- MENU LATERAL (SIDEBAR) --- */
-        .sidebar {
-            width: var(--sidebar-width);
-            background: var(--sidebar-bg);
-            border-right: 1px solid var(--border-color);
-            padding: 20px 14px;
+        .hub-container {
+            width: 100%;
+            max-width: 1000px;
             display: flex;
             flex-direction: column;
-            gap: 16px;
-            height: 100vh;
-            position: sticky;
-            top: 0;
-            flex-shrink: 0;
+            gap: 24px;
         }
 
-        .sidebar-title {
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: var(--accent-color);
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 12px;
+        /* HEADER DO HUB */
+        .hub-header {
+            text-align: center;
+            padding: 24px;
+            background: linear-gradient(135deg, #1f293d, #111827);
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.15);
         }
 
-        .nav-menu {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+        .hub-header h1 {
+            font-size: 1.8rem;
+            color: var(--color-digivice);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 6px;
         }
 
-        .nav-link {
+        .hub-header p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        /* GRELHA DE CARDS */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .hub-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            padding: 24px;
+            text-decoration: none;
+            color: var(--text-color);
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 12px;
-            color: var(--text-color);
-            text-decoration: none;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid transparent;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: all 0.2s;
+            gap: 18px;
+            transition: all 0.25s ease;
+            position: relative;
+            overflow: hidden;
         }
 
-        .nav-link:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: var(--border-color);
+        /* Efeito de brilho lateral nas cores respetivas */
+        .hub-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 5px;
+            transition: width 0.25s ease;
         }
 
-        .nav-link.active {
-            background: rgba(0, 210, 255, 0.1);
-            border-color: var(--accent-color);
-            color: var(--accent-color);
+        .hub-card.checklist::before { background-color: var(--color-checklist); }
+        .hub-card.digivice::before { background-color: var(--color-digivice); }
+        .hub-card.beast::before { background-color: var(--color-beast); }
+        .hub-card.goggles::before { background-color: var(--color-goggles); }
+        .hub-card.spiral::before { background-color: var(--color-spiral); }
+
+        .hub-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--text-muted);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
         }
 
-        .nav-link.crafting-link {
-            background: rgba(168, 85, 247, 0.1);
-            border-color: rgba(168, 85, 247, 0.3);
-            color: #d2a8ff;
+        .hub-card.checklist:hover { border-color: var(--color-checklist); }
+        .hub-card.digivice:hover { border-color: var(--color-digivice); }
+        .hub-card.beast:hover { border-color: var(--color-beast); }
+        .hub-card.goggles:hover { border-color: var(--color-goggles); }
+        .hub-card.spiral:hover { border-color: var(--color-spiral); }
+
+        /* ÍCONES DOS CARDS */
+        .card-icon-box {
+            width: 54px;
+            height: 54px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--border-color);
+            padding: 6px;
         }
 
-        .nav-link.crafting-link:hover {
-            background: rgba(168, 85, 247, 0.2);
-            border-color: var(--accent-purple);
+        .card-icon-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
-        /* --- CONTEÚDO PRINCIPAL --- */
-        .main-content {
-            flex-grow: 1;
-            padding: 20px;
-            max-width: 1200px;
-            padding-bottom: 90px;
+        /* TEXTOS DOS CARDS */
+        .card-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
         }
 
-        header {
-            text-align: center;
-            margin-bottom: 20px;
-            padding: 16px 12px;
-            background: linear-gradient(135deg, #1f293d, #111827);
-            border-radius: 12px;
-            border: 1px solid var(--accent-color);
-            box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
         }
 
-        h1 {
-            font-size: 1.4rem;
-            color: var(--accent-color);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 4px;
-        }
+        .checklist .card-title { color: var(--color-checklist); }
+        .digivice .card-title { color: var(--color-digivice); }
+        .beast .card-title { color: var(--color-beast); }
+        .goggles .card-title { color: var(--color-goggles); }
+        .spiral .card-title { color: var(--color-spiral); }
 
-        p.subtitle {
+        .card-desc {
             font-size: 0.85rem;
             color: var(--text-muted);
-        }
-
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 16px;
-        }
-
-        @media (min-width: 900px) {
-            .dashboard-grid {
-                grid-template-columns: 1fr 1fr;
-                align-items: start;
-            }
-        }
-
-        .column {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .category-card {
-            background: var(--card-bg);
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            padding: 16px;
-        }
-
-        .category-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--accent-orange);
-            margin-bottom: 12px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 6px;
-        }
-
-        .todo-list {
-            list-style: none;
-            margin-top: 10px;
-        }
-
-        .todo-item {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 8px;
-            margin-bottom: 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            user-select: none;
-            border: 1px solid transparent;
-        }
-
-        .todo-item:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .todo-item.completed {
-            background: rgba(35, 134, 54, 0.15);
-            border-color: rgba(35, 134, 54, 0.4);
-        }
-
-        .todo-item.completed .todo-text {
-            text-decoration: line-through;
-            color: var(--text-muted);
-        }
-
-        .checkbox {
-            width: 22px;
-            height: 22px;
-            border-radius: 6px;
-            border: 2px solid var(--accent-color);
-            margin-right: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .todo-item.completed .checkbox {
-            background-color: var(--completed-color);
-            border-color: var(--completed-color);
-        }
-
-        .checkbox::after {
-            content: '✓';
-            color: white;
-            font-size: 14px;
-            font-weight: bold;
-            display: none;
-        }
-
-        .todo-item.completed .checkbox::after {
-            display: block;
-        }
-
-        .item-icon {
-            width: 34px;
-            height: 34px;
-            margin-right: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-        }
-
-        .todo-text {
-            font-size: 0.95rem;
-            flex-grow: 1;
-        }
-
-        .controls {
-            position: fixed;
-            bottom: 16px;
-            right: 16px;
-            display: flex;
-            gap: 10px;
-            z-index: 10;
-        }
-
-        .btn {
-            padding: 12px 20px;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 0.95rem;
-            cursor: pointer;
-        }
-
-        .btn-reset { background-color: var(--accent-orange); color: white; }
-
-        @media (max-width: 768px) {
-            body { flex-direction: column; }
-            .sidebar { width: 100%; height: auto; position: relative; }
+            line-height: 1.3;
         }
     </style>
 </head>
 <body>
 
-    <!-- SIDEBAR DE NAVEGAÇÃO -->
-    <aside class="sidebar">
-        <div class="sidebar-title">Digimon Galaxy</div>
-        <ul class="nav-menu">
-            <li>
-                <a href="index.html" class="nav-link active">
-                    📋 Checklist Diário
-                </a>
-            </li>
-            <li>
-                <a href="true_digivice.html" class="nav-link crafting-link">
-                    ⚡ True Digivice Steps
-                </a>
-            </li>
-            <li>
-                <a href="four_holy_beast.html" class="nav-link crafting-link">
-                    💍 Four Holy Beast Ring
-                </a>
-            </li>
-            <li>
-                <a href="tamer_goggles.html" class="nav-link crafting-link">
-                    🥽 Tamer's Goggles
-                </a>
-            </li>
-        </ul>
-    </aside>
-
-    <!-- CONTEÚDO PRINCIPAL -->
-    <main class="main-content">
-        <header>
-            <h1>Digimon Galaxy</h1>
-            <p class="subtitle">Lista de Tarefas Diárias</p>
+    <div class="hub-container">
+        <!-- HEADER -->
+        <header class="hub-header">
+            <h1>Digimon Galaxy Hub</h1>
+            <p>Selecione um guia ou ferramenta abaixo para começar</p>
         </header>
 
-        <div class="dashboard-grid">
-            <div class="column">
-                <div class="category-card">
-                    <div class="category-title">Missões Especiais</div>
-                    <ul class="todo-list">
-                        <li class="todo-item" data-id="shinjuku">
-                            <div class="checkbox"></div>
-                            <span class="item-icon">👓</span>
-                            <span class="todo-text">Missões Shinjuku (Goggles)</span>
-                        </li>
-                    </ul>
+        <!-- GRELHA DE NAVEGAÇÃO -->
+        <div class="cards-grid">
+            
+            <!-- Checklist Diário -->
+            <a href="checklist.html" class="hub-card checklist">
+                <div class="card-icon-box">
+                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Checklist.png" alt="Checklist" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/CheckList.png'">
                 </div>
-            </div>
+                <div class="card-info">
+                    <span class="card-title">CHECKLIST DIÁRIO</span>
+                    <span class="card-desc">Controlo de missões e passes diários</span>
+                </div>
+            </a>
 
-            <div class="column">
-                <div class="category-card">
-                    <div class="category-title">Coletar Passes</div>
-                    <ul class="todo-list">
-                        <li class="todo-item" data-id="mother">
-                            <div class="checkbox"></div>
-                            <span class="item-icon">🎟️</span>
-                            <span class="todo-text">Mother (D-Reaper)</span>
-                        </li>
-                        <li class="todo-item" data-id="rbn-rbh">
-                            <div class="checkbox"></div>
-                            <span class="item-icon">📜</span>
-                            <span class="todo-text">RBN e RBH</span>
-                        </li>
-                        <li class="todo-item" data-id="chaotic">
-                            <div class="checkbox"></div>
-                            <span class="item-icon">⚡</span>
-                            <span class="todo-text">Chaotic (Resting Area)</span>
-                        </li>
-                    </ul>
+            <!-- True Digivice -->
+            <a href="true_digivice.html" class="hub-card digivice">
+                <div class="card-icon-box">
+                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/True_Digivice.png" alt="Digivice" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Kaiser_Goggles.png'">
                 </div>
-            </div>
+                <div class="card-info">
+                    <span class="card-title">TRUE DIGIVICE</span>
+                    <span class="card-desc">Passos e requisitos de evolução</span>
+                </div>
+            </a>
+
+            <!-- Four Holy Beast Ring -->
+            <a href="four_holy_beast.html" class="hub-card beast">
+                <div class="card-icon-box">
+                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Brilliant_Kindness_Earring.png" alt="Holy Beast Ring" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Kaiser_Goggles.png'">
+                </div>
+                <div class="card-info">
+                    <span class="card-title">FOUR HOLY BEAST</span>
+                    <span class="card-desc">Guia de Evolução e Materiais de Craft</span>
+                </div>
+            </a>
+
+            <!-- Tamer's Goggles -->
+            <a href="tamer_goggles.html" class="hub-card goggles">
+                <div class="card-icon-box">
+                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Kaiser_Goggles.png" alt="Goggles" onerror="this.style.display='none'">
+                </div>
+                <div class="card-info">
+                    <span class="card-title">TAMER'S GOGGLES</span>
+                    <span class="card-desc">Guia de Evolução e Materiais de Craft</span>
+                </div>
+            </a>
+
+            <!-- Spiral Key Ring -->
+            <a href="spiral_key.html" class="hub-card spiral">
+                <div class="card-icon-box">
+                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png" alt="Spiral Key" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Kaiser_Goggles.png'">
+                </div>
+                <div class="card-info">
+                    <span class="card-title">SPIRAL KEY RING</span>
+                    <span class="card-desc">Guia de Evolução e Materiais de Craft</span>
+                </div>
+            </a>
+
         </div>
-    </main>
-
-    <div class="controls">
-        <button class="btn btn-reset" onclick="resetAll()">Reset Diário</button>
     </div>
 
-    <script>
-        let state = JSON.parse(localStorage.getItem('digimon_todo_state')) || {};
-
-        document.querySelectorAll('.todo-item').forEach(item => {
-            const id = item.getAttribute('data-id');
-            if (state[id]) item.classList.add('completed');
-
-            item.addEventListener('click', () => {
-                state[id] = !state[id];
-                item.classList.toggle('completed', state[id]);
-                localStorage.setItem('digimon_todo_state', JSON.stringify(state));
-            });
-        });
-
-        function resetAll() {
-            if (confirm('Deseja desmarcar todas as tarefas?')) {
-                state = {};
-                document.querySelectorAll('.todo-item').forEach(i => i.classList.remove('completed'));
-                localStorage.removeItem('digimon_todo_state');
-            }
-        }
-    </script>
 </body>
 </html>
