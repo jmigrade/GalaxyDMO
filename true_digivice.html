@@ -652,8 +652,7 @@
 
                 <li class="mat-row" style="background: rgba(31, 55, 33, 0.4); border-color: rgba(126, 231, 135, 0.2);">
                     <div class="mat-info">
-                        <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Money.png" class="chip-icon" onerror="this.style.display='none'">
-                        <b>Money Total Necessário:</b>
+                        💰 <b>Money Total Necessário:</b>
                     </div>
                     <div class="mat-calc">
                         <span style="color: #7ee787; font-weight: bold; font-size: 0.95rem;">21 T 700 M</span>
@@ -711,10 +710,10 @@
 
             if (remaining > 0) {
                 statusEl.className = 'mat-status status-missing';
-                statusEl.innerHTML = `Faltam: ${remaining.toLocaleString()}`;
+                statusEl.innerHTML = `${val.toLocaleString()} / ${target.toLocaleString()} <br><small>(Falta: ${remaining.toLocaleString()})</small>`;
             } else {
                 statusEl.className = 'mat-status status-done';
-                statusEl.innerHTML = `Concluído! (${val.toLocaleString()}/${target.toLocaleString()})`;
+                statusEl.innerHTML = `${val.toLocaleString()} / ${target.toLocaleString()} <br><small>(Concluído! 🎉)</small>`;
             }
         }
     </script>
