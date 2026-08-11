@@ -8,14 +8,12 @@
         :root {
             --bg-color: #0d1117;
             --card-bg: #161b22;
-            --sidebar-bg: #11161d;
             --accent-color: #00d2ff;
             --accent-purple: #a855f7;
             --text-color: #f0f6fc;
             --text-muted: #8b949e;
             --border-color: #30363d;
             --completed-color: #238636;
-            --sidebar-width: 260px;
         }
 
         * {
@@ -23,75 +21,51 @@
             margin: 0;
             padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
             display: flex;
+            flex-direction: column;
+            align-items: center;
             min-height: 100vh;
         }
 
-        /* SIDEBAR DE NAVEGAÇÃO */
-        .sidebar {
-            width: var(--sidebar-width);
-            background: var(--sidebar-bg);
-            border-right: 1px solid var(--border-color);
-            padding: 20px 14px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            height: 100vh;
-            position: sticky;
-            top: 0;
-            flex-shrink: 0;
+        /* --- BOTÃO DE VOLTAR AO MENU --- */
+        .top-nav {
+            width: 100%;
+            max-width: 1000px;
+            padding: 20px 20px 0 20px;
         }
 
-        .sidebar-title {
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: var(--accent-color);
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 12px;
-        }
-
-        .nav-menu {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .nav-link {
-            display: flex;
+        .back-btn {
+            display: inline-flex;
             align-items: center;
-            gap: 10px;
-            padding: 12px;
+            gap: 8px;
+            padding: 8px 16px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
             color: var(--text-color);
             text-decoration: none;
             border-radius: 8px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid transparent;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 500;
             transition: all 0.2s;
         }
 
-        .nav-link:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: var(--border-color);
-        }
-
-        .nav-link.active {
-            background: rgba(168, 85, 247, 0.15);
+        .back-btn:hover {
             border-color: var(--accent-purple);
             color: #d2a8ff;
+            background-color: rgba(168, 85, 247, 0.05);
         }
 
+        /* --- CONTEÚDO PRINCIPAL --- */
         .main-content {
-            flex-grow: 1;
-            padding: 20px;
+            width: 100%;
             max-width: 1000px;
+            padding: 20px;
             padding-bottom: 90px;
         }
 
@@ -105,8 +79,16 @@
             box-shadow: 0 0 15px rgba(168, 85, 247, 0.2);
         }
 
-        h1 { font-size: 1.4rem; color: #d2a8ff; text-transform: uppercase; }
-        p.subtitle { font-size: 0.85rem; color: var(--text-muted); }
+        h1 { 
+            font-size: 1.4rem; 
+            color: #d2a8ff; 
+            text-transform: uppercase; 
+        }
+        
+        p.subtitle { 
+            font-size: 0.85rem; 
+            color: var(--text-muted); 
+        }
 
         .category-card {
             background: var(--card-bg);
@@ -125,7 +107,9 @@
             padding-bottom: 6px;
         }
 
-        .todo-list { list-style: none; }
+        .todo-list { 
+            list-style: none; 
+        }
 
         .todo-item {
             display: flex;
@@ -136,6 +120,11 @@
             margin-bottom: 8px;
             cursor: pointer;
             border: 1px solid transparent;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .todo-item:hover {
+            background: rgba(255, 255, 255, 0.04);
         }
 
         .todo-item.completed {
@@ -143,7 +132,10 @@
             border-color: rgba(35, 134, 54, 0.4);
         }
 
-        .todo-item.completed .todo-text { text-decoration: line-through; color: var(--text-muted); }
+        .todo-item.completed .todo-text { 
+            text-decoration: line-through; 
+            color: var(--text-muted); 
+        }
 
         .checkbox {
             width: 22px;
@@ -163,32 +155,61 @@
         }
 
         .checkbox::after {
-            content: '✓'; color: white; font-size: 14px; font-weight: bold; display: none;
+            content: '✓'; 
+            color: white; 
+            font-size: 14px; 
+            font-weight: bold; 
+            display: none;
         }
 
-        .todo-item.completed .checkbox::after { display: block; }
+        .todo-item.completed .checkbox::after { 
+            display: block; 
+        }
 
         .item-icon {
-            width: 36px; height: 36px; margin-right: 12px; object-fit: contain;
+            width: 36px; 
+            height: 36px; 
+            margin-right: 12px; 
+            object-fit: contain;
         }
 
-        .todo-text { font-size: 0.95rem; flex-grow: 1; }
+        .todo-text { 
+            font-size: 0.95rem; 
+            flex-grow: 1; 
+        }
 
         .mat-chip {
-            display: inline-flex; align-items: center; gap: 4px;
-            background: rgba(255, 255, 255, 0.05); padding: 3px 6px;
-            border-radius: 4px; margin-top: 4px; margin-right: 4px;
-            font-size: 0.75rem; color: #d2a8ff; border: 1px solid rgba(168, 85, 247, 0.2);
+            display: inline-flex; 
+            align-items: center; 
+            gap: 4px;
+            background: rgba(255, 255, 255, 0.05); 
+            padding: 3px 6px;
+            border-radius: 4px; 
+            margin-top: 4px; 
+            margin-right: 4px;
+            font-size: 0.75rem; 
+            color: #d2a8ff; 
+            border: 1px solid rgba(168, 85, 247, 0.2);
         }
 
-        .chip-icon { width: 18px; height: 18px; object-fit: contain; }
+        .chip-icon { 
+            width: 18px; 
+            height: 18px; 
+            object-fit: contain; 
+        }
 
         /* TABELA DE SUB-CRAFTING */
+        .craft-table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+
         .craft-table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 10px;
             font-size: 0.85rem;
+            min-width: 600px;
         }
 
         .craft-table th, .craft-table td {
@@ -229,17 +250,30 @@
             border-radius: 4px;
             font-weight: bold;
             font-size: 0.75rem;
+            white-space: nowrap;
         }
 
         /* MATERIAIS ACUMULADOS */
         .mats-summary {
             background: rgba(168, 85, 247, 0.08);
             border: 1px solid rgba(168, 85, 247, 0.3);
-            border-radius: 8px; padding: 16px; color: #e2d9f3;
+            border-radius: 8px; 
+            padding: 16px; 
+            color: #e2d9f3;
         }
 
-        .mats-summary h3 { margin-bottom: 12px; color: #d2a8ff; font-size: 1rem; }
-        .mats-summary ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+        .mats-summary h3 { 
+            margin-bottom: 12px; 
+            color: #d2a8ff; 
+            font-size: 1rem; 
+        }
+        
+        .mats-summary ul { 
+            list-style: none; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 10px; 
+        }
 
         .mat-row {
             display: flex;
@@ -294,8 +328,6 @@
         .status-done { color: #4ade80; }
 
         @media (max-width: 768px) {
-            body { flex-direction: column; }
-            .sidebar { width: 100%; height: auto; position: relative; }
             .mat-row { flex-direction: column; align-items: flex-start; }
             .mat-calc { width: 100%; justify-content: space-between; margin-top: 4px; }
             .mat-status { text-align: left; }
@@ -304,32 +336,12 @@
 </head>
 <body>
 
-    <!-- SIDEBAR DE NAVEGAÇÃO -->
-    <aside class="sidebar">
-        <div class="sidebar-title">Digimon Galaxy</div>
-        <ul class="nav-menu">
-            <li>
-                <a href="index.html" class="nav-link">
-                    📋 Checklist Diário
-                </a>
-            </li>
-            <li>
-                <a href="true_digivice.html" class="nav-link crafting-link active">
-                    ⚡ True Digivice Steps
-                </a>
-            </li>
-            <li>
-                <a href="four_holy_beast.html" class="nav-link crafting-link">
-                    💍 Four Holy Beast Ring
-                </a>
-            </li>
-            <li>
-                <a href="tamer_goggles.html" class="nav-link crafting-link">
-                    🥽 Tamer's Goggles
-                </a>
-            </li>
-        </ul>
-    </aside>
+    <!-- BOTÃO DE VOLTAR AO MENU -->
+    <div class="top-nav">
+        <a href="index.html" class="back-btn">
+            ← Voltar ao Menu Principal
+        </a>
+    </div>
 
     <!-- CONTEÚDO PRINCIPAL -->
     <main class="main-content">
@@ -429,64 +441,66 @@
         <!-- TABELA DE SUB-CRAFTING -->
         <div class="category-card">
             <div class="category-title">🧪 Sub-Crafting (Materiais Intermédios)</div>
-            <table class="craft-table">
-                <thead>
-                    <tr>
-                        <th>Production Item</th>
-                        <th>Materials</th>
-                        <th>Cost</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <div class="prod-item">
-                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Absolute_Essence_of_Evolution.png" class="chip-icon" onerror="this.style.display='none'">
-                                Absolute Essence
-                            </div>
-                        </td>
-                        <td>
-                            <div class="mat-list">
-                                <div class="mat-line"><img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Fragment_of_Evolution.png" class="chip-icon" onerror="this.style.display='none'"> Frag. Evolution x3</div>
-                                <div class="mat-line"><img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Piece_of_Evolution.png" class="chip-icon" onerror="this.style.display='none'"> Piece Evolution x3</div>
-                            </div>
-                        </td>
-                        <td><span class="badge-money">100 M</span></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="prod-item">
-                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Heinous_Digicore.png" class="chip-icon" onerror="this.style.display='none'">
-                                Heinous Digicore
-                            </div>
-                        </td>
-                        <td>
-                            <div class="mat-list">
-                                <div class="mat-line"><img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/SkullMeramons_Digicore.png" class="chip-icon" onerror="this.style.display='none'"> SkullMeramon x1</div>
-                                <div class="mat-line"><img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Myotismons_Digicore.png" class="chip-icon" onerror="this.style.display='none'"> Myotismon x3</div>
-                                <div class="mat-line"><img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Infective_Virus.png" class="chip-icon" onerror="this.style.display='none'"> Infective Virus x3</div>
-                            </div>
-                        </td>
-                        <td><span class="badge-money">300 M</span></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="prod-item">
-                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Condensed_Dark_Energy.png" class="chip-icon" onerror="this.style.display='none'">
-                                Condensed Dark Energy
-                            </div>
-                        </td>
-                        <td>
-                            <div class="mat-list">
-                                <div class="mat-line"><img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Myotismons_Digicore.png" class="chip-icon" onerror="this.style.display='none'"> Myotismon x1</div>
-                                <div class="mat-line"><img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/SkullMeramons_Digicore.png" class="chip-icon" onerror="this.style.display='none'"> SkullMeramon x2</div>
-                                <div class="mat-line"><img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Soul_of_Myotismon.png" class="chip-icon" onerror="this.style.display='none'"> Soul Myotismon x1</div>
-                            </div>
-                        </td>
-                        <td><span class="badge-money">700 M</span></td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="craft-table-wrapper">
+                <table class="craft-table">
+                    <thead>
+                        <tr>
+                            <th>Production Item</th>
+                            <th>Materials</th>
+                            <th>Cost</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="prod-item">
+                                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Absolute_Essence_of_Evolution.png" class="chip-icon" onerror="this.style.display='none'">
+                                    Absolute Essence
+                                </div>
+                            </td>
+                            <td>
+                                <div class="mat-list">
+                                    <div class="mat-line"><img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Fragment_of_Evolution.png" class="chip-icon" onerror="this.style.display='none'"> Frag. Evolution x3</div>
+                                    <div class="mat-line"><img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Piece_of_Evolution.png" class="chip-icon" onerror="this.style.display='none'"> Piece Evolution x3</div>
+                                </div>
+                            </td>
+                            <td><span class="badge-money">100 M</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="prod-item">
+                                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Heinous_Digicore.png" class="chip-icon" onerror="this.style.display='none'">
+                                    Heinous Digicore
+                                </div>
+                            </td>
+                            <td>
+                                <div class="mat-list">
+                                    <div class="mat-line"><img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/SkullMeramons_Digicore.png" class="chip-icon" onerror="this.style.display='none'"> SkullMeramon x1</div>
+                                    <div class="mat-line"><img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Myotismons_Digicore.png" class="chip-icon" onerror="this.style.display='none'"> Myotismon x3</div>
+                                    <div class="mat-line"><img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Infective_Virus.png" class="chip-icon" onerror="this.style.display='none'"> Infective Virus x3</div>
+                                </div>
+                            </td>
+                            <td><span class="badge-money">300 M</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="prod-item">
+                                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Condensed_Dark_Energy.png" class="chip-icon" onerror="this.style.display='none'">
+                                    Condensed Dark Energy
+                                </div>
+                            </td>
+                            <td>
+                                <div class="mat-list">
+                                    <div class="mat-line"><img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Myotismons_Digicore.png" class="chip-icon" onerror="this.style.display='none'"> Myotismon x1</div>
+                                    <div class="mat-line"><img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/SkullMeramons_Digicore.png" class="chip-icon" onerror="this.style.display='none'"> SkullMeramon x2</div>
+                                    <div class="mat-line"><img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Soul_of_Myotismon.png" class="chip-icon" onerror="this.style.display='none'"> Soul Myotismon x1</div>
+                                </div>
+                            </td>
+                            <td><span class="badge-money">700 M</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <!-- TOTAL DE MATERIAIS ACUMULADOS -->
@@ -665,6 +679,18 @@
             });
         });
 
+        // Carregar inputs de materiais salvos
+        document.querySelectorAll('.mat-row[data-id]').forEach(row => {
+            const id = row.getAttribute('data-id');
+            const input = row.querySelector('.mat-input');
+            if (matState[id] !== undefined) {
+                input.value = matState[id];
+                updateMat(input);
+            } else {
+                updateMat(input);
+            }
+        });
+
         // Atualizar valores dos materiais
         function updateMat(input) {
             const row = input.closest('.mat-row');
@@ -674,9 +700,11 @@
 
             const statusEl = row.querySelector('.mat-status');
 
-            // Salvar no localStorage
-            matState[id] = input.value;
-            localStorage.setItem('digimon_mats_state', JSON.stringify(matState));
+            // Salvar no localStorage se id existir
+            if (id) {
+                matState[id] = input.value;
+                localStorage.setItem('digimon_mats_state', JSON.stringify(matState));
+            }
 
             const remaining = target - val;
 
@@ -685,20 +713,9 @@
                 statusEl.innerHTML = `${val.toLocaleString()} / ${target.toLocaleString()} <br><small>(Falta: ${remaining.toLocaleString()})</small>`;
             } else {
                 statusEl.className = 'mat-status status-done';
-                statusEl.innerHTML = `${val.toLocaleString()} / ${target.toLocaleString()} <br><small>(Concluído!)</small>`;
+                statusEl.innerHTML = `${val.toLocaleString()} / ${target.toLocaleString()} <br><small>(Concluído! 🎉)</small>`;
             }
         }
-
-        // Carregar materiais guardados ao iniciar
-        document.querySelectorAll('.mat-row[data-target]').forEach(row => {
-            const id = row.getAttribute('data-id');
-            const input = row.querySelector('.mat-input');
-            
-            if (matState[id] !== undefined) {
-                input.value = matState[id];
-            }
-            updateMat(input);
-        });
     </script>
 </body>
 </html>
