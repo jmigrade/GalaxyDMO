@@ -3,69 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GalaxyDMO - Spiral Key Ring Craft</title>
+    <title>Digimon Galaxy - Spiral Key Ring</title>
     <style>
         :root {
             --bg-color: #0d1117;
-            --panel-bg: #161b22;
+            --card-bg: #161b22;
+            --sidebar-bg: #11161d;
+            --accent-color: #00d2ff;
+            --accent-orange: #ff7b00;
+            --accent-purple: #a855f7;
+            --text-color: #f0f6fc;
+            --text-muted: #8b949e;
             --border-color: #30363d;
-            --text-color: #c9d1d9;
-            --accent-color: #58a6ff;
-            --success-color: #2ea043;
-            --highlight-color: #1f6feb;
+            --completed-color: #238636;
+            --sidebar-width: 260px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
-            margin: 0;
-            padding: 20px;
+            display: flex;
+            min-height: 100vh;
         }
 
-        .container {
+        /* --- MENU LATERAL (SIDEBAR) --- */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            padding: 20px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            flex-shrink: 0;
+        }
+
+        .sidebar-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            color: var(--text-color);
+            text-decoration: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid transparent;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--border-color);
+        }
+
+        .nav-link.active {
+            background: rgba(0, 210, 255, 0.1);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .nav-link.crafting-link {
+            background: rgba(168, 85, 247, 0.1);
+            border-color: rgba(168, 85, 247, 0.3);
+            color: #d2a8ff;
+        }
+
+        .nav-link.crafting-link:hover {
+            background: rgba(168, 85, 247, 0.2);
+            border-color: var(--accent-purple);
+        }
+
+        /* --- CONTEÚDO PRINCIPAL --- */
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
             max-width: 1200px;
-            margin: 0 auto;
+            padding-bottom: 90px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 16px 12px;
+            background: linear-gradient(135deg, #1f293d, #111827);
+            border-radius: 12px;
+            border: 1px solid var(--accent-purple);
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.2);
         }
 
         h1 {
-            text-align: center;
-            color: var(--accent-color);
-            margin-bottom: 30px;
+            font-size: 1.4rem;
+            color: #d2a8ff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        p.subtitle {
+            font-size: 0.85rem;
+            color: var(--text-muted);
         }
 
         .craft-container {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
             gap: 20px;
-            background-color: var(--panel-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 20px;
         }
 
-        @media (max-width: 768px) {
+        @media (min-width: 900px) {
             .craft-container {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr 1fr;
+                align-items: start;
             }
         }
 
-        .section-title {
-            font-size: 1.1rem;
-            font-weight: bold;
-            text-align: center;
-            padding: 10px;
-            background-color: rgba(255, 255, 255, 0.05);
+        .category-card {
+            background: var(--card-bg);
+            border-radius: 10px;
             border: 1px solid var(--border-color);
-            border-radius: 4px;
-            margin-bottom: 15px;
+            padding: 16px;
+        }
+
+        .category-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent-orange);
+            margin-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 6px;
         }
 
         .list-group {
             display: flex;
             flex-direction: column;
             gap: 8px;
-            max-height: 500px;
+            max-height: 520px;
             overflow-y: auto;
         }
 
@@ -73,31 +173,41 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 15px;
-            background-color: rgba(0, 0, 0, 0.2);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
+            padding: 10px 12px;
+            background-color: rgba(255, 255, 255, 0.02);
+            border: 1px solid transparent;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.2s ease;
         }
 
-        .item-row:hover, .item-row.active {
-            background-color: var(--highlight-color);
-            border-color: var(--accent-color);
+        .item-row:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .item-row.active {
+            background-color: rgba(168, 85, 247, 0.15);
+            border-color: rgba(168, 85, 247, 0.4);
         }
 
         .item-info {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
 
         .item-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 4px;
+            width: 34px;
+            height: 34px;
+            border-radius: 6px;
             background-color: #21262d;
             border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
         }
 
         .item-details span {
@@ -105,95 +215,124 @@
         }
 
         .item-name {
-            color: #56d364;
+            color: var(--text-color);
             font-weight: 600;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
 
         .item-cost {
-            font-size: 0.8rem;
-            color: #8b949e;
+            font-size: 0.75rem;
+            color: var(--text-muted);
         }
 
         .success-rate {
             color: #3fb950;
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
 
         .materials-list {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
         }
 
         .material-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 10px 15px;
-            background-color: rgba(0, 0, 0, 0.2);
+            padding: 10px 12px;
+            background-color: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--border-color);
-            border-radius: 6px;
+            border-radius: 8px;
         }
 
         .material-name {
             font-weight: 500;
+            font-size: 0.9rem;
         }
 
         .material-count {
             font-weight: bold;
             color: #f85149;
+            font-size: 0.9rem;
         }
 
-        .back-link {
-            display: inline-block;
-            margin-bottom: 20px;
-            color: var(--accent-color);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .back-link:hover {
-            text-decoration: underline;
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            .sidebar { width: 100%; height: auto; position: relative; }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <a href="index.html" class="back-link">← Voltar ao Início</a>
-        <h1>Spiral Key Ring Crafting</h1>
+    <!-- SIDEBAR DE NAVEGAÇÃO -->
+    <aside class="sidebar">
+        <div class="sidebar-title">Digimon Galaxy</div>
+        <ul class="nav-menu">
+            <li>
+                <a href="index.html" class="nav-link">
+                    📋 Checklist Diário
+                </a>
+            </li>
+            <li>
+                <a href="true_digivice.html" class="nav-link crafting-link">
+                    ⚡ True Digivice Steps
+                </a>
+            </li>
+            <li>
+                <a href="four_holy_beast.html" class="nav-link crafting-link">
+                    💍 Four Holy Beast Ring
+                </a>
+            </li>
+            <li>
+                <a href="tamer_goggles.html" class="nav-link crafting-link">
+                    🥽 Tamer's Goggles
+                </a>
+            </li>
+            <li>
+                <a href="SpiralKeyRing.html" class="nav-link crafting-link active">
+                    🌀 Spiral Key Ring
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="main-content">
+        <header>
+            <h1>Spiral Key Ring</h1>
+            <p class="subtitle">Guia de Evolução e Materiais de Craft</p>
+        </header>
 
         <div class="craft-container">
             <!-- Lado Esquerdo: Lista de Produção -->
-            <div>
-                <div class="section-title">Production Item</div>
+            <div class="category-card">
+                <div class="category-title">Production Item</div>
                 <div class="list-group" id="productionList">
                     <!-- Preenchido via JavaScript -->
                 </div>
             </div>
 
             <!-- Lado Direito: Materiais Necessários -->
-            <div>
-                <div class="section-title">Necessary Material item</div>
+            <div class="category-card">
+                <div class="category-title">Necessary Material Item</div>
                 <div class="materials-list" id="materialsList">
                     <!-- Preenchido dinamicamente ao selecionar um item -->
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 
     <script>
-        // Dados extraídos diretamente das imagens do craft do Spiral Key Ring
         const craftData = [
             {
                 id: 1,
                 name: "Spiral Key Ring Lv1",
                 cost: "101 M 000 B",
                 materials: [
-                    { name: "Spiral Key Ring Lv1", count: 1, icon: "Icons/spiral_key_lv1.png" },
-                    { name: "Aura de Dominação", count: 110, icon: "Icons/aura_dominacao.png" }
+                    { name: "Spiral Key Ring Lv1", count: 1, icon: "🌀" },
+                    { name: "Aura de Dominação", count: 110, icon: "✨" }
                 ]
             },
             {
@@ -201,9 +340,9 @@
                 name: "Spiral Key Ring Lv2",
                 cost: "101 M 000 B",
                 materials: [
-                    { name: "Spiral Key Ring Lv2", count: 1, icon: "Icons/spiral_key_lv2.png" },
-                    { name: "Aura de Dominação", count: 340, icon: "Icons/aura_dominacao.png" },
-                    { name: "Aura of Fear [MetalSeadramon]", count: 2, icon: "Icons/aura_fear.png" }
+                    { name: "Spiral Key Ring Lv2", count: 1, icon: "🌀" },
+                    { name: "Aura de Dominação", count: 340, icon: "✨" },
+                    { name: "Aura of Fear [MetalSeadramon]", count: 2, icon: "💠" }
                 ]
             },
             {
@@ -211,9 +350,9 @@
                 name: "Spiral Key Ring Lv3",
                 cost: "101 M 000 B",
                 materials: [
-                    { name: "Spiral Key Ring Lv3", count: 1, icon: "Icons/spiral_key_lv3.png" },
-                    { name: "Aura de Dominação", count: 600, icon: "Icons/aura_dominacao.png" },
-                    { name: "Aura of Fear [MetalSeadramon]", count: 4, icon: "Icons/aura_fear.png" }
+                    { name: "Spiral Key Ring Lv3", count: 1, icon: "🌀" },
+                    { name: "Aura de Dominação", count: 600, icon: "✨" },
+                    { name: "Aura of Fear [MetalSeadramon]", count: 4, icon: "💠" }
                 ]
             },
             {
@@ -221,9 +360,9 @@
                 name: "Spiral Key Ring Lv4",
                 cost: "101 M 000 B",
                 materials: [
-                    { name: "Spiral Key Ring Lv4", count: 1, icon: "Icons/spiral_key_lv4.png" },
-                    { name: "Aura de Dominação", count: 1160, icon: "Icons/aura_dominacao.png" },
-                    { name: "Aura of Fear [MetalSeadramon]", count: 6, icon: "Icons/aura_fear.png" }
+                    { name: "Spiral Key Ring Lv4", count: 1, icon: "🌀" },
+                    { name: "Aura de Dominação", count: 1160, icon: "✨" },
+                    { name: "Aura of Fear [MetalSeadramon]", count: 6, icon: "💠" }
                 ]
             },
             {
@@ -231,10 +370,10 @@
                 name: "Spiral Key Ring Lv5",
                 cost: "101 M 000 B",
                 materials: [
-                    { name: "Spiral Key Ring Lv5", count: 1, icon: "Icons/spiral_key_lv5.png" },
-                    { name: "Aura de Dominação", count: 1400, icon: "Icons/aura_dominacao.png" },
-                    { name: "Aura of Fear [MetalSeadramon]", count: 8, icon: "Icons/aura_fear.png" },
-                    { name: "Aura of Cruelty [Metal Seadramon]", count: 1, icon: "Icons/aura_cruelty.png" }
+                    { name: "Spiral Key Ring Lv5", count: 1, icon: "🌀" },
+                    { name: "Aura de Dominação", count: 1400, icon: "✨" },
+                    { name: "Aura of Fear [MetalSeadramon]", count: 8, icon: "💠" },
+                    { name: "Aura of Cruelty [Metal Seadramon]", count: 1, icon: "🔥" }
                 ]
             },
             {
@@ -242,10 +381,10 @@
                 name: "Spiral Key Ring Lv6",
                 cost: "101 M 000 B",
                 materials: [
-                    { name: "Spiral Key Ring Lv6", count: 1, icon: "Icons/spiral_key_lv6.png" },
-                    { name: "Aura de Dominação", count: 1820, icon: "Icons/aura_dominacao.png" },
-                    { name: "Aura of Fear [MetalSeadramon]", count: 10, icon: "Icons/aura_fear.png" },
-                    { name: "Aura of Cruelty [Metal Seadramon]", count: 3, icon: "Icons/aura_cruelty.png" }
+                    { name: "Spiral Key Ring Lv6", count: 1, icon: "🌀" },
+                    { name: "Aura de Dominação", count: 1820, icon: "✨" },
+                    { name: "Aura of Fear [MetalSeadramon]", count: 10, icon: "💠" },
+                    { name: "Aura of Cruelty [Metal Seadramon]", count: 3, icon: "🔥" }
                 ]
             },
             {
@@ -253,10 +392,10 @@
                 name: "Spiral Key Ring Lv7",
                 cost: "101 M 000 B",
                 materials: [
-                    { name: "Spiral Key Ring Lv7", count: 1, icon: "Icons/spiral_key_lv7.png" },
-                    { name: "Aura de Dominação", count: 2500, icon: "Icons/aura_dominacao.png" },
-                    { name: "Aura of Fear [MetalSeadramon]", count: 20, icon: "Icons/aura_fear.png" },
-                    { name: "Aura of Cruelty [Metal Seadramon]", count: 5, icon: "Icons/aura_cruelty.png" }
+                    { name: "Spiral Key Ring Lv7", count: 1, icon: "🌀" },
+                    { name: "Aura de Dominação", count: 2500, icon: "✨" },
+                    { name: "Aura of Fear [MetalSeadramon]", count: 20, icon: "💠" },
+                    { name: "Aura of Cruelty [Metal Seadramon]", count: 5, icon: "🔥" }
                 ]
             },
             {
@@ -264,10 +403,10 @@
                 name: "Spiral Key Ring LvMax",
                 cost: "101 M 000 B",
                 materials: [
-                    { name: "Spiral Key Ring LvMax", count: 1, icon: "Icons/spiral_key_lvmax.png" },
-                    { name: "Aura de Dominação", count: 1100, icon: "Icons/aura_dominacao.png" },
-                    { name: "Aura of Fear [MetalSeadramon]", count: 10, icon: "Icons/aura_fear.png" },
-                    { name: "Aura of Cruelty [Metal Seadramon]", count: 2, icon: "Icons/aura_cruelty.png" }
+                    { name: "Spiral Key Ring LvMax", count: 1, icon: "🌀" },
+                    { name: "Aura de Dominação", count: 1100, icon: "✨" },
+                    { name: "Aura of Fear [MetalSeadramon]", count: 10, icon: "💠" },
+                    { name: "Aura of Cruelty [Metal Seadramon]", count: 2, icon: "🔥" }
                 ]
             }
         ];
@@ -282,9 +421,9 @@
                 row.className = `item-row ${index === 0 ? 'active' : ''}`;
                 row.innerHTML = `
                     <div class="item-info">
-                        <img src="Icons/gift_box.png" alt="Box" class="item-icon">
+                        <div class="item-icon">📦</div>
                         <div class="item-details">
-                            <span class="item-name">Spiral Key Ring Container...</span>
+                            <span class="item-name">${item.name}</span>
                             <span class="item-cost">${item.cost}</span>
                         </div>
                     </div>
@@ -300,7 +439,6 @@
                 productionList.appendChild(row);
             });
 
-            // Renderiza os materiais do primeiro item por padrão
             renderMaterials(craftData[0]);
         }
 
@@ -311,7 +449,7 @@
                 matRow.className = 'material-row';
                 matRow.innerHTML = `
                     <div class="item-info">
-                        <img src="${mat.icon}" alt="${mat.name}" class="item-icon">
+                        <div class="item-icon">${mat.icon}</div>
                         <span class="material-name">${mat.name}</span>
                     </div>
                     <span class="material-count">0 / ${mat.count}</span>
