@@ -3,553 +3,333 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digimon Galaxy - Equipment Crafting</title>
+    <title>GalaxyDMO - Spiral Key Ring Craft</title>
     <style>
         :root {
             --bg-color: #0d1117;
-            --card-bg: #161b22;
-            --accent-color: #00d2ff;
-            --accent-orange: #ff7b00;
-            --accent-purple: #a855f7;
-            --text-color: #f0f6fc;
-            --text-muted: #8b949e;
+            --panel-bg: #161b22;
             --border-color: #30363d;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            -webkit-tap-highlight-color: transparent;
+            --text-color: #c9d1d9;
+            --accent-color: #58a6ff;
+            --success-color: #2ea043;
+            --highlight-color: #1f6feb;
         }
 
         body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .top-nav {
-            width: 100%;
-            max-width: 1200px;
-            padding: 20px 20px 0 20px;
-        }
-
-        .back-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            color: var(--text-color);
-            text-decoration: none;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-
-        .back-btn:hover {
-            border-color: var(--accent-purple);
-            color: #d2a8ff;
-            background-color: rgba(168, 85, 247, 0.05);
-        }
-
-        .main-content {
-            width: 100%;
-            max-width: 1200px;
+            margin: 0;
             padding: 20px;
-            padding-bottom: 50px;
         }
 
-        header {
-            text-align: center;
-            margin-bottom: 20px;
-            padding: 18px 12px;
-            background: linear-gradient(135deg, #1f293d, #111827);
-            border-radius: 12px;
-            border: 1px solid var(--accent-purple);
-            box-shadow: 0 0 15px rgba(168, 85, 247, 0.2);
-        }
-
-        .header-title-wrapper {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 4px;
-        }
-
-        .header-icon {
-            width: 36px;
-            height: 36px;
-            object-fit: contain;
-            border-radius: 6px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--border-color);
-            padding: 2px;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         h1 {
-            font-size: 1.4rem;
-            color: #d2a8ff;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        p.subtitle {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        /* Caixa de Aviso do NPC */
-        .npc-notice {
-            background: rgba(0, 210, 255, 0.08);
-            border: 1px solid rgba(0, 210, 255, 0.3);
-            border-radius: 10px;
-            padding: 12px 18px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 0.9rem;
-            color: var(--text-color);
-        }
-
-        .npc-notice strong {
+            text-align: center;
             color: var(--accent-color);
+            margin-bottom: 30px;
         }
 
-        .tabs-container {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 10px;
-        }
-
-        .tab-btn {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border-color);
-            color: var(--text-muted);
-            padding: 10px 18px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.95rem;
-            font-weight: 600;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .tab-btn:hover {
-            background: rgba(255, 255, 255, 0.08);
-            color: var(--text-color);
-        }
-
-        .tab-btn.active {
-            background: var(--accent-purple);
-            color: white;
-            border-color: var(--accent-purple);
-            box-shadow: 0 0 10px rgba(168, 85, 247, 0.3);
-        }
-
-        .card {
-            background: var(--card-bg);
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            padding: 20px;
-            margin-bottom: 24px;
-        }
-
-        .card-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--accent-orange);
-            margin-bottom: 14px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .table-responsive {
-            width: 100%;
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-            font-size: 0.9rem;
-        }
-
-        th, td {
-            padding: 12px;
-            border-bottom: 1px solid var(--border-color);
-            vertical-align: middle;
-        }
-
-        th {
-            background: rgba(255, 255, 255, 0.03);
-            color: var(--accent-color);
-            font-weight: 600;
-            white-space: nowrap;
-        }
-
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        tr:hover td {
-            background: rgba(255, 255, 255, 0.02);
-        }
-
-        .tier-cell {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .item-icon {
-            width: 28px;
-            height: 28px;
-            object-fit: contain;
-            border-radius: 4px;
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid var(--border-color);
-            padding: 1px;
-        }
-
-        .badge-tier {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-weight: bold;
-            font-size: 0.8rem;
-        }
-
-        .tier-1, .tier-2 { background: rgba(35, 134, 54, 0.2); color: #56d364; border: 1px solid rgba(35, 134, 54, 0.4); }
-        .tier-3, .tier-4 { background: rgba(0, 210, 255, 0.15); color: #58a6ff; border: 1px solid rgba(0, 210, 255, 0.3); }
-        .tier-5 { background: rgba(168, 85, 247, 0.2); color: #d2a8ff; border: 1px solid rgba(168, 85, 247, 0.4); }
-
-        .item-with-icon {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .calc-grid {
+        .craft-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-bottom: 16px;
-        }
-
-        @media (max-width: 600px) {
-            .calc-grid { grid-template-columns: 1fr; }
-            .tabs-container { flex-direction: column; }
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        label {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        select {
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.3);
+            gap: 20px;
+            background-color: var(--panel-bg);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            color: var(--text-color);
-            font-size: 0.95rem;
-            outline: none;
+            padding: 20px;
         }
 
-        select:focus {
+        @media (max-width: 768px) {
+            .craft-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        .list-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .item-row:hover, .item-row.active {
+            background-color: var(--highlight-color);
             border-color: var(--accent-color);
         }
 
-        .summary-box {
-            background: rgba(0, 210, 255, 0.05);
-            border: 1px solid rgba(0, 210, 255, 0.2);
-            border-radius: 8px;
-            padding: 16px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 16px;
-        }
-
-        .summary-item {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .summary-item .label {
-            font-size: 0.8rem;
-            color: var(--text-muted);
+        .item-info {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 12px;
         }
 
-        .summary-item .value {
-            font-size: 1.1rem;
+        .item-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 4px;
+            background-color: #21262d;
+            border: 1px solid var(--border-color);
+            object-fit: contain;
+            padding: 2px;
+        }
+
+        .item-details span {
+            display: block;
+        }
+
+        .item-name {
+            color: #56d364;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .item-cost {
+            font-size: 0.8rem;
+            color: #8b949e;
+        }
+
+        .success-rate {
+            color: #3fb950;
             font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .materials-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .material-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 15px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+        }
+
+        .material-name {
+            font-weight: 500;
+        }
+
+        .material-count {
+            font-weight: bold;
+            color: #f85149;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
             color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
 
-    <div class="top-nav">
-        <a href="index.html" class="back-btn">
-            ← Voltar ao Menu Principal
-        </a>
+    <div class="container">
+        <a href="index.html" class="back-link">← Voltar ao Início</a>
+        <h1>Spiral Key Ring Crafting</h1>
+
+        <div class="craft-container">
+            <!-- Lado Esquerdo: Lista de Produção -->
+            <div>
+                <div class="section-title">Production Item</div>
+                <div class="list-group" id="productionList">
+                    <!-- Preenchido via JavaScript -->
+                </div>
+            </div>
+
+            <!-- Lado Direito: Materiais Necessários -->
+            <div>
+                <div class="section-title">Necessary Material item</div>
+                <div class="materials-list" id="materialsList">
+                    <!-- Preenchido dinamicamente ao selecionar um item -->
+                </div>
+            </div>
+        </div>
     </div>
 
-    <main class="main-content">
-        <header>
-            <div class="header-title-wrapper">
-                <img id="header-icon" src="Icons/Digitamamon.png" alt="Icon" class="header-icon" onerror="this.style.display='none'">
-                <h1 id="header-title">Four Holy Beast Ring</h1>
-            </div>
-            <p class="subtitle">Guia de Craft e Materiais (Lv 1 ao Lv 5)</p>
-        </header>
-
-        <!-- Aviso do NPC Nanomon -->
-        <div class="npc-notice">
-            <span>ℹ️</span>
-            <div>O sistema de criação (Craft) e trocas é realizado diretamente com o NPC <strong>Nanomon</strong>, localizado no lado oeste do <strong>DATS Center</strong>.</div>
-        </div>
-
-        <div class="tabs-container">
-            <button class="tab-btn active" onclick="switchTab('ring', event)"><img src="Icons/Sealed_Ring_of_Four_Holy_Beasts.png" class="item-icon" alt="" onerror="this.style.display='none'"> Ring</button>
-            <button class="tab-btn" onclick="switchTab('necklace', event)"><img src="Icons/Sealed_Necklace_of_Four_Holy_Beasts.png" class="item-icon" alt="" onerror="this.style.display='none'"> Necklace</button>
-            <button class="tab-btn" onclick="switchTab('earring', event)"><img src="Icons/Earrings_of_Four_Holy_Beasts.png" class="item-icon" alt="" onerror="this.style.display='none'"> Earring</button>
-        </div>
-
-        <div class="card">
-            <div class="card-title">🧮 Calculadora de Materiais Necessários</div>
-            <div class="calc-grid">
-                <div class="form-group">
-                    <label for="current-lvl">Nível Atual:</label>
-                    <select id="current-lvl" onchange="calculate()">
-                        <option value="0">Nenhum (Começar do zero)</option>
-                        <option value="1">Lv 1</option>
-                        <option value="2">Lv 2</option>
-                        <option value="3">Lv 3</option>
-                        <option value="4">Lv 4</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="target-lvl">Nível Desejado:</label>
-                    <select id="target-lvl" onchange="calculate()">
-                        <option value="1">Lv 1</option>
-                        <option value="2">Lv 2</option>
-                        <option value="3">Lv 3</option>
-                        <option value="4">Lv 4</option>
-                        <option value="5" selected>Lv 5</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="summary-box">
-                <div class="summary-item">
-                    <span class="label">💰 Bits Totais:</span>
-                    <span class="value" id="res-bits">3 T 800 M</span>
-                </div>
-                <div class="summary-item">
-                    <span class="label" id="lbl-boss-item">🎁 Boss Item:</span>
-                    <span class="value" id="res-boss">7</span>
-                </div>
-                <div class="summary-item">
-                    <span class="label" id="lbl-sec-item">💎 Secondary Material:</span>
-                    <span class="value" id="res-sec">75</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-title">📋 Requisitos por Nível (Crafting Table)</div>
-            <div class="table-responsive">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Nível</th>
-                            <th>Item Anterior Requerido</th>
-                            <th id="th-boss-item">Boss Item</th>
-                            <th id="th-sec-item">Secondary Material</th>
-                            <th>Custo em Bits</th>
-                        </tr>
-                    </thead>
-                    <tbody id="craft-table-body">
-                        <!-- Gerado Dinamicamente via JS -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </main>
-
     <script>
-        let currentTab = 'ring';
-
-        const gearData = {
-            ring: {
-                title: "Four Holy Beast Ring",
-                icon: "Icons/Sealed_Ring_of_Four_Holy_Beasts.png",
-                bossItemName: "Xuanwumon's Shiny Ring",
-                bossItemIcon: "Icons/Xuanwumon_Shiny_Ring.png",
-                secItemName: "Jack Frost of Water Crystal",
-                secItemIcon: "Icons/Jack_Frost_of_Water_Crystal.png",
-                baseItemName: "Ring of Four Holy Beasts",
-                tiers: [
-                    { lvl: 1, bits: 500, bossQty: 1, secQty: 5 },
-                    { lvl: 2, bits: 500, bossQty: 1, secQty: 10 },
-                    { lvl: 3, bits: 800, bossQty: 1, secQty: 15 },
-                    { lvl: 4, bits: 1000, bossQty: 2, secQty: 20 },
-                    { lvl: 5, bits: 1500, bossQty: 2, secQty: 25 }
+        // Dados ajustados com os links diretos do GitHub para os ícones
+        const craftData = [
+            {
+                id: 1,
+                name: "Spiral Key Ring Lv.1",
+                icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.1-5.png",
+                cost: "101 M 000 B",
+                materials: [
+                    { name: "Spiral Key Ring Lv.1", count: 1, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.1-5.png" },
+                    { name: "Aura de Dominação", count: 110, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/aura_of_domination.png" }
                 ]
             },
-            necklace: {
-                title: "Four Holy Beast Necklace",
-                icon: "Icons/Sealed_Necklace_of_Four_Holy_Beasts.png",
-                bossItemName: "Flame Necklace of Zhuqiaomon",
-                bossItemIcon: "Icons/Flame_Necklace_of_Sealed_Zhuqiamon.png",
-                secItemName: "Uprising Infernal Flame",
-                secItemIcon: "Icons/Uprising_Infernal_Flame_Crystal.png",
-                baseItemName: "Necklace of Four Holy Beasts",
-                tiers: [
-                    { lvl: 1, bits: 500, bossQty: 1, secQty: 5 },
-                    { lvl: 2, bits: 500, bossQty: 1, secQty: 10 },
-                    { lvl: 3, bits: 800, bossQty: 1, secQty: 15 },
-                    { lvl: 4, bits: 1000, bossQty: 2, secQty: 20 },
-                    { lvl: 5, bits: 1500, bossQty: 2, secQty: 25 }
+            {
+                id: 2,
+                name: "Spiral Key Ring Lv.2",
+                icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.1-5.png",
+                cost: "101 M 000 B",
+                materials: [
+                    { name: "Spiral Key Ring Lv.1", count: 1, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.1-5.png" },
+                    { name: "Aura de Dominação", count: 340, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/aura_of_domination.png" },
+                    { name: "Aura of Fear [MetalSeadramon]", count: 2, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png" }
                 ]
             },
-            earring: {
-                title: "Four Holy Beast Earring",
-                icon: "Icons/Earrings_of_Four_Holy_Beasts.png",
-                bossItemName: "Aural Earring of Baihumon",
-                bossItemIcon: "Icons/Baihumon_Shiny_Earring.png",
-                secItemName: "Flawless Crystal of Trace",
-                secItemIcon: "Icons/Flawless_Crystal_of_Trace.png",
-                baseItemName: "Earrings of Four Holy Beasts",
-                tiers: [
-                    { lvl: 1, bits: 500, bossQty: 1, secQty: 5 },
-                    { lvl: 2, bits: 500, bossQty: 1, secQty: 10 },
-                    { lvl: 3, bits: 800, bossQty: 1, secQty: 15 },
-                    { lvl: 4, bits: 1000, bossQty: 2, secQty: 20 },
-                    { lvl: 5, bits: 1500, bossQty: 2, secQty: 25 }
+            {
+                id: 3,
+                name: "Spiral Key Ring Lv.3",
+                icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.1-5.png",
+                cost: "101 M 000 B",
+                materials: [
+                    { name: "Spiral Key Ring Lv.2", count: 1, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.1-5.png" },
+                    { name: "Aura de Dominação", count: 600, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/aura_of_domination.png" },
+                    { name: "Aura of Fear [MetalSeadramon]", count: 4, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png" }
+                ]
+            },
+            {
+                id: 4,
+                name: "Spiral Key Ring Lv.4",
+                icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.1-5.png",
+                cost: "101 M 000 B",
+                materials: [
+                    { name: "Spiral Key Ring Lv.3", count: 1, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.1-5.png" },
+                    { name: "Aura de Dominação", count: 1160, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/aura_of_domination.png" },
+                    { name: "Aura of Fear [MetalSeadramon]", count: 6, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png" }
+                ]
+            },
+            {
+                id: 5,
+                name: "Spiral Key Ring Lv.5",
+                icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.1-5.png",
+                cost: "101 M 000 B",
+                materials: [
+                    { name: "Spiral Key Ring Lv.4", count: 1, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.1-5.png" },
+                    { name: "Aura de Dominação", count: 1400, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/aura_of_domination.png" },
+                    { name: "Aura of Fear [MetalSeadramon]", count: 8, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png" },
+                    { name: "Aura of Cruelty [Metal Seadramon]", count: 1, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png" }
+                ]
+            },
+            {
+                id: 6,
+                name: "Spiral Key Ring Lv.6",
+                icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png",
+                cost: "101 M 000 B",
+                materials: [
+                    { name: "Spiral Key Ring Lv.5", count: 1, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png" },
+                    { name: "Aura de Dominação", count: 1820, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/aura_of_domination.png" },
+                    { name: "Aura of Fear [MetalSeadramon]", count: 10, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png" },
+                    { name: "Aura of Cruelty [Metal Seadramon]", count: 3, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png" }
+                ]
+            },
+            {
+                id: 7,
+                name: "Spiral Key Ring Lv.7",
+                icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png",
+                cost: "101 M 000 B",
+                materials: [
+                    { name: "Spiral Key Ring Lv.6", count: 1, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png" },
+                    { name: "Aura de Dominação", count: 2500, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Essence_of_Deva.png" },
+                    { name: "Aura of Fear [MetalSeadramon]", count: 20, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png" },
+                    { name: "Aura of Cruelty [Metal Seadramon]", count: 5, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png" }
+                ]
+            },
+            {
+                id: 8,
+                name: "Spiral Key Ring Lv.Max",
+                icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png",
+                cost: "101 M 000 B",
+                materials: [
+                    { name: "Spiral Key Ring Lv.7", count: 1, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/SSpiral_Key_Ring_Lv.6+.png" },
+                    { name: "Aura de Dominação", count: 1100, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Essence_of_Deva.png" },
+                    { name: "Aura of Fear [MetalSeadramon]", count: 10, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png" },
+                    { name: "Aura of Cruelty [Metal Seadramon]", count: 2, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png" }
                 ]
             }
-        };
+        ];
 
-        function switchTab(tabKey, event) {
-            currentTab = tabKey;
-            
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            if (event && event.currentTarget) {
-                event.currentTarget.classList.add('active');
-            }
+        const productionList = document.getElementById('productionList');
+        const materialsList = document.getElementById('materialsList');
 
-            renderGearData();
-            calculate();
+        function renderProductionItems() {
+            productionList.innerHTML = '';
+            craftData.forEach((item, index) => {
+                const row = document.createElement('div');
+                row.className = `item-row ${index === 0 ? 'active' : ''}`;
+                row.innerHTML = `
+                    <div class="item-info">
+                        <img src="${item.icon}" alt="${item.name}" class="item-icon" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Kaiser_Goggles.png'">
+                        <div class="item-details">
+                            <span class="item-name">${item.name}</span>
+                            <span class="item-cost">${item.cost}</span>
+                        </div>
+                    </div>
+                    <div class="success-rate">100%</div>
+                `;
+                
+                row.addEventListener('click', () => {
+                    document.querySelectorAll('.item-row').forEach(r => r.classList.remove('active'));
+                    row.classList.add('active');
+                    renderMaterials(item);
+                });
+
+                productionList.appendChild(row);
+            });
+
+            renderMaterials(craftData[0]);
         }
 
-        function renderGearData() {
-            const data = gearData[currentTab];
-
-            document.getElementById('header-title').innerText = data.title;
-            document.getElementById('header-icon').src = data.icon;
-            
-            document.getElementById('lbl-boss-item').innerHTML = `<img src="${data.bossItemIcon}" class="item-icon" alt="" onerror="this.style.display='none'"> ${data.bossItemName}:`;
-            document.getElementById('lbl-sec-item').innerHTML = `<img src="${data.secItemIcon}" class="item-icon" alt="" onerror="this.style.display='none'"> ${data.secItemName}:`;
-
-            document.getElementById('th-boss-item').innerHTML = `<div class="item-with-icon"><img src="${data.bossItemIcon}" class="item-icon" alt="" onerror="this.style.display='none'"> ${data.bossItemName}</div>`;
-            document.getElementById('th-sec-item').innerHTML = `<div class="item-with-icon"><img src="${data.secItemIcon}" class="item-icon" alt="" onerror="this.style.display='none'"> ${data.secItemName}</div>`;
-
-            const tbody = document.getElementById('craft-table-body');
-            tbody.innerHTML = '';
-
-            data.tiers.forEach((tier, index) => {
-                const prevItem = index === 0 ? '-' : `${data.baseItemName} [Lv ${tier.lvl - 1}]`;
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>
-                        <div class="tier-cell">
-                            <img src="${data.icon}" class="item-icon" alt="" onerror="this.style.display='none'">
-                            <span class="badge-tier tier-${tier.lvl}">Lv ${tier.lvl}</span>
-                        </div>
-                    </td>
-                    <td>${prevItem}</td>
-                    <td>${tier.bossQty}</td>
-                    <td>${tier.secQty}</td>
-                    <td>${formatBits(tier.bits)}</td>
+        function renderMaterials(item) {
+            materialsList.innerHTML = '';
+            item.materials.forEach(mat => {
+                const matRow = document.createElement('div');
+                matRow.className = 'material-row';
+                matRow.innerHTML = `
+                    <div class="item-info">
+                        <img src="${mat.icon}" alt="${mat.name}" class="item-icon" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png'">
+                        <span class="material-name">${mat.name}</span>
+                    </div>
+                    <span class="material-count">0 / ${mat.count}</span>
                 `;
-                tbody.appendChild(row);
+                materialsList.appendChild(matRow);
             });
         }
 
-        function formatBits(totalM) {
-            if (totalM >= 1000) {
-                const t = Math.floor(totalM / 1000);
-                const m = totalM % 1000;
-                return m > 0 ? `${t} T ${m} M` : `${t} T`;
-            }
-            return `${totalM} M`;
-        }
-
-        function calculate() {
-            const currentSelect = document.getElementById('current-lvl');
-            const targetSelect = document.getElementById('target-lvl');
-            
-            let current = parseInt(currentSelect.value);
-            let target = parseInt(targetSelect.value);
-
-            if (current >= target) {
-                target = Math.min(current + 1, 5);
-                if (current >= 5) current = 4;
-                targetSelect.value = target;
-                currentSelect.value = current;
-            }
-
-            const tiers = gearData[currentTab].tiers;
-
-            let totalBits = 0;
-            let totalBoss = 0;
-            let totalSec = 0;
-
-            for (let i = current; i < target; i++) {
-                totalBits += tiers[i].bits;
-                totalBoss += tiers[i].bossQty;
-                totalSec += tiers[i].secQty;
-            }
-
-            document.getElementById('res-bits').innerText = formatBits(totalBits);
-            document.getElementById('res-boss').innerText = totalBoss;
-            document.getElementById('res-sec').innerText = totalSec;
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            renderGearData();
-            calculate();
-        });
+        renderProductionItems();
     </script>
 </body>
 </html>
