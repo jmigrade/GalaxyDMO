@@ -243,7 +243,7 @@
                 id: 1,
                 name: "Spiral Key Ring Lv.1",
                 icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.1-5.png",
-                cost: "101 M",
+                cost: "101 M 000 B",
                 materials: [
                     { name: "Spiral Key Ring Lv.1", count: 1, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.1-5.png" },
                     { name: "Aura de Dominação", count: 110, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/aura_of_domination.png" }
@@ -253,7 +253,7 @@
                 id: 2,
                 name: "Spiral Key Ring Lv.2",
                 icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.1-5.png",
-                cost: "1 T 500 M",
+                cost: "151 M 000 B",
                 materials: [
                     { name: "Spiral Key Ring Lv.1", count: 1, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.1-5.png" },
                     { name: "Aura de Dominação", count: 340, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/aura_of_domination.png" },
@@ -264,7 +264,7 @@
                 id: 3,
                 name: "Spiral Key Ring Lv.3",
                 icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.1-5.png",
-                cost: "2 T",
+                cost: "200 M 000 B",
                 materials: [
                     { name: "Spiral Key Ring Lv.2", count: 1, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.1-5.png" },
                     { name: "Aura de Dominação", count: 600, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/aura_of_domination.png" },
@@ -275,7 +275,7 @@
                 id: 4,
                 name: "Spiral Key Ring Lv.4",
                 icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.1-5.png",
-                cost: "3 T 50 M 200 B",
+                cost: "251 M 000 B",
                 materials: [
                     { name: "Spiral Key Ring Lv.3", count: 1, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.1-5.png" },
                     { name: "Aura de Dominação", count: 1160, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/aura_of_domination.png" },
@@ -286,7 +286,7 @@
                 id: 5,
                 name: "Spiral Key Ring Lv.5",
                 icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.1-5.png",
-                cost: "5 T",
+                cost: "301 M 000 B",
                 materials: [
                     { name: "Spiral Key Ring Lv.4", count: 1, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.1-5.png" },
                     { name: "Aura de Dominação", count: 1400, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/aura_of_domination.png" },
@@ -298,7 +298,7 @@
                 id: 6,
                 name: "Spiral Key Ring Lv.6",
                 icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png",
-                cost: "7 T",
+                cost: "351 M 000 B",
                 materials: [
                     { name: "Spiral Key Ring Lv.5", count: 1, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png" },
                     { name: "Aura de Dominação", count: 1820, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/aura_of_domination.png" },
@@ -310,7 +310,7 @@
                 id: 7,
                 name: "Spiral Key Ring Lv.7",
                 icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png",
-                cost: "10 T",
+                cost: "401 M 000 B",
                 materials: [
                     { name: "Spiral Key Ring Lv.6", count: 1, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png" },
                     { name: "Aura de Dominação", count: 2500, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Essence_of_Deva.png" },
@@ -322,7 +322,7 @@
                 id: 8,
                 name: "Spiral Key Ring Lv.Max",
                 icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png",
-                cost: "15 T",
+                cost: "701 M 000 B",
                 materials: [
                     { name: "Spiral Key Ring Lv.7", count: 1, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png" },
                     { name: "Aura de Dominação", count: 1100, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Essence_of_Deva.png" },
@@ -332,17 +332,13 @@
             }
         ];
 
-        const productionList = document.getElementById('productionList');
-        const materialsList = document.getElementById('materialsList');
-
-        // Função que substitui as letras T, M e B pelos respetivos ícones de imagem
+        // Função para detetar e substituir as letras T, M e B pelos respetivos ícones de imagem corretos
         function parseCurrencyIcons(costString) {
             return costString
                 .replace(/T/g, '<img src="Icons/Currency_Tera.png" alt="Tera" class="currency-icon" onerror="this.style.display=\'none\'">')
                 .replace(/M/g, '<img src="Icons/Currency_Mega.png" alt="Mega" class="currency-icon" onerror="this.style.display=\'none\'">')
                 .replace(/B/g, '<img src="Icons/Currency_Bit.png" alt="Bit" class="currency-icon" onerror="this.style.display=\'none\'">');
         }
-
         function renderProductionItems() {
             productionList.innerHTML = '';
             craftData.forEach((item, index) => {
