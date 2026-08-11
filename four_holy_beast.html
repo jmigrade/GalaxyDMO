@@ -33,7 +33,6 @@
             min-height: 100vh;
         }
 
-        /* --- BOTÃO DE VOLTAR AO MENU --- */
         .top-nav {
             width: 100%;
             max-width: 1200px;
@@ -61,7 +60,6 @@
             background-color: rgba(168, 85, 247, 0.05);
         }
 
-        /* --- CONTEÚDO PRINCIPAL --- */
         .main-content {
             width: 100%;
             max-width: 1200px;
@@ -109,7 +107,6 @@
             color: var(--text-muted);
         }
 
-        /* --- TABS SYSTEM --- */
         .tabs-container {
             display: flex;
             gap: 10px;
@@ -165,7 +162,6 @@
             gap: 8px;
         }
 
-        /* --- TABELA --- */
         .table-responsive {
             width: 100%;
             overflow-x: auto;
@@ -233,7 +229,6 @@
             gap: 8px;
         }
 
-        /* --- CALCULADORA --- */
         .calc-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -304,14 +299,12 @@
 </head>
 <body>
 
-    <!-- BOTÃO DE VOLTAR AO MENU -->
     <div class="top-nav">
         <a href="index.html" class="back-btn">
             ← Voltar ao Menu Principal
         </a>
     </div>
 
-    <!-- CONTEÚDO PRINCIPAL -->
     <main class="main-content">
         <header>
             <div class="header-title-wrapper">
@@ -321,14 +314,12 @@
             <p class="subtitle">Guia de Craft e Materiais (Lv 1 ao Lv 5)</p>
         </header>
 
-        <!-- NAVEGAÇÃO ENTRE ACESSÓRIOS -->
         <div class="tabs-container">
             <button class="tab-btn active" onclick="switchTab('ring', event)"><img src="Icons/Sealed_Ring_of_Four_Holy_Beasts.png" class="item-icon" alt="" onerror="this.style.display='none'"> Ring</button>
             <button class="tab-btn" onclick="switchTab('necklace', event)"><img src="Icons/Sealed_Necklace_of_Four_Holy_Beasts.png" class="item-icon" alt="" onerror="this.style.display='none'"> Necklace</button>
             <button class="tab-btn" onclick="switchTab('earring', event)"><img src="Icons/Earrings_of_Four_Holy_Beasts.png" class="item-icon" alt="" onerror="this.style.display='none'"> Earring</button>
         </div>
 
-        <!-- CALCULADORA DE MATERIAIS -->
         <div class="card">
             <div class="card-title">🧮 Calculadora de Materiais Necessários</div>
             <div class="calc-grid">
@@ -370,7 +361,6 @@
             </div>
         </div>
 
-        <!-- TABELA DE MATERIAIS -->
         <div class="card">
             <div class="card-title">📋 Requisitos por Nível (Crafting Table)</div>
             <div class="table-responsive">
@@ -400,7 +390,7 @@
                 title: "Four Holy Beast Ring",
                 icon: "Icons/Sealed_Ring_of_Four_Holy_Beasts.png",
                 bossItemName: "Xuanwumon's Shiny Ring",
-                bossItemIcon: "Icons/Xuanwumon_Shiny_Ring.png", // Confirma se o teu ficheiro se chama assim na pasta Icons
+                bossItemIcon: "Icons/Xuanwumon_Shiny_Ring.png",
                 secItemName: "Jack Frost of Water Crystal",
                 secItemIcon: "Icons/Jack_Frost_of_Water_Crystal.png",
                 baseItemName: "Ring of Four Holy Beasts",
@@ -532,8 +522,11 @@
             document.getElementById('res-sec').innerText = totalSec;
         }
 
-        renderGearData();
-        calculate();
+        // Executar após carregar totalmente a página
+        window.addEventListener('DOMContentLoaded', () => {
+            renderGearData();
+            calculate();
+        });
     </script>
 </body>
 </html>
