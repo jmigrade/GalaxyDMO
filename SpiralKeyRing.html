@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GalaxyDMO - Spiral Key Ring Craft</title>
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --panel-bg: #161b22;
+            --border-color: #30363d;
+            --text-color: #c9d1d9;
+            --accent-color: #58a6ff;
+            --success-color: #2ea043;
+            --highlight-color: #1f6feb;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--accent-color);
+            margin-bottom: 30px;
+        }
+
+        .craft-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .craft-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        .list-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .item-row:hover, .item-row.active {
+            background-color: var(--highlight-color);
+            border-color: var(--accent-color);
+        }
+
+        .item-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .item-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 4px;
+            background-color: #21262d;
+            border: 1px solid var(--border-color);
+        }
+
+        .item-details span {
+            display: block;
+        }
+
+        .item-name {
+            color: #56d364;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .item-cost {
+            font-size: 0.8rem;
+            color: #8b949e;
+        }
+
+        .success-rate {
+            color: #3fb950;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .materials-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .material-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 15px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+        }
+
+        .material-name {
+            font-weight: 500;
+        }
+
+        .material-count {
+            font-weight: bold;
+            color: #f85149;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <a href="index.html" class="back-link">← Voltar ao Início</a>
+        <h1>Spiral Key Ring Crafting</h1>
+
+        <div class="craft-container">
+            <!-- Lado Esquerdo: Lista de Produção -->
+            <div>
+                <div class="section-title">Production Item</div>
+                <div class="list-group" id="productionList">
+                    <!-- Preenchido via JavaScript -->
+                </div>
+            </div>
+
+            <!-- Lado Direito: Materiais Necessários -->
+            <div>
+                <div class="section-title">Necessary Material item</div>
+                <div class="materials-list" id="materialsList">
+                    <!-- Preenchido dinamicamente ao selecionar um item -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dados extraídos diretamente das imagens do craft do Spiral Key Ring
+        const craftData = [
+            {
+                id: 1,
+                name: "Spiral Key Ring Lv1",
+                cost: "101 M 000 B",
+                materials: [
+                    { name: "Spiral Key Ring Lv1", count: 1, icon: "Icons/spiral_key_lv1.png" },
+                    { name: "Aura de Dominação", count: 110, icon: "Icons/aura_dominacao.png" }
+                ]
+            },
+            {
+                id: 2,
+                name: "Spiral Key Ring Lv2",
+                cost: "101 M 000 B",
+                materials: [
+                    { name: "Spiral Key Ring Lv2", count: 1, icon: "Icons/spiral_key_lv2.png" },
+                    { name: "Aura de Dominação", count: 340, icon: "Icons/aura_dominacao.png" },
+                    { name: "Aura of Fear [MetalSeadramon]", count: 2, icon: "Icons/aura_fear.png" }
+                ]
+            },
+            {
+                id: 3,
+                name: "Spiral Key Ring Lv3",
+                cost: "101 M 000 B",
+                materials: [
+                    { name: "Spiral Key Ring Lv3", count: 1, icon: "Icons/spiral_key_lv3.png" },
+                    { name: "Aura de Dominação", count: 600, icon: "Icons/aura_dominacao.png" },
+                    { name: "Aura of Fear [MetalSeadramon]", count: 4, icon: "Icons/aura_fear.png" }
+                ]
+            },
+            {
+                id: 4,
+                name: "Spiral Key Ring Lv4",
+                cost: "101 M 000 B",
+                materials: [
+                    { name: "Spiral Key Ring Lv4", count: 1, icon: "Icons/spiral_key_lv4.png" },
+                    { name: "Aura de Dominação", count: 1160, icon: "Icons/aura_dominacao.png" },
+                    { name: "Aura of Fear [MetalSeadramon]", count: 6, icon: "Icons/aura_fear.png" }
+                ]
+            },
+            {
+                id: 5,
+                name: "Spiral Key Ring Lv5",
+                cost: "101 M 000 B",
+                materials: [
+                    { name: "Spiral Key Ring Lv5", count: 1, icon: "Icons/spiral_key_lv5.png" },
+                    { name: "Aura de Dominação", count: 1400, icon: "Icons/aura_dominacao.png" },
+                    { name: "Aura of Fear [MetalSeadramon]", count: 8, icon: "Icons/aura_fear.png" },
+                    { name: "Aura of Cruelty [Metal Seadramon]", count: 1, icon: "Icons/aura_cruelty.png" }
+                ]
+            },
+            {
+                id: 6,
+                name: "Spiral Key Ring Lv6",
+                cost: "101 M 000 B",
+                materials: [
+                    { name: "Spiral Key Ring Lv6", count: 1, icon: "Icons/spiral_key_lv6.png" },
+                    { name: "Aura de Dominação", count: 1820, icon: "Icons/aura_dominacao.png" },
+                    { name: "Aura of Fear [MetalSeadramon]", count: 10, icon: "Icons/aura_fear.png" },
+                    { name: "Aura of Cruelty [Metal Seadramon]", count: 3, icon: "Icons/aura_cruelty.png" }
+                ]
+            },
+            {
+                id: 7,
+                name: "Spiral Key Ring Lv7",
+                cost: "101 M 000 B",
+                materials: [
+                    { name: "Spiral Key Ring Lv7", count: 1, icon: "Icons/spiral_key_lv7.png" },
+                    { name: "Aura de Dominação", count: 2500, icon: "Icons/aura_dominacao.png" },
+                    { name: "Aura of Fear [MetalSeadramon]", count: 20, icon: "Icons/aura_fear.png" },
+                    { name: "Aura of Cruelty [Metal Seadramon]", count: 5, icon: "Icons/aura_cruelty.png" }
+                ]
+            },
+            {
+                id: 8,
+                name: "Spiral Key Ring LvMax",
+                cost: "101 M 000 B",
+                materials: [
+                    { name: "Spiral Key Ring LvMax", count: 1, icon: "Icons/spiral_key_lvmax.png" },
+                    { name: "Aura de Dominação", count: 1100, icon: "Icons/aura_dominacao.png" },
+                    { name: "Aura of Fear [MetalSeadramon]", count: 10, icon: "Icons/aura_fear.png" },
+                    { name: "Aura of Cruelty [Metal Seadramon]", count: 2, icon: "Icons/aura_cruelty.png" }
+                ]
+            }
+        ];
+
+        const productionList = document.getElementById('productionList');
+        const materialsList = document.getElementById('materialsList');
+
+        function renderProductionItems() {
+            productionList.innerHTML = '';
+            craftData.forEach((item, index) => {
+                const row = document.createElement('div');
+                row.className = `item-row ${index === 0 ? 'active' : ''}`;
+                row.innerHTML = `
+                    <div class="item-info">
+                        <img src="Icons/gift_box.png" alt="Box" class="item-icon">
+                        <div class="item-details">
+                            <span class="item-name">Spiral Key Ring Container...</span>
+                            <span class="item-cost">${item.cost}</span>
+                        </div>
+                    </div>
+                    <div class="success-rate">100%</div>
+                `;
+                
+                row.addEventListener('click', () => {
+                    document.querySelectorAll('.item-row').forEach(r => r.classList.remove('active'));
+                    row.classList.add('active');
+                    renderMaterials(item);
+                });
+
+                productionList.appendChild(row);
+            });
+
+            // Renderiza os materiais do primeiro item por padrão
+            renderMaterials(craftData[0]);
+        }
+
+        function renderMaterials(item) {
+            materialsList.innerHTML = '';
+            item.materials.forEach(mat => {
+                const matRow = document.createElement('div');
+                matRow.className = 'material-row';
+                matRow.innerHTML = `
+                    <div class="item-info">
+                        <img src="${mat.icon}" alt="${mat.name}" class="item-icon">
+                        <span class="material-name">${mat.name}</span>
+                    </div>
+                    <span class="material-count">0 / ${mat.count}</span>
+                `;
+                materialsList.appendChild(matRow);
+            });
+        }
+
+        renderProductionItems();
+    </script>
+</body>
+</html>
