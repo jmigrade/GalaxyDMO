@@ -301,6 +301,17 @@
     </div>
         
     <script>
+        // Função auxiliar para determinar o ícone correto do Keyring por família e nível/etapa (1 a 9)
+        function getFamilyIcon(fam, stepIndex) {
+            let levelSuffix = 'Level_1';
+            if (stepIndex >= 2 && stepIndex <= 3) { // Lv.3 e Lv.4 (índices 2 e 3)
+                levelSuffix = 'Level_3';
+            } else if (stepIndex >= 4) { // Lv.5 em diante até Max e Material (índices 4 a 8)
+                levelSuffix = 'Level_5';
+            }
+            return `https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_${fam}_${levelSuffix}.png`;
+        }
+
         const database = {
             inicial: [
                 {
@@ -331,7 +342,7 @@
             ]
         };
 
-        // Mapeamento correto e exato dos bosses por família
+        // Mapeamento dos bosses e criação automática das 9 etapas para cada família aplicando a regra de ícones correta
         const familiesList = ['WG', 'DS', 'JT', 'ME', 'TBD', 'DR', 'NSp', 'UK', 'VB', 'DA', 'NSo'];
         const bossNames = {
             'WG': 'Puppetmon', 'DS': 'Puppetmon', 'JT': 'Puppetmon',
@@ -343,15 +354,15 @@
         familiesList.forEach(fam => {
             const boss = bossNames[fam] || 'Apocalymon';
             database[fam] = [
-                { name: `Spiral Key Ring Container (${fam})`, cost: '150 M 000 B', icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Container.png', materials: [{ name: `Spiral Key Ring(${fam}) Lv1`, count: 1, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png' }, { name: 'Aura de Dominação', count: 110, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/aura_of_domination.png' }] },
-                { name: `Spiral Key Ring Container (${fam})`, cost: '200 M 000 B', icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Container.png', materials: [{ name: `Spiral Key Ring(${fam}) Lv2`, count: 1, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png' }, { name: 'Aura de Dominação', count: 340, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/aura_of_domination.png' }, { name: `Aura of Fear [${boss}]`, count: 2, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png' }] },
-                { name: `Spiral Key Ring Container (${fam})`, cost: '250 M 000 B', icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Container.png', materials: [{ name: `Spiral Key Ring(${fam}) Lv3`, count: 1, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png' }, { name: 'Aura de Dominação', count: 600, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/aura_of_domination.png' }, { name: `Aura of Fear [${boss}]`, count: 4, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png' }] },
-                { name: `Spiral Key Ring Container (${fam})`, cost: '325 M 000 B', icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Container.png', materials: [{ name: `Spiral Key Ring(${fam}) Lv4`, count: 1, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png' }, { name: 'Aura de Dominação', count: 1160, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/aura_of_domination.png' }, { name: `Aura of Fear [${boss}]`, count: 6, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png' }] },
-                { name: `Spiral Key Ring Container (${fam})`, cost: '400 M 000 B', icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Container.png', materials: [{ name: `Spiral Key Ring(${fam}) Lv5`, count: 1, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png' }, { name: 'Aura de Dominação', count: 1400, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/aura_of_domination.png' }, { name: `Aura of Fear [${boss}]`, count: 8, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png' }, { name: `Aura of Cruelty [${boss}]`, count: 1, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png' }] },
-                { name: `Spiral Key Ring Container (${fam})`, cost: '500 M 000 B', icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Container.png', materials: [{ name: `Spiral Key Ring(${fam}) Lv6`, count: 1, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png' }, { name: 'Aura de Dominação', count: 1820, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/aura_of_domination.png' }, { name: `Aura of Fear [${boss}]`, count: 10, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png' }, { name: `Aura of Cruelty [${boss}]`, count: 3, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png' }] },
-                { name: `Spiral Key Ring Container (${fam})`, cost: '600 M 000 B', icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Container.png', materials: [{ name: `Spiral Key Ring(${fam}) Lv7`, count: 1, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png' }, { name: 'Aura de Dominação', count: 2500, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/aura_of_domination.png' }, { name: `Aura of Fear [${boss}]`, count: 20, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png' }, { name: `Aura of Cruelty [${boss}]`, count: 5, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png' }] },
-                { name: `Spiral Key Ring Container (${fam})`, cost: '700 M 000 B', icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Container.png', materials: [{ name: `Spiral Key Ring(${fam}) LvMax`, count: 1, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png' }, { name: 'Aura de Dominação', count: 1100, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/aura_of_domination.png' }, { name: `Aura of Fear [${boss}]`, count: 10, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png' }, { name: `Aura of Cruelty [${boss}]`, count: 2, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png' }] },
-                { name: `Max Key Ring Material (${fam})`, cost: '2 T 500 M 000 B', icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Container.png', materials: [{ name: `Spiral Key Ring(${fam}) LvMax`, count: 1, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png' }] }
+                { name: `Spiral Key Ring Container (${fam})`, cost: '150 M 000 B', icon: getFamilyIcon(fam, 0), materials: [{ name: `Spiral Key Ring(${fam}) Lv1`, count: 1, icon: getFamilyIcon(fam, 0) }, { name: 'Aura de Dominação', count: 110, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/aura_of_domination.png' }] },
+                { name: `Spiral Key Ring Container (${fam})`, cost: '200 M 000 B', icon: getFamilyIcon(fam, 1), materials: [{ name: `Spiral Key Ring(${fam}) Lv2`, count: 1, icon: getFamilyIcon(fam, 1) }, { name: 'Aura de Dominação', count: 340, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/aura_of_domination.png' }, { name: `Aura of Fear [${boss}]`, count: 2, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png' }] },
+                { name: `Spiral Key Ring Container (${fam})`, cost: '250 M 000 B', icon: getFamilyIcon(fam, 2), materials: [{ name: `Spiral Key Ring(${fam}) Lv3`, count: 1, icon: getFamilyIcon(fam, 2) }, { name: 'Aura de Dominação', count: 600, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/aura_of_domination.png' }, { name: `Aura of Fear [${boss}]`, count: 4, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png' }] },
+                { name: `Spiral Key Ring Container (${fam})`, cost: '325 M 000 B', icon: getFamilyIcon(fam, 3), materials: [{ name: `Spiral Key Ring(${fam}) Lv4`, count: 1, icon: getFamilyIcon(fam, 3) }, { name: 'Aura de Dominação', count: 1160, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/aura_of_domination.png' }, { name: `Aura of Fear [${boss}]`, count: 6, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png' }] },
+                { name: `Spiral Key Ring Container (${fam})`, cost: '400 M 000 B', icon: getFamilyIcon(fam, 4), materials: [{ name: `Spiral Key Ring(${fam}) Lv5`, count: 1, icon: getFamilyIcon(fam, 4) }, { name: 'Aura de Dominação', count: 1400, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/aura_of_domination.png' }, { name: `Aura of Fear [${boss}]`, count: 8, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png' }, { name: `Aura of Cruelty [${boss}]`, count: 1, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png' }] },
+                { name: `Spiral Key Ring Container (${fam})`, cost: '500 M 000 B', icon: getFamilyIcon(fam, 5), materials: [{ name: `Spiral Key Ring(${fam}) Lv6`, count: 1, icon: getFamilyIcon(fam, 5) }, { name: 'Aura de Dominação', count: 1820, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/aura_of_domination.png' }, { name: `Aura of Fear [${boss}]`, count: 10, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png' }, { name: `Aura of Cruelty [${boss}]`, count: 3, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png' }] },
+                { name: `Spiral Key Ring Container (${fam})`, cost: '600 M 000 B', icon: getFamilyIcon(fam, 6), materials: [{ name: `Spiral Key Ring(${fam}) Lv7`, count: 1, icon: getFamilyIcon(fam, 6) }, { name: 'Aura de Dominação', count: 2500, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/aura_of_domination.png' }, { name: `Aura of Fear [${boss}]`, count: 20, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png' }, { name: `Aura of Cruelty [${boss}]`, count: 5, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png' }] },
+                { name: `Spiral Key Ring Container (${fam})`, cost: '700 M 000 B', icon: getFamilyIcon(fam, 7), materials: [{ name: `Spiral Key Ring(${fam}) LvMax`, count: 1, icon: getFamilyIcon(fam, 7) }, { name: 'Aura de Dominação', count: 1100, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/aura_of_domination.png' }, { name: `Aura of Fear [${boss}]`, count: 10, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png' }, { name: `Aura of Cruelty [${boss}]`, count: 2, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png' }] },
+                { name: `Max Key Ring Material (${fam})`, cost: '2 T 500 M 000 B', icon: getFamilyIcon(fam, 8), materials: [{ name: `Spiral Key Ring(${fam}) LvMax`, count: 1, icon: getFamilyIcon(fam, 8) }] }
             ];
         });
 
@@ -385,6 +396,70 @@
             renderProductionItems(database[typeKey] || database.inicial);
         }
 
+        function selectFamilyItem(famKey) {
+            document.querySelectorAll('.tree-item').forEach(el => el.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            
+            if(database[famKey]) {
+                renderProductionItems(database[famKey]);
+            } else {
+                renderProductionItems(database.apocalymon);
+            }
+        }
+
+        function renderProductionItems(data) {
+            const prodList = document.getElementById('productionList');
+            prodList.innerHTML = '';
+            
+            data.forEach((item, index) => {
+                const row = document.createElement('div');
+                row.className = `item-row ${index === 0 ? 'active' : ''}`;
+                const formattedCost = parseCurrencyIcons(item.cost);
+
+                row.innerHTML = `
+                    <div class="item-info">
+                        <img src="${item.icon}" alt="${item.name}" class="item-icon" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Kaiser_Goggles.png'">
+                        <div class="item-details">
+                            <span class="item-name">${item.name}</span>
+                            <span class="item-cost">${formattedCost}</span>
+                        </div>
+                    </div>
+                    <div class="success-rate">100%</div>
+                `;
+                
+                row.addEventListener('click', () => {
+                    prodList.querySelectorAll('.item-row').forEach(r => r.classList.remove('active'));
+                    row.classList.add('active');
+                    renderMaterials(item);
+                });
+
+                prodList.appendChild(row);
+            });
+            if(data.length > 0) renderMaterials(data[0]);
+        }
+
+        function renderMaterials(item) {
+            const matList = document.getElementById('materialsList');
+            matList.innerHTML = '';
+            item.materials.forEach(mat => {
+                const matRow = document.createElement('div');
+                matRow.className = 'material-row';
+                matRow.innerHTML = `
+                    <div class="item-info">
+                        <img src="${mat.icon}" alt="${mat.name}" class="item-icon" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png'">
+                        <span class="material-name">${mat.name}</span>
+                    </div>
+                    <span class="material-count">${mat.count}</span>
+                `;
+                matList.appendChild(matRow);
+            });
+        }
+
+        // Inicialização padrão
+        renderProductionItems(database.inicial);
+    </script>
+</body>
+</html>
         function selectFamilyItem(famKey) {
             document.querySelectorAll('.tree-item').forEach(el => el.classList.remove('active'));
             event.currentTarget.classList.add('active');
