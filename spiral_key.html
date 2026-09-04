@@ -248,13 +248,16 @@
         <h1>Spiral Key Ring Crafting</h1>
 
         <div class="craft-container-3col">
+            <!-- Coluna 1: Making List -->
             <div>
                 <div class="section-title">Making List</div>
                 <div class="list-group" id="makingList">
+                    <!-- Categoria 1: Spiral Keys -->
                     <div class="tree-item category active" onclick="toggleCategory('spiralSub')">▼ Spiral Keys</div>
                     <div class="tree-item subitem spiralSub show active" onclick="selectItemType('inicial')">Chaveiro Inicial</div>
                     <div class="tree-item subitem spiralSub show" onclick="selectItemType('craft')">Craft (Lv.1 ao Max)</div>
 
+                    <!-- Categoria 2: Keychain Creation Family -->
                     <div class="tree-item category" onclick="toggleCategory('familySub')">▶ Keychain Creation Family</div>
                     <div class="tree-item subitem familySub" onclick="selectFamilyItem('apocalymon')">Aura of Fear [Apocalymon]</div>
                     <div class="tree-item subitem familySub" onclick="selectFamilyItem('selectKey')">Select Family Key</div>
@@ -276,11 +279,13 @@
                 </div>
             </div>
 
+            <!-- Coluna 2: Production Item -->
             <div>
                 <div class="section-title">Production Item</div>
                 <div class="list-group" id="productionList"></div>
             </div>
 
+            <!-- Coluna 3: Necessary Material item -->
             <div>
                 <div class="section-title">Necessary Material item</div>
                 <div class="materials-list" id="materialsList"></div>
@@ -301,20 +306,19 @@
     </div>
         
     <script>
-        // Função auxiliar para determinar o ícone correto do Keyring por família e nível/etapa (1 a 9)
+        // Função auxiliar para determinar o ícone correto do Keyring por família e nível/etapa (0 a 8)
         function getFamilyIcon(fam, stepIndex) {
-    let levelSuffix = 'Level_1'; // Para os índices 0 e 1 (Lv. 1 e 2)
-    
-    if (stepIndex >= 2 && stepIndex <= 3) {       // Índices 2 e 3 (Lv. 3 e 4)
-        levelSuffix = 'Level_3';
-    } else if (stepIndex >= 4 && stepIndex <= 5) { // Índices 4 e 5 (Lv. 5 e 6)
-        levelSuffix = 'Level_5';
-    } else if (stepIndex >= 6) {                   // Índices 6, 7 e 8 (Lv. 7, Max e Material)
-        levelSuffix = 'Level_7';
-    }
-    
-    return `https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_${fam}_${levelSuffix}.png`;
-}
+            let levelSuffix = 'Level_1'; // Lv. 1 e 2 (índices 0 e 1)
+            
+            if (stepIndex >= 2 && stepIndex <= 3) {       // Lv. 3 e 4 (índices 2 e 3)
+                levelSuffix = 'Level_3';
+            } else if (stepIndex >= 4 && stepIndex <= 5) { // Lv. 5 e 6 (índices 4 e 5)
+                levelSuffix = 'Level_5';
+            } else if (stepIndex >= 6) {                   // Lv. 7, Max e Material (índices 6, 7 e 8)
+                levelSuffix = 'Level_7';
+            }
+            return `https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_${fam}_${levelSuffix}.png`;
+        }
 
         const database = {
             inicial: [
@@ -346,7 +350,7 @@
             ]
         };
 
-        // Mapeamento dos bosses e criação automática das 9 etapas para cada família aplicando a regra de ícones correta
+        // Mapeamento dos bosses e criação automática das 9 etapas para cada família
         const familiesList = ['WG', 'DS', 'JT', 'ME', 'TBD', 'DR', 'NSp', 'UK', 'VB', 'DA', 'NSo'];
         const bossNames = {
             'WG': 'Puppetmon', 'DS': 'Puppetmon', 'JT': 'Puppetmon',
@@ -459,71 +463,7 @@
             });
         }
 
-        // Inicialização padrão
-        renderProductionItems(database.inicial);
-    </script>
-</body>
-</html>
-        function selectFamilyItem(famKey) {
-            document.querySelectorAll('.tree-item').forEach(el => el.classList.remove('active'));
-            event.currentTarget.classList.add('active');
-            
-            if(database[famKey]) {
-                renderProductionItems(database[famKey]);
-            } else {
-                renderProductionItems(database.apocalymon);
-            }
-        }
-
-        function renderProductionItems(data) {
-            const prodList = document.getElementById('productionList');
-            prodList.innerHTML = '';
-            
-            data.forEach((item, index) => {
-                const row = document.createElement('div');
-                row.className = `item-row ${index === 0 ? 'active' : ''}`;
-                const formattedCost = parseCurrencyIcons(item.cost);
-
-                row.innerHTML = `
-                    <div class="item-info">
-                        <img src="${item.icon}" alt="${item.name}" class="item-icon" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Kaiser_Goggles.png'">
-                        <div class="item-details">
-                            <span class="item-name">${item.name}</span>
-                            <span class="item-cost">${formattedCost}</span>
-                        </div>
-                    </div>
-                    <div class="success-rate">100%</div>
-                `;
-                
-                row.addEventListener('click', () => {
-                    prodList.querySelectorAll('.item-row').forEach(r => r.classList.remove('active'));
-                    row.classList.add('active');
-                    renderMaterials(item);
-                });
-
-                prodList.appendChild(row);
-            });
-            if(data.length > 0) renderMaterials(data[0]);
-        }
-
-        function renderMaterials(item) {
-            const matList = document.getElementById('materialsList');
-            matList.innerHTML = '';
-            item.materials.forEach(mat => {
-                const matRow = document.createElement('div');
-                matRow.className = 'material-row';
-                matRow.innerHTML = `
-                    <div class="item-info">
-                        <img src="${mat.icon}" alt="${mat.name}" class="item-icon" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png'">
-                        <span class="material-name">${mat.name}</span>
-                    </div>
-                    <span class="material-count">${mat.count}</span>
-                `;
-                matList.appendChild(matRow);
-            });
-        }
-
-        // Inicialização padrão
+        // Inicialização padrão ao carregar a página
         renderProductionItems(database.inicial);
     </script>
 </body>
