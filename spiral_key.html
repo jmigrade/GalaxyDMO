@@ -248,16 +248,13 @@
         <h1>Spiral Key Ring Crafting</h1>
 
         <div class="craft-container-3col">
-            <!-- Coluna 1: Making List -->
             <div>
                 <div class="section-title">Making List</div>
                 <div class="list-group" id="makingList">
-                    <!-- Categoria 1: Spiral Keys -->
                     <div class="tree-item category active" onclick="toggleCategory('spiralSub')">▼ Spiral Keys</div>
                     <div class="tree-item subitem spiralSub show active" onclick="selectItemType('inicial')">Chaveiro Inicial</div>
                     <div class="tree-item subitem spiralSub show" onclick="selectItemType('craft')">Craft (Lv.1 ao Max)</div>
 
-                    <!-- Categoria 2: Keychain Creation Family -->
                     <div class="tree-item category" onclick="toggleCategory('familySub')">▶ Keychain Creation Family</div>
                     <div class="tree-item subitem familySub" onclick="selectFamilyItem('apocalymon')">Aura of Fear [Apocalymon]</div>
                     <div class="tree-item subitem familySub" onclick="selectFamilyItem('selectKey')">Select Family Key</div>
@@ -267,11 +264,11 @@
                     <div class="tree-item subitem familySub" onclick="selectFamilyItem('ME')">[ME] Keyring Box</div>
                     <div class="tree-item subitem familySub" onclick="selectFamilyItem('TBD')">[TBD] Keyring Box</div>
                     <div class="tree-item subitem familySub" onclick="selectFamilyItem('DR')">[DR] Keyring Box</div>
-                    <div class="tree-item subitem familySub" onclick="selectFamilyItem('VB')">[VB] Keyring Box</div>
                     <div class="tree-item subitem familySub" onclick="selectFamilyItem('NSp')">[NSp] Keyring Box</div>
                     <div class="tree-item subitem familySub" onclick="selectFamilyItem('UK')">[UK] Keyring Box</div>
+                    <div class="tree-item subitem familySub" onclick="selectFamilyItem('VB')">[VB] Keyring Box</div>
                     <div class="tree-item subitem familySub" onclick="selectFamilyItem('DA')">[DA] Keyring Box</div>
-                    <div class="tree-item subitem familySub" onclick="selectFamilyItem('NS_O')">[NS_O] Keyring Box</div>
+                    <div class="tree-item subitem familySub" onclick="selectFamilyItem('NSo')">[NSo] Keyring Box</div>
 
                     <div class="tree-item category">+ Craft Pass Essence</div>
                     <div class="tree-item category">+ Marine Dragon Domain</div>
@@ -279,13 +276,11 @@
                 </div>
             </div>
 
-            <!-- Coluna 2: Production Item -->
             <div>
                 <div class="section-title">Production Item</div>
                 <div class="list-group" id="productionList"></div>
             </div>
 
-            <!-- Coluna 3: Necessary Material item -->
             <div>
                 <div class="section-title">Necessary Material item</div>
                 <div class="materials-list" id="materialsList"></div>
@@ -336,14 +331,13 @@
             ]
         };
 
-        // Mapeamento exato dos bosses de acordo com as regras pedidas
-        const familiesList = ['WG', 'DS', 'JT', 'ME', 'TBD', 'DR', 'VB', 'NSp', 'UK', 'DA', 'NS_O'];
+        // Mapeamento correto e exato dos bosses por família
+        const familiesList = ['WG', 'DS', 'JT', 'ME', 'TBD', 'DR', 'NSp', 'UK', 'VB', 'DA', 'NSo'];
         const bossNames = {
             'WG': 'Puppetmon', 'DS': 'Puppetmon', 'JT': 'Puppetmon',
             'ME': 'MugenDramon', 'TBD': 'MugenDramon', 'DR': 'MugenDramon',
-            'NSp': 'Piedmon', 'UK': 'Piedmon',
-            'DA': 'Apocalymon', 'NS_O': 'Apocalymon',
-            'VB': 'Apocalymon'
+            'NSp': 'Piedmon', 'UK': 'Piedmon', 'VB': 'Piedmon',
+            'DA': 'Apocalymon', 'NSo': 'Apocalymon'
         };
 
         familiesList.forEach(fam => {
