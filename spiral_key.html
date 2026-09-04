@@ -248,13 +248,16 @@
         <h1>Spiral Key Ring Crafting</h1>
 
         <div class="craft-container-3col">
+            <!-- Coluna 1: Making List -->
             <div>
                 <div class="section-title">Making List</div>
                 <div class="list-group" id="makingList">
+                    <!-- Categoria 1: Spiral Keys -->
                     <div class="tree-item category active" onclick="toggleCategory('spiralSub')">▼ Spiral Keys</div>
                     <div class="tree-item subitem spiralSub show active" onclick="selectItemType('inicial')">Chaveiro Inicial</div>
                     <div class="tree-item subitem spiralSub show" onclick="selectItemType('craft')">Craft (Lv.1 ao Max)</div>
 
+                    <!-- Categoria 2: Keychain Creation Family -->
                     <div class="tree-item category" onclick="toggleCategory('familySub')">▶ Keychain Creation Family</div>
                     <div class="tree-item subitem familySub" onclick="selectFamilyItem('apocalymon')">Aura of Fear [Apocalymon]</div>
                     <div class="tree-item subitem familySub" onclick="selectFamilyItem('selectKey')">Select Family Key</div>
@@ -276,11 +279,13 @@
                 </div>
             </div>
 
+            <!-- Coluna 2: Production Item -->
             <div>
                 <div class="section-title">Production Item</div>
                 <div class="list-group" id="productionList"></div>
             </div>
 
+            <!-- Coluna 3: Necessary Material item -->
             <div>
                 <div class="section-title">Necessary Material item</div>
                 <div class="materials-list" id="materialsList"></div>
@@ -331,16 +336,18 @@
             ]
         };
 
-        // Geração correta da progressão por família com Lv1 até Lv7 e LvMax no último
+        // Mapeamento correto dos bosses por família conforme solicitado
         const familiesList = ['WG', 'DS', 'JT', 'ME', 'TBD', 'DR', 'VB', 'NSp', 'UK', 'DA', 'NS_O'];
         const bossNames = {
-            'WG': 'Puppetmon', 'DS': 'MetalSeadramon', 'JT': 'MugenDramon', 'ME': 'Piedmon',
-            'TBD': 'Apocalymon', 'DR': 'MetalSeadramon', 'VB': 'Piedmon', 'NSp': 'Puppetmon',
-            'UK': 'MugenDramon', 'DA': 'Apocalymon', 'NS_O': 'Piedmon'
+            'WG': 'Puppetmon', 'DS': 'Puppetmon', 'JT': 'Puppetmon',
+            'ME': 'MugenDramon', 'TBD': 'MugenDramon', 'DR': 'MugenDramon',
+            'NSp': 'Piedmon', 'UK': 'Piedmon',
+            'DA': 'Apocalymon', 'NS_O': 'Apocalymon',
+            'VB': 'Apocalymon' // Fallback caso necessário
         };
 
         familiesList.forEach(fam => {
-            const boss = bossNames[fam] || 'MetalSeadramon';
+            const boss = bossNames[fam] || 'Apocalymon';
             database[fam] = [
                 { name: `Spiral Key Ring Container (${fam})`, cost: '150 M 000 B', icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Container.png', materials: [{ name: `Spiral Key Ring(${fam}) Lv1`, count: 1, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png' }, { name: 'Aura de Dominação', count: 110, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/aura_of_domination.png' }] },
                 { name: `Spiral Key Ring Container (${fam})`, cost: '200 M 000 B', icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Container.png', materials: [{ name: `Spiral Key Ring(${fam}) Lv2`, count: 1, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png' }, { name: 'Aura de Dominação', count: 340, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/aura_of_domination.png' }, { name: `Aura of Fear [${boss}]`, count: 2, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png' }] },
