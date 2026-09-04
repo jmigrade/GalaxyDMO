@@ -3,390 +3,426 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GalaxyDMO - Spiral Key Ring Craft</title>
+    <title>Keychain Creation Family - Spiral Keys</title>
     <style>
         :root {
             --bg-color: #0d1117;
-            --panel-bg: #161b22;
+            --card-bg: #161b22;
+            --accent-color: #f0883e;
+            --accent-purple: #a855f7;
+            --text-color: #f0f6fc;
+            --text-muted: #8b949e;
             --border-color: #30363d;
-            --text-color: #c9d1d9;
-            --accent-color: #58a6ff;
-            --success-color: #2ea043;
-            --highlight-color: #1f6feb;
+            --completed-color: #238636;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
-            margin: 0;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        h1 {
-            text-align: center;
-            color: var(--accent-color);
-            margin-bottom: 30px;
-        }
-
-        .craft-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            background-color: var(--panel-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .craft-container {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .section-title {
-            font-size: 1.1rem;
-            font-weight: bold;
-            text-align: center;
-            padding: 10px;
-            background-color: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            margin-bottom: 15px;
-        }
-
-        .list-group {
             display: flex;
             flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* --- BOTÃO DE VOLTAR AO MENU --- */
+        .top-nav {
+            width: 100%;
+            max-width: 1000px;
+            padding: 20px 20px 0 20px;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
             gap: 8px;
-            max-height: 500px;
-            overflow-y: auto;
-        }
-
-        .item-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 15px;
-            background-color: rgba(0, 0, 0, 0.2);
+            padding: 8px 16px;
+            background-color: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s ease;
+            color: var(--text-color);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
         }
 
-        .item-row:hover, .item-row.active {
-            background-color: var(--highlight-color);
+        .back-btn:hover {
             border-color: var(--accent-color);
+            color: var(--accent-color);
+            background-color: rgba(240, 136, 62, 0.05);
         }
 
-        .item-info {
+        /* --- CONTEÚDO PRINCIPAL --- */
+        .main-content {
+            width: 100%;
+            max-width: 1000px;
+            padding: 20px;
+            padding-bottom: 90px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 16px 12px;
+            background: linear-gradient(135deg, #3d221b, #111827);
+            border-radius: 12px;
+            border: 1px solid var(--accent-color);
+            box-shadow: 0 0 15px rgba(240, 136, 62, 0.2);
+        }
+
+        h1 { 
+            font-size: 1.4rem; 
+            color: #ffab70; 
+            text-transform: uppercase; 
+        }
+        
+        p.subtitle { 
+            font-size: 0.85rem; 
+            color: var(--text-muted); 
+        }
+
+        .category-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .category-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            margin-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 6px;
+        }
+
+        .todo-list { 
+            list-style: none; 
+        }
+
+        .todo-item {
             display: flex;
             align-items: center;
-            gap: 12px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .todo-item:hover {
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .todo-item.completed {
+            background: rgba(35, 134, 54, 0.15);
+            border-color: rgba(35, 134, 54, 0.4);
+        }
+
+        .todo-item.completed .todo-text { 
+            text-decoration: line-through; 
+            color: var(--text-muted); 
+        }
+
+        .checkbox {
+            width: 22px;
+            height: 22px;
+            border-radius: 6px;
+            border: 2px solid var(--accent-color);
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .todo-item.completed .checkbox {
+            background-color: var(--completed-color);
+            border-color: var(--completed-color);
+        }
+
+        .checkbox::after {
+            content: '✓'; 
+            color: white; 
+            font-size: 14px; 
+            font-weight: bold; 
+            display: none;
+        }
+
+        .todo-item.completed .checkbox::after { 
+            display: block; 
         }
 
         .item-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 4px;
-            background-color: #21262d;
-            border: 1px solid var(--border-color);
+            width: 36px; 
+            height: 36px; 
+            margin-right: 12px; 
             object-fit: contain;
-            padding: 2px;
         }
 
-        .item-details span {
-            display: block;
+        .todo-text { 
+            font-size: 0.95rem; 
+            flex-grow: 1; 
         }
 
-        .item-name {
-            color: #56d364;
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-
-        /* Estilo para alinhar os ícones de moeda no custo */
-        .item-cost {
-            font-size: 0.85rem;
-            color: #8b949e;
-            display: flex;
-            align-items: center;
+        .mat-chip {
+            display: inline-flex; 
+            align-items: center; 
             gap: 4px;
-            margin-top: 2px;
+            background: rgba(255, 255, 255, 0.05); 
+            padding: 3px 6px;
+            border-radius: 4px; 
+            margin-top: 4px; 
+            margin-right: 4px;
+            font-size: 0.75rem; 
+            color: #ffab70; 
+            border: 1px solid rgba(240, 136, 62, 0.2);
         }
 
-        .currency-icon {
-            width: 16px;
-            height: 16px;
-            object-fit: contain;
-            vertical-align: middle;
-            display: inline-block;
+        .chip-icon { 
+            width: 18px; 
+            height: 18px; 
+            object-fit: contain; 
         }
 
-        .success-rate {
-            color: #3fb950;
-            font-weight: bold;
-            font-size: 1rem;
+        /* MATERIAIS ACUMULADOS */
+        .mats-summary {
+            background: rgba(240, 136, 62, 0.05);
+            border: 1px solid rgba(240, 136, 62, 0.3);
+            border-radius: 8px; 
+            padding: 16px; 
+            color: #e2d9f3;
         }
 
-        .materials-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+        .mats-summary h3 { 
+            margin-bottom: 12px; 
+            color: #ffab70; 
+            font-size: 1rem; 
+        }
+        
+        .mats-summary ul { 
+            list-style: none; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 10px; 
         }
 
-        .material-row {
+        .mat-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 10px 15px;
-            background-color: rgba(0, 0, 0, 0.2);
-            border: 1px solid var(--border-color);
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 8px 12px;
             border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            flex-wrap: wrap;
         }
 
-        .material-name {
-            font-weight: 500;
-        }
-
-        .material-count {
-            font-weight: bold;
-            color: #f85149;
-        }
-
-        .back-link {
-            display: inline-block;
-            margin-bottom: 20px;
-            color: var(--accent-color);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .back-link:hover {
-            text-decoration: underline;
-        }
-
-        .npc-section {
-            background: rgba(0, 210, 255, 0.05);
-            border: 1px solid rgba(0, 210, 255, 0.2);
-            border-radius: 8px;
-            padding: 20px;
+        .mat-info {
             display: flex;
             align-items: center;
-            gap: 20px;
-            margin-top: 20px;
+            gap: 8px;
+            font-size: 0.9rem;
+            min-width: 220px;
         }
 
-        .npc-visuals {
+        .mat-calc {
             display: flex;
+            align-items: center;
             gap: 10px;
         }
 
-        .npc-img, .map-img {
+        .mat-input {
             width: 80px;
-            height: 80px;
-            border-radius: 6px;
+            background: #0d1117;
             border: 1px solid var(--border-color);
-            background-color: #000;
-            object-fit: cover;
+            border-radius: 4px;
+            color: #fff;
+            padding: 4px 8px;
+            font-size: 0.85rem;
+            text-align: center;
+            outline: none;
+        }
+
+        .mat-input:focus {
+            border-color: var(--accent-color);
+        }
+
+        .mat-status {
+            font-size: 0.85rem;
+            font-weight: bold;
+            min-width: 140px;
+            text-align: right;
+        }
+
+        .status-missing { color: #f87171; }
+        .status-done { color: #4ade80; }
+
+        @media (max-width: 768px) {
+            .mat-row { flex-direction: column; align-items: flex-start; }
+            .mat-calc { width: 100%; justify-content: space-between; margin-top: 4px; }
+            .mat-status { text-align: left; }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <a href="index.html" class="back-link">← Voltar ao Início</a>
-        <h1>Spiral Key Ring Crafting</h1>
-
-        <div class="craft-container">
-            <!-- Lado Esquerdo: Lista de Produção -->
-            <div>
-                <div class="section-title">Production Item</div>
-                <div class="list-group" id="productionList">
-                    <!-- Preenchido via JavaScript -->
-                </div>
-            </div>
-
-            <!-- Lado Direito: Materiais Necessários -->
-            <div>
-                <div class="section-title">Necessary Material item</div>
-                <div class="materials-list" id="materialsList">
-                    <!-- Preenchido dinamicamente ao selecionar um item -->
-                </div>
-            </div>
-        </div>
-
-        <div class="npc-section">
-            <div class="npc-visuals">
-                <img src="URL_DA_IMAGEM_DO_NANOMON" alt="Nanomon" class="npc-img" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Nanomon_(Item_Craft).png'">
-            </div>
-            <div class="npc-text">
-                <p style="margin: 0;"> O sistema de criação (Craft) e trocas é realizado diretamente com o NPC <strong>Nanomon</strong>, localizado no lado oeste do <strong>DATS Center</strong>.</p>
-            </div>
-            <div class="npc-visuals">
-                <img src="URL_DO_MAPA_DATS" alt="Mapa DATS" class="map-img" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/DATS_Center.png'">
-            </div>
-        </div>
+    <!-- BOTÃO DE VOLTAR AO MENU -->
+    <div class="top-nav">
+        <a href="index.html" class="back-btn">
+            ← Voltar ao Menu Principal
+        </a>
     </div>
-        
-    <script>
-        const craftData = [
-            {
-                id: 1,
-                name: "Spiral Key Ring Lv.1",
-                icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.1-5.png",
-                cost: "101 M 000 B",
-                materials: [
-                    { name: "Spiral Key Ring Lv.1", count: 1, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.1-5.png" },
-                    { name: "Aura de Dominação", count: 110, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/aura_of_domination.png" }
-                ]
-            },
-            {
-                id: 2,
-                name: "Spiral Key Ring Lv.2",
-                icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.1-5.png",
-                cost: "151 M 000 B",
-                materials: [
-                    { name: "Spiral Key Ring Lv.1", count: 1, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.1-5.png" },
-                    { name: "Aura de Dominação", count: 340, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/aura_of_domination.png" },
-                    { name: "Aura of Fear [MetalSeadramon]", count: 2, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png" }
-                ]
-            },
-            {
-                id: 3,
-                name: "Spiral Key Ring Lv.3",
-                icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.1-5.png",
-                cost: "200 M 000 B",
-                materials: [
-                    { name: "Spiral Key Ring Lv.2", count: 1, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.1-5.png" },
-                    { name: "Aura de Dominação", count: 600, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/aura_of_domination.png" },
-                    { name: "Aura of Fear [MetalSeadramon]", count: 4, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png" }
-                ]
-            },
-            {
-                id: 4,
-                name: "Spiral Key Ring Lv.4",
-                icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.1-5.png",
-                cost: "251 M 000 B",
-                materials: [
-                    { name: "Spiral Key Ring Lv.3", count: 1, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.1-5.png" },
-                    { name: "Aura de Dominação", count: 1160, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/aura_of_domination.png" },
-                    { name: "Aura of Fear [MetalSeadramon]", count: 6, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png" }
-                ]
-            },
-            {
-                id: 5,
-                name: "Spiral Key Ring Lv.5",
-                icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.1-5.png",
-                cost: "301 M 000 B",
-                materials: [
-                    { name: "Spiral Key Ring Lv.4", count: 1, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.1-5.png" },
-                    { name: "Aura de Dominação", count: 1400, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/aura_of_domination.png" },
-                    { name: "Aura of Fear [MetalSeadramon]", count: 8, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png" },
-                    { name: "Aura of Cruelty [Metal Seadramon]", count: 1, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png" }
-                ]
-            },
-            {
-                id: 6,
-                name: "Spiral Key Ring Lv.6",
-                icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png",
-                cost: "351 M 000 B",
-                materials: [
-                    { name: "Spiral Key Ring Lv.5", count: 1, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png" },
-                    { name: "Aura de Dominação", count: 1820, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/aura_of_domination.png" },
-                    { name: "Aura of Fear [MetalSeadramon]", count: 10, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png" },
-                    { name: "Aura of Cruelty [Metal Seadramon]", count: 3, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png" }
-                ]
-            },
-            {
-                id: 7,
-                name: "Spiral Key Ring Lv.7",
-                icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png",
-                cost: "401 M 000 B",
-                materials: [
-                    { name: "Spiral Key Ring Lv.6", count: 1, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png" },
-                    { name: "Aura de Dominação", count: 2500, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Essence_of_Deva.png" },
-                    { name: "Aura of Fear [MetalSeadramon]", count: 20, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png" },
-                    { name: "Aura of Cruelty [Metal Seadramon]", count: 5, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png" }
-                ]
-            },
-            {
-                id: 8,
-                name: "Spiral Key Ring Lv.Max",
-                icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png",
-                cost: "701 M 000 B",
-                materials: [
-                    { name: "Spiral Key Ring Lv.7", count: 1, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png" },
-                    { name: "Aura de Dominação", count: 1100, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Essence_of_Deva.png" },
-                    { name: "Aura of Fear [MetalSeadramon]", count: 10, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png" },
-                    { name: "Aura of Cruelty [Metal Seadramon]", count: 2, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png" }
-                ]
-            }
-        ];
 
-        // Função para detetar e substituir as letras T, M e B pelos respetivos ícones de imagem corretos
-        function parseCurrencyIcons(costString) {
-            return costString
-                .replace(/T/g, '<img src="Icons/Currency_Tera.png" alt="Tera" class="currency-icon" onerror="this.style.display=\'none\'">')
-                .replace(/M/g, '<img src="Icons/Currency_Mega.png" alt="Mega" class="currency-icon" onerror="this.style.display=\'none\'">')
-                .replace(/B/g, '<img src="Icons/Currency_Bit.png" alt="Bit" class="currency-icon" onerror="this.style.display=\'none\'">');
-        }
-        function renderProductionItems() {
-            productionList.innerHTML = '';
-            craftData.forEach((item, index) => {
-                const row = document.createElement('div');
-                row.className = `item-row ${index === 0 ? 'active' : ''}`;
-                
-                const formattedCost = parseCurrencyIcons(item.cost);
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="main-content">
+        <header>
+            <h1>Keychain Creation Family</h1>
+            <p class="subtitle">Evolução dos Chaveiros por Família (Ex: DA, DR, UK, NSP, etc.)</p>
+        </header>
 
-                row.innerHTML = `
-                    <div class="item-info">
-                        <img src="${item.icon}" alt="${item.name}" class="item-icon" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Kaiser_Goggles.png'">
-                        <div class="item-details">
-                            <span class="item-name">${item.name}</span>
-                            <span class="item-cost">${formattedCost}</span>
+        <!-- PASSOS DA FAMÍLIA DE KEYCHAIN -->
+        <div class="category-card">
+            <div class="category-title">Seleção e Evolução de Família (Keyring Box)</div>
+            <ul class="todo-list">
+                <li class="todo-item" data-id="family_base">
+                    <div class="checkbox"></div>
+                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_LvMax.png" class="item-icon" onerror="this.style.display='none'">
+                    <span class="todo-text">
+                        Spiral Key Ring LvMax (Base)
+                        <div style="font-size:0.8rem; color:var(--text-muted)">Pré-requisito para selecionar a família</div>
+                    </span>
+                </li>
+
+                <li class="todo-item" data-id="family_upgrade">
+                    <div class="checkbox"></div>
+                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Container.png" class="item-icon" onerror="this.style.display='none'">
+                    <span class="todo-text">
+                        Família Escolhida (Ex: [DA], [DR], [UK], [NSP], etc.)
+                        <div>
+                            <span class="mat-chip"><img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_LvMax.png" class="chip-icon" onerror="this.style.display='none'"> 1x Spiral Key Ring LvMax</span>
+                            <span class="mat-chip"><img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_de_Dominacao.png" class="chip-icon" onerror="this.style.display='none'"> 200x Aura de Dominação</span>
                         </div>
+                    </span>
+                </li>
+
+                <li class="todo-item" data-id="family_final">
+                    <div class="checkbox"></div>
+                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Container.png" class="item-icon" onerror="this.style.display='none'">
+                    <span class="todo-text">
+                        <b style="color:var(--accent-color);">Keyring Box Específica Concluída (Final)</b>
+                    </span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- TOTAL DE MATERIAIS ACUMULADOS -->
+        <div class="mats-summary">
+            <h3>📊 Total de Materiais Acumulados por Família</h3>
+            <ul id="mats-list">
+                <li class="mat-row" data-target="1" data-id="mat_ring_lvmax">
+                    <div class="mat-info">
+                        <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_LvMax.png" class="chip-icon" onerror="this.style.display='none'">
+                        <b>Spiral Key Ring LvMax:</b>
                     </div>
-                    <div class="success-rate">100%</div>
-                `;
-                
-                row.addEventListener('click', () => {
-                    document.querySelectorAll('.item-row').forEach(r => r.classList.remove('active'));
-                    row.classList.add('active');
-                    renderMaterials(item);
-                });
-
-                productionList.appendChild(row);
-            });
-
-            renderMaterials(craftData[0]);
-        }
-
-        function renderMaterials(item) {
-            materialsList.innerHTML = '';
-            item.materials.forEach(mat => {
-                const matRow = document.createElement('div');
-                matRow.className = 'material-row';
-                matRow.innerHTML = `
-                    <div class="item-info">
-                        <img src="${mat.icon}" alt="${mat.name}" class="item-icon" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png'">
-                        <span class="material-name">${mat.name}</span>
+                    <div class="mat-calc">
+                        <input type="number" class="mat-input" placeholder="Tenho" min="0" oninput="updateMat(this)">
+                        <span class="mat-status"></span>
                     </div>
-                    <span class="material-count">${mat.count}</span>
-                `;
-                materialsList.appendChild(matRow);
-            });
-        }
+                </li>
 
-        renderProductionItems();
+                <li class="mat-row" data-target="200" data-id="mat_aura_dominacao">
+                    <div class="mat-info">
+                        <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_de_Dominacao.png" class="chip-icon" onerror="this.style.display='none'">
+                        <b>Aura de Dominação:</b>
+                    </div>
+                    <div class="mat-calc">
+                        <input type="number" class="mat-input" placeholder="Tenho" min="0" oninput="updateMat(this)">
+                        <span class="mat-status"></span>
+                    </div>
+                </li>
+
+                <li class="mat-row" style="background: rgba(61, 34, 27, 0.4); border-color: rgba(240, 136, 62, 0.2);">
+                    <div class="mat-info">
+                        <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Money.png" class="chip-icon" onerror="this.style.display='none'">
+                        <b>Money Total Necessário:</b>
+                    </div>
+                    <div class="mat-calc">
+                        <span style="color: #ffab70; font-weight: bold; font-size: 0.95rem;">200 M</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </main>
+
+    <script>
+        // Estado das checklists e dos materiais para Keychain Family
+        let state = JSON.parse(localStorage.getItem('keychain_family_todo_state')) || {};
+        let matState = JSON.parse(localStorage.getItem('keychain_family_mats_state')) || {};
+
+        // Carregar checklists
+        document.querySelectorAll('.todo-item').forEach(item => {
+            const id = item.getAttribute('data-id');
+            if (state[id]) item.classList.add('completed');
+
+            item.addEventListener('click', () => {
+                state[id] = !state[id];
+                item.classList.toggle('completed', state[id]);
+                localStorage.setItem('keychain_family_todo_state', JSON.stringify(state));
+            });
+        });
+
+        // Carregar inputs de materiais salvos
+        document.querySelectorAll('.mat-row[data-id]').forEach(row => {
+            const id = row.getAttribute('data-id');
+            const input = row.querySelector('.mat-input');
+            if (matState[id] !== undefined) {
+                input.value = matState[id];
+                updateMat(input);
+            } else {
+                updateMat(input);
+            }
+        });
+
+        // Atualizar valores dos materiais
+        function updateMat(input) {
+            const row = input.closest('.mat-row');
+            const target = parseInt(row.getAttribute('data-target'));
+            const id = row.getAttribute('data-id');
+            const val = parseInt(input.value) || 0;
+
+            const statusEl = row.querySelector('.mat-status');
+
+            // Salvar no localStorage se id existir
+            if (id) {
+                matState[id] = input.value;
+                localStorage.setItem('keychain_family_mats_state', JSON.stringify(matState));
+            }
+
+            const remaining = target - val;
+
+            if (remaining > 0) {
+                statusEl.className = 'mat-status status-missing';
+                statusEl.innerHTML = `Faltam: ${remaining.toLocaleString()}`;
+            } else {
+                statusEl.className = 'mat-status status-done';
+                statusEl.innerHTML = `Concluído! (${val.toLocaleString()}/${target.toLocaleString()})`;
+            }
+        }
     </script>
 </body>
 </html>
