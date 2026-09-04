@@ -25,7 +25,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
@@ -35,42 +35,10 @@
             margin-bottom: 20px;
         }
 
-        .tabs-nav {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .tab-btn {
-            background-color: var(--tab-bg);
-            border: 1px solid var(--border-color);
-            color: var(--text-color);
-            padding: 10px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.2s ease;
-        }
-
-        .tab-btn:hover, .tab-btn.active {
-            background-color: var(--highlight-color);
-            border-color: var(--accent-color);
-            color: #fff;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .craft-container {
+        .craft-container-3col {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
             background-color: var(--panel-bg);
             border: 1px solid var(--border-color);
             border-radius: 8px;
@@ -78,14 +46,14 @@
             margin-bottom: 20px;
         }
 
-        @media (max-width: 768px) {
-            .craft-container {
+        @media (max-width: 1024px) {
+            .craft-container-3col {
                 grid-template-columns: 1fr;
             }
         }
 
         .section-title {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: bold;
             text-align: center;
             padding: 10px;
@@ -98,16 +66,47 @@
         .list-group {
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            max-height: 500px;
+            gap: 6px;
+            max-height: 520px;
             overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        /* Estilo da árvore da 1ª coluna estilo DMO */
+        .tree-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .tree-item:hover, .tree-item.active {
+            background-color: var(--highlight-color);
+            border-color: var(--accent-color);
+        }
+
+        .tree-item.category {
+            font-weight: bold;
+            color: var(--accent-color);
+            background-color: rgba(88, 166, 255, 0.1);
+        }
+
+        .tree-item.subitem {
+            padding-left: 24px;
+            font-size: 0.85rem;
         }
 
         .item-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 15px;
+            padding: 8px 12px;
             background-color: rgba(0, 0, 0, 0.2);
             border: 1px solid var(--border-color);
             border-radius: 6px;
@@ -123,12 +122,12 @@
         .item-info {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
 
         .item-icon {
-            width: 36px;
-            height: 36px;
+            width: 32px;
+            height: 32px;
             border-radius: 4px;
             background-color: #21262d;
             border: 1px solid var(--border-color);
@@ -143,21 +142,21 @@
         .item-name {
             color: #56d364;
             font-weight: 600;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
         }
 
         .item-cost {
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             color: #8b949e;
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 3px;
             margin-top: 2px;
         }
 
         .currency-icon {
-            width: 16px;
-            height: 16px;
+            width: 14px;
+            height: 14px;
             object-fit: contain;
             vertical-align: middle;
             display: inline-block;
@@ -166,14 +165,14 @@
         .success-rate {
             color: #3fb950;
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
 
         .materials-list {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            max-height: 500px;
+            gap: 8px;
+            max-height: 520px;
             overflow-y: auto;
         }
 
@@ -181,7 +180,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 10px 15px;
+            padding: 8px 12px;
             background-color: rgba(0, 0, 0, 0.2);
             border: 1px solid var(--border-color);
             border-radius: 6px;
@@ -190,13 +189,13 @@
         .material-name {
             font-weight: 600;
             color: #f1e05a;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .material-count {
             font-weight: bold;
             color: #f85149;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
 
         .back-link {
@@ -243,34 +242,33 @@
         <a href="index.html" class="back-link">← Voltar ao Início</a>
         <h1>Spiral Key Ring Crafting</h1>
 
-        <div class="tabs-nav">
-            <button class="tab-btn active" onclick="switchTab('upgrade')">Normal Upgrades (Lv.1 - Lv.Max)</button>
-            <button class="tab-btn" onclick="switchTab('family')">Keychain Creation Family</button>
-        </div>
-
-        <div id="tab-upgrade" class="tab-content active">
-            <div class="craft-container">
-                <div>
-                    <div class="section-title">Production Item</div>
-                    <div class="list-group" id="productionList"></div>
-                </div>
-                <div>
-                    <div class="section-title">Necessary Material item</div>
-                    <div class="materials-list" id="materialsList"></div>
+        <div class="craft-container-3col">
+            <!-- Coluna 1: Making List (Árvore de Categorias) -->
+            <div>
+                <div class="section-title">Making List</div>
+                <div class="list-group" id="makingList">
+                    <div class="tree-item category">Craft</div>
+                    <div class="tree-item category active" onclick="filterCategory('family')">▼ Keychain Creation Family</div>
+                    <div class="tree-item subitem active" onclick="filterSubCategory('apocalymon')">Aura of Fear [Apocalymon]</div>
+                    <div class="tree-item subitem" onclick="filterSubCategory('familykeys')">Select Family Key</div>
+                    <div class="tree-item category" onclick="filterCategory('pass')">+ Craft Pass Essence</div>
+                    <div class="tree-item category" onclick="filterCategory('marine')">+ Marine Dragon Domain</div>
+                    <div class="tree-item category" onclick="filterCategory('marionette')">+ Marionette Mansion</div>
+                    <div class="tree-item category" onclick="filterCategory('clown')">+ Stage Of Clown</div>
+                    <div class="tree-item category" onclick="filterCategory('empire')">+ Back Of The Empire</div>
                 </div>
             </div>
-        </div>
 
-        <div id="tab-family" class="tab-content">
-            <div class="craft-container">
-                <div>
-                    <div class="section-title">Select Family Key</div>
-                    <div class="list-group" id="familyList"></div>
-                </div>
-                <div>
-                    <div class="section-title">Necessary Material item</div>
-                    <div class="materials-list" id="familyMaterialsList"></div>
-                </div>
+            <!-- Coluna 2: Production Item -->
+            <div>
+                <div class="section-title">Production Item</div>
+                <div class="list-group" id="productionList"></div>
+            </div>
+
+            <!-- Coluna 3: Necessary Material item -->
+            <div>
+                <div class="section-title">Necessary Material item</div>
+                <div class="materials-list" id="materialsList"></div>
             </div>
         </div>
 
@@ -288,35 +286,10 @@
     </div>
         
     <script>
-        const craftData = [
-            {
-                id: 1,
-                name: "Spiral Key Ring Lv.1",
-                icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.1-5.png",
-                cost: "101 M 000 B",
-                materials: [
-                    { name: "Spiral Key Ring Lv.1", count: 1, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.1-5.png" },
-                    { name: "Aura de Dominação", count: 110, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/aura_of_domination.png" }
-                ]
-            },
-            {
-                id: 2,
-                name: "Spiral Key Ring Lv.2",
-                icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.1-5.png",
-                cost: "151 M 000 B",
-                materials: [
-                    { name: "Spiral Key Ring Lv.1", count: 1, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.1-5.png" },
-                    { name: "Aura de Dominação", count: 340, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/aura_of_domination.png" },
-                    { name: "Aura of Fear [MetalSeadramon]", count: 2, icon: "https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Aura_of_Fear_MetalSeadramon.png" }
-                ]
-            }
-        ];
-
-        // Lado esquerdo ajustado para exibir os containers da família exatamente como na imagem 3
         const familyData = [
             {
                 id: 'wg',
-                name: 'Spiral Key Ring Container',
+                name: '[WG] Keyring Box',
                 cost: '150 M 000 B',
                 icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Container.png',
                 materials: [
@@ -326,7 +299,7 @@
             },
             {
                 id: 'ds',
-                name: 'Spiral Key Ring Container',
+                name: '[DS] Keyring Box',
                 cost: '200 M 000 B',
                 icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Container.png',
                 materials: [
@@ -337,7 +310,7 @@
             },
             {
                 id: 'jt',
-                name: 'Spiral Key Ring Container',
+                name: '[JT] Keyring Box',
                 cost: '250 M 000 B',
                 icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Container.png',
                 materials: [
@@ -348,7 +321,7 @@
             },
             {
                 id: 'me',
-                name: 'Spiral Key Ring Container',
+                name: '[ME] Keyring Box',
                 cost: '325 M 000 B',
                 icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Container.png',
                 materials: [
@@ -359,7 +332,7 @@
             },
             {
                 id: 'tbd',
-                name: 'Spiral Key Ring Container',
+                name: '[TBD] Keyring Box',
                 cost: '400 M 000 B',
                 icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Container.png',
                 materials: [
@@ -371,7 +344,7 @@
             },
             {
                 id: 'dr',
-                name: 'Spiral Key Ring Container',
+                name: '[DR] Keyring Box',
                 cost: '500 M 000 B',
                 icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Container.png',
                 materials: [
@@ -399,23 +372,11 @@
                 .replace(/B/g, '<img src="Icons/Currency_Bit.png" alt="Bit" class="currency-icon" onerror="this.style.display=\'none\'">');
         }
 
-        function switchTab(tabName) {
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-
-            if (tabName === 'upgrade') {
-                document.querySelector('.tabs-nav button:nth-child(1)').classList.add('active');
-                document.getElementById('tab-upgrade').classList.add('active');
-            } else {
-                document.querySelector('.tabs-nav button:nth-child(2)').classList.add('active');
-                document.getElementById('tab-family').classList.add('active');
-            }
-        }
-
-        function renderProductionItems() {
+        function renderProductionItems(data) {
             const prodList = document.getElementById('productionList');
             prodList.innerHTML = '';
-            craftData.forEach((item, index) => {
+            
+            data.forEach((item, index) => {
                 const row = document.createElement('div');
                 row.className = `item-row ${index === 0 ? 'active' : ''}`;
                 const formattedCost = parseCurrencyIcons(item.cost);
@@ -439,7 +400,7 @@
 
                 prodList.appendChild(row);
             });
-            renderMaterials(craftData[0]);
+            if(data.length > 0) renderMaterials(data[0]);
         }
 
         function renderMaterials(item) {
@@ -459,55 +420,26 @@
             });
         }
 
-        function renderFamilyItems() {
-            const famList = document.getElementById('familyList');
-            famList.innerHTML = '';
-            familyData.forEach((item, index) => {
-                const row = document.createElement('div');
-                row.className = `item-row ${index === 0 ? 'active' : ''}`;
-                const formattedCost = parseCurrencyIcons(item.cost);
-
-                row.innerHTML = `
-                    <div class="item-info">
-                        <img src="${item.icon}" alt="${item.name}" class="item-icon" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Kaiser_Goggles.png'">
-                        <div class="item-details">
-                            <span class="item-name">${item.name}</span>
-                            <span class="item-cost">${formattedCost}</span>
-                        </div>
-                    </div>
-                    <div class="success-rate">100%</div>
-                `;
-                
-                row.addEventListener('click', () => {
-                    famList.querySelectorAll('.item-row').forEach(r => r.classList.remove('active'));
-                    row.classList.add('active');
-                    renderFamilyMaterials(item);
-                });
-
-                famList.appendChild(row);
-            });
-            renderFamilyMaterials(familyData[0]);
+        function filterCategory(cat) {
+            // Apenas para simulação visual da árvore
+            document.querySelectorAll('.tree-item').forEach(el => el.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            if(cat === 'family') {
+                renderProductionItems(familyData);
+            } else {
+                document.getElementById('productionList').innerHTML = '<div style="padding: 10px; color: #8b949e; text-align: center;">Em desenvolvimento</div>';
+                document.getElementById('materialsList').innerHTML = '';
+            }
         }
 
-        function renderFamilyMaterials(item) {
-            const famMatList = document.getElementById('familyMaterialsList');
-            famMatList.innerHTML = '';
-            item.materials.forEach(mat => {
-                const matRow = document.createElement('div');
-                matRow.className = 'material-row';
-                matRow.innerHTML = `
-                    <div class="item-info">
-                        <img src="${mat.icon}" alt="${mat.name}" class="item-icon" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png'">
-                        <span class="material-name">${mat.name}</span>
-                    </div>
-                    <span class="material-count">${mat.count}</span>
-                `;
-                famMatList.appendChild(matRow);
-            });
+        function filterSubCategory(sub) {
+            document.querySelectorAll('.tree-item').forEach(el => el.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            renderProductionItems(familyData);
         }
 
-        renderProductionItems();
-        renderFamilyItems();
+        // Inicializar com os dados da família
+        renderProductionItems(familyData);
     </script>
 </body>
 </html>
