@@ -303,14 +303,18 @@
     <script>
         // Função auxiliar para determinar o ícone correto do Keyring por família e nível/etapa (1 a 9)
         function getFamilyIcon(fam, stepIndex) {
-            let levelSuffix = 'Level_1';
-            if (stepIndex >= 2 && stepIndex <= 3) { // Lv.3 e Lv.4 (índices 2 e 3)
-                levelSuffix = 'Level_3';
-            } else if (stepIndex >= 4) { // Lv.5 em diante até Max e Material (índices 4 a 8)
-                levelSuffix = 'Level_5';
-            }
-            return `https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_${fam}_${levelSuffix}.png`;
-        }
+    let levelSuffix = 'Level_1'; // Para os índices 0 e 1 (Lv. 1 e 2)
+    
+    if (stepIndex >= 2 && stepIndex <= 3) {       // Índices 2 e 3 (Lv. 3 e 4)
+        levelSuffix = 'Level_3';
+    } else if (stepIndex >= 4 && stepIndex <= 5) { // Índices 4 e 5 (Lv. 5 e 6)
+        levelSuffix = 'Level_5';
+    } else if (stepIndex >= 6) {                   // Índices 6, 7 e 8 (Lv. 7, Max e Material)
+        levelSuffix = 'Level_7';
+    }
+    
+    return `https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_${fam}_${levelSuffix}.png`;
+}
 
         const database = {
             inicial: [
