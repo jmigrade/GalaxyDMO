@@ -389,46 +389,50 @@
             });
         }
 
-        // Som de Alerta Agressivo:
-        // [3 beeps curtos e incisivos] -> pausa 2s -> [3 beeps] -> pausa 2s -> [3 beeps]
+        // SOM ESTILO DESPERTADOR DIGITAL DE EMERGÊNCIA
+        // Ritmo: 4 Beeps ultra-rápidos e agudos (Bip-Bip-Bip-Bip) -> Pausa 1.8s -> Repete 3 Vezes
         function playBeep() {
             try {
                 const ctx = new (window.AudioContext || window.webkitAudioContext)();
                 
-                function singleBeep(startTime) {
+                function singleAlarmBeep(startTime) {
                     const osc = ctx.createOscillator();
                     const gain = ctx.createGain();
                     
-                    osc.type = 'sawtooth'; // Onda dente-de-serra para um som mais cortante e agressivo
-                    osc.frequency.setValueAtTime(1500, startTime);
-                    osc.frequency.exponentialRampToValueAtTime(2000, startTime + 0.08); // Rápido tom ascendente de alarme
+                    osc.type = 'square'; // Onda quadrada para som marcante de despertador relógio digital
                     
-                    gain.gain.setValueAtTime(0.2, startTime);
-                    gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.08);
+                    // Salto rápido de frequência (1000Hz -> 2400Hz) criando efeito "BIP!" estridente
+                    osc.frequency.setValueAtTime(1000, startTime);
+                    osc.frequency.setValueAtTime(2400, startTime + 0.02);
+                    
+                    gain.gain.setValueAtTime(0.22, startTime);
+                    gain.gain.setValueAtTime(0.0001, startTime + 0.07);
                     
                     osc.connect(gain);
                     gain.connect(ctx.destination);
                     
                     osc.start(startTime);
-                    osc.stop(startTime + 0.08);
+                    osc.stop(startTime + 0.07);
                 }
 
-                function playBeepGroup(baseTime) {
-                    singleBeep(baseTime);
-                    singleBeep(baseTime + 0.12);
-                    singleBeep(baseTime + 0.24);
+                // Toca um bloco de 4 beeps super rápidos de despertador
+                function playAlarmBurst(baseTime) {
+                    singleAlarmBeep(baseTime);
+                    singleAlarmBeep(baseTime + 0.09);
+                    singleAlarmBeep(baseTime + 0.18);
+                    singleAlarmBeep(baseTime + 0.27);
                 }
 
                 const now = ctx.currentTime;
 
-                // Grupo 1: 3 beeps rápidos
-                playBeepGroup(now);
+                // Ciclo 1: Bip-Bip-Bip-Bip
+                playAlarmBurst(now);
 
-                // Grupo 2: 3 beeps após 2 segundos de pausa (2.24s depois do início)
-                playBeepGroup(now + 2.24);
+                // Ciclo 2: Bip-Bip-Bip-Bip (após 1.8 segundos)
+                playAlarmBurst(now + 1.8);
 
-                // Grupo 3: 3 beeps após mais 2 segundos de pausa (4.48s depois do início)
-                playBeepGroup(now + 4.48);
+                // Ciclo 3: Bip-Bip-Bip-Bip (após 3.6 segundos)
+                playAlarmBurst(now + 3.6);
 
             } catch (e) {
                 console.log("AudioContext bloqueado pelo navegador");
