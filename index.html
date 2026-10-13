@@ -3,239 +3,493 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Galaxy Wiki - Central de Ferramentas & Guias DMO</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        wikibg: '#12161f',
-                        wikiheader: '#1a202c',
-                        wikipanel: '#1e2433',
-                        wikiborder: '#2d3748',
-                        wikitext: '#e2e8f0',
-                        wikilink: '#63b3ed',
-                        wikiaccent: '#3182ce',
-                        wikihover: '#2b6cb0',
-                        wikisidebar: '#161b22',
-                    }
-                }
-            }
-        }
-    </script>
+    <title>Digimon Galaxy - Hub</title>
     <style>
-        body {
-            background-color: #12161f;
-            color: #e2e8f0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        :root {
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --text-color: #f0f6fc;
+            --text-muted: #8b949e;
+            --border-color: #30363d;
+            
+            /* Cores customizadas por card */
+            --color-checklist: #238636;  /* Verde */
+            --color-digivice: #00d2ff;   /* Azul Ciano */
+            --color-beast: #a855f7;      /* Roxo */
+            --color-goggles: #ff7b00;    /* Laranja */
+            --color-spiral: #ec4899;     /* Rosa */
+            --color-candy: #eab308;      /* Amarelo/Ouro para o Evento Candy */
         }
-        .card-glow:hover {
-            border-color: #63b3ed;
-            box-shadow: 0 0 20px rgba(99, 179, 237, 0.15);
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 30px 20px;
+        }
+
+        .hub-container {
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* HEADER DO HUB */
+        .hub-header {
+            text-align: center;
+            padding: 24px;
+            background: linear-gradient(135deg, #1f293d, #111827);
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.15);
+        }
+
+        .hub-header h1 {
+            font-size: 1.8rem;
+            color: var(--color-digivice);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 6px;
+        }
+
+        .hub-header p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        /* GRELHA DE CARDS */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .hub-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            padding: 24px;
+            text-decoration: none;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            transition: all 0.25s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        /* Efeito de brilho lateral nas cores respetivas */
+        .hub-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 5px;
+            transition: width 0.25s ease;
+        }
+
+        .hub-card.checklist::before { background-color: var(--color-checklist); }
+        .hub-card.digivice::before { background-color: var(--color-digivice); }
+        .hub-card.beast::before { background-color: var(--color-beast); }
+        .hub-card.goggles::before { background-color: var(--color-goggles); }
+        .hub-card.spiral::before { background-color: var(--color-spiral); }
+        .hub-card.candy::before { background-color: var(--color-candy); }
+
+        .hub-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--text-muted);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
+
+        .hub-card.checklist:hover { border-color: var(--color-checklist); }
+        .hub-card.digivice:hover { border-color: var(--color-digivice); }
+        .hub-card.beast:hover { border-color: var(--color-beast); }
+        .hub-card.goggles:hover { border-color: var(--color-goggles); }
+        .hub-card.spiral:hover { border-color: var(--color-spiral); }
+        .hub-card.candy:hover { border-color: var(--color-candy); }
+
+        /* ÍCONES DOS CARDS */
+        .card-icon-box {
+            width: 54px;
+            height: 54px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--border-color);
+            padding: 6px;
+        }
+
+        .card-icon-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* TEXTOS DOS CARDS */
+        .card-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .checklist .card-title { color: var(--color-checklist); }
+        .digivice .card-title { color: var(--color-digivice); }
+        .beast .card-title { color: var(--color-beast); }
+        .goggles .card-title { color: var(--color-goggles); }
+        .spiral .card-title { color: var(--color-spiral); }
+        .candy .card-title { color: var(--color-candy); }
+
+        .card-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.3;
+        }
+
+        /* MODAL CALCULADORA CANDY */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border: 1px solid var(--color-candy);
+            border-radius: 14px;
+            width: 100%;
+            max-width: 500px;
+            padding: 24px;
+            box-shadow: 0 0 25px rgba(234, 179, 8, 0.2);
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+        }
+
+        .modal-header h2 {
+            font-size: 1.3rem;
+            color: var(--color-candy);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .close-btn:hover {
+            color: var(--text-color);
+        }
+
+        .calc-form {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .form-group input {
+            background: rgba(0,0,0,0.4);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px 14px;
+            color: var(--text-color);
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: var(--color-candy);
+        }
+
+        .results-box {
+            margin-top: 10px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            padding: 16px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .results-box h3 {
+            font-size: 0.95rem;
+            color: var(--color-candy);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 6px;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .result-value {
+            font-weight: bold;
+            color: #58a6ff;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between">
+<body>
 
-    <!-- Top Header -->
-    <header class="bg-wikiheader border-b border-wikiborder sticky top-0 z-50 px-4 sm:px-8 py-3 flex flex-wrap justify-between items-center gap-4">
-        <a href="index.html" class="flex items-center gap-3 text-wikilink font-bold text-xl tracking-wide hover:opacity-90 transition-opacity">
-            <span class="text-2xl">🛡️</span>
-            <span>Digital Galaxy Wiki</span>
-        </a>
+    <div class="hub-container">
+        <!-- HEADER -->
+        <header class="hub-header">
+            <h1>Digimon Galaxy Hub</h1>
+            <p>Selecione um guia ou ferramenta abaixo para começar</p>
+        </header>
 
-        <!-- Search Bar -->
-        <div class="flex-1 max-w-md mx-2">
-            <div class="relative">
-                <input type="text" id="toolSearch" onkeyup="filterTools()" placeholder="Pesquisar ferramentas ou guias (ex: D-Ark, Key Ring, Drops)..." 
-                       class="w-full bg-wikibg border border-wikiborder rounded-md px-4 py-2 pl-10 text-sm text-wikitext placeholder-gray-400 focus:outline-none focus:border-wikilink transition-colors">
-                <svg class="w-4 h-4 text-gray-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                </svg>
-            </div>
-        </div>
-
-        <!-- Quick Links -->
-        <nav class="flex items-center gap-4 text-sm font-medium">
-            <a href="#ferramentas" class="text-gray-300 hover:text-wikilink transition-colors">Ferramentas</a>
-            <a href="https://github.com/jmigrade/GalaxyDMO" target="_blank" rel="noopener" class="bg-wikipanel hover:bg-wikiborder border border-wikiborder text-wikilink px-3 py-1.5 rounded-md transition-colors flex items-center gap-2">
-                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-                <span>GitHub</span>
+        <!-- GRELHA DE NAVEGAÇÃO -->
+        <div class="cards-grid">
+            
+            <!-- Checklist Diário -->
+            <a href="checklist.html" class="hub-card checklist">
+                <div class="card-icon-box">
+                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Checklist.png" alt="Checklist" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/CheckList.png'">
+                </div>
+                <div class="card-info">
+                    <span class="card-title">CHECKLIST DIÁRIO</span>
+                    <span class="card-desc">Controlo de missões e passes diários</span>
+                </div>
             </a>
-        </nav>
-    </header>
 
-    <!-- Hero Banner -->
-    <section class="bg-gradient-to-b from-wikipanel to-wikibg border-b border-wikiborder py-12 px-4 text-center">
-        <div class="max-w-4xl mx-auto space-y-4">
-            <span class="inline-block px-3 py-1 bg-wikiaccent/20 text-wikilink border border-wikiaccent/40 rounded-full text-xs font-semibold uppercase tracking-wider">
-                Portal GalaxyDMO
-            </span>
-            <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-                Central de Ferramentas & Base de Dados
-            </h1>
-            <p class="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto">
-                Acesse guias detalhados de craft, calculadoras de recursos e tabelas de drops do Digimon Masters Online organizados de forma simples e rápida.
-            </p>
-        </div>
-    </section>
-
-    <!-- Main Content Hub -->
-    <main id="ferramentas" class="max-w-7xl mx-auto px-4 sm:px-8 py-12 flex-1 w-full">
-        <div class="flex items-center justify-between mb-8 border-b border-wikiborder pb-4">
-            <div>
-                <h2 class="text-2xl font-bold text-white flex items-center gap-2">
-                    <span>⚡</span> Ferramentas Disponíveis
-                </h2>
-                <p class="text-sm text-gray-400">Selecione um utilitário para abrir o painel completo</p>
-            </div>
-            <span id="cardCount" class="text-xs font-semibold bg-wikipanel text-wikilink border border-wikiborder px-3 py-1 rounded-full">
-                3 Módulos
-            </span>
-        </div>
-
-        <!-- Cards Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="toolsGrid">
-
-            <!-- Card 1: Spiral Key Ring Crafting -->
-            <div class="tool-card bg-wikipanel border border-wikiborder rounded-xl p-6 flex flex-col justify-between card-glow transition-all duration-200">
-                <div class="space-y-4">
-                    <div class="flex items-start justify-between">
-                        <div class="w-12 h-12 bg-wikibg border border-wikiborder rounded-lg flex items-center justify-center text-2xl">
-                            💍
-                        </div>
-                        <span class="px-2.5 py-1 text-xs font-semibold bg-blue-900/40 text-blue-300 border border-blue-700/50 rounded-md">
-                            Calculadora
-                        </span>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-bold text-white mb-2">Spiral Key Ring Crafting</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed">
-                            Calculadora de materiais e custos de fabricação para todas as 11 Famílias de Chaveiros Espirais (AT, CT, HT, DE, etc.).
-                        </p>
-                    </div>
-                    <div class="flex flex-wrap gap-2 pt-2">
-                        <span class="text-[11px] bg-wikibg text-gray-300 border border-wikiborder px-2 py-0.5 rounded">11 Famílias</span>
-                        <span class="text-[11px] bg-wikibg text-gray-300 border border-wikiborder px-2 py-0.5 rounded">Custo Total em Bits</span>
-                    </div>
+            <!-- True Digivice -->
+            <a href="true_digivice.html" class="hub-card digivice">
+                <div class="card-icon-box">
+                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/True_Digivice.png" alt="Digivice" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Kaiser_Goggles.png'">
                 </div>
-                <div class="mt-6 pt-4 border-t border-wikiborder/60">
-                    <a href="spiral_keyring.html" class="w-full inline-flex items-center justify-center gap-2 bg-wikiaccent hover:bg-wikihover text-white font-semibold text-sm px-4 py-2.5 rounded-lg transition-colors">
-                        <span>Acessar Ferramenta</span>
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                    </a>
+                <div class="card-info">
+                    <span class="card-title">TRUE DIGIVICE</span>
+                    <span class="card-desc">Passos e requisitos de evolução</span>
                 </div>
-            </div>
+            </a>
 
-            <!-- Card 2: D-Ark Digivice Crafting -->
-            <div class="tool-card bg-wikipanel border border-wikiborder rounded-xl p-6 flex flex-col justify-between card-glow transition-all duration-200">
-                <div class="space-y-4">
-                    <div class="flex items-start justify-between">
-                        <div class="w-12 h-12 bg-wikibg border border-wikiborder rounded-lg flex items-center justify-center text-2xl">
-                            📱
-                        </div>
-                        <span class="px-2.5 py-1 text-xs font-semibold bg-emerald-900/40 text-emerald-300 border border-emerald-700/50 rounded-md">
-                            Crafting NPC
-                        </span>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-bold text-white mb-2">D-Ark Digivice Crafting</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed">
-                            Tabela completa de receitas para criação do D-Ark Protótipo, Modelo Completo e D-Ark Edição Limitada no NPC Gankoomon.
-                        </p>
-                    </div>
-                    <div class="flex flex-wrap gap-2 pt-2">
-                        <span class="text-[11px] bg-wikibg text-gray-300 border border-wikiborder px-2 py-0.5 rounded">Gankoomon NPC</span>
-                        <span class="text-[11px] bg-wikibg text-gray-300 border border-wikiborder px-2 py-0.5 rounded">Edição Limitada</span>
-                    </div>
+            <!-- Four Holy Beast Ring -->
+            <a href="four_holy_beast.html" class="hub-card beast">
+                <div class="card-icon-box">
+                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Brilliant_Kindness_Earring.png" alt="Holy Beast Ring" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Kaiser_Goggles.png'">
                 </div>
-                <div class="mt-6 pt-4 border-t border-wikiborder/60">
-                    <a href="d_ark.html" class="w-full inline-flex items-center justify-center gap-2 bg-wikiaccent hover:bg-wikihover text-white font-semibold text-sm px-4 py-2.5 rounded-lg transition-colors">
-                        <span>Acessar Ferramenta</span>
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                    </a>
+                <div class="card-info">
+                    <span class="card-title">FOUR HOLY BEAST</span>
+                    <span class="card-desc">Guia de Evolução e Materiais de Craft</span>
                 </div>
-            </div>
+            </a>
 
-            <!-- Card 3: Mercenary DigiEgg Drops Wiki -->
-            <div class="tool-card bg-wikipanel border border-wikiborder rounded-xl p-6 flex flex-col justify-between card-glow transition-all duration-200">
-                <div class="space-y-4">
-                    <div class="flex items-start justify-between">
-                        <div class="w-12 h-12 bg-wikibg border border-wikiborder rounded-lg flex items-center justify-center text-2xl">
-                            🥚
-                        </div>
-                        <span class="px-2.5 py-1 text-xs font-semibold bg-purple-900/40 text-purple-300 border border-purple-700/50 rounded-md">
-                            Base de Dados
-                        </span>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-bold text-white mb-2">Mercenary DigiEgg Drops</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed">
-                            Guia estilo wiki com busca por Digimon, Mobs e mapas onde é possível obter Ovos Mercenários de todas as linhas.
-                        </p>
-                    </div>
-                    <div class="flex flex-wrap gap-2 pt-2">
-                        <span class="text-[11px] bg-wikibg text-gray-300 border border-wikiborder px-2 py-0.5 rounded">Busca de Mobs</span>
-                        <span class="text-[11px] bg-wikibg text-gray-300 border border-wikiborder px-2 py-0.5 rounded">Mapas & Drops</span>
-                    </div>
+            <!-- Tamer's Goggles -->
+            <a href="tamer_goggles.html" class="hub-card goggles">
+                <div class="card-icon-box">
+                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Kaiser_Goggles.png" alt="Goggles" onerror="this.style.display='none'">
                 </div>
-                <div class="mt-6 pt-4 border-t border-wikiborder/60">
-                    <a href="digi_eggs.html" class="w-full inline-flex items-center justify-center gap-2 bg-wikiaccent hover:bg-wikihover text-white font-semibold text-sm px-4 py-2.5 rounded-lg transition-colors">
-                        <span>Acessar Ferramenta</span>
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                    </a>
+                <div class="card-info">
+                    <span class="card-title">TAMER'S GOGGLES</span>
+                    <span class="card-desc">Guia de Evolução e Materiais de Craft</span>
+                </div>
+            </a>
+
+            <!-- Spiral Key Ring -->
+            <a href="spiral_key.html" class="hub-card spiral">
+                <div class="card-icon-box">
+                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png" alt="Spiral Key" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Kaiser_Goggles.png'">
+                </div>
+                <div class="card-info">
+                    <span class="card-title">SPIRAL KEY RING</span>
+                    <span class="card-desc">Guia de Evolução e Materiais de Craft</span>
+                </div>
+            </a>
+            
+             <!-- D-ARK Digivice -->
+            <a href="dark_digivice.html" class="hub-card spiral">
+                <div class="card-icon-box">
+                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png" alt="Spiral Key" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Kaiser_Goggles.png'">
+                </div>
+                <div class="card-info">
+                    <span class="card-title">D-ARK Digivice</span>
+                    <span class="card-desc">Guia de Evolução e Materiais de Craft</span>
+                </div>
+            </a>
+
+            <!-- Candy Craft Event (Calculadora) -->
+            <div class="hub-card candy" onclick="openCandyModal()">
+                <div class="card-icon-box">
+                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Checklist.png" alt="Candy Event" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/CheckList.png'">
+                </div>
+                <div class="card-info">
+                    <span class="card-title">CANDY CRAFT EVENT</span>
+                    <span class="card-desc">Calculadora de Materiais para Best Handmade Candy</span>
                 </div>
             </div>
 
         </div>
+    </div>
 
-        <!-- Empty state message when filtering -->
-        <div id="noResults" class="hidden text-center py-12 text-gray-400">
-            <p class="text-lg">Nenhuma ferramenta encontrada para o termo pesquisado.</p>
-        </div>
-    </main>
+    <!-- MODAL CALCULADORA DE CANDY -->
+    <div class="modal-overlay" id="candyModal" onclick="closeCandyModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2>Candy Craft Calculator</h2>
+                <button class="close-btn" onclick="closeCandyModal()">&times;</button>
+            </div>
 
-    <!-- Footer -->
-    <footer class="bg-wikiheader border-t border-wikiborder py-6 px-4 text-center text-sm text-gray-400">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
-            <div>
-                <p>© Digital Galaxy Wiki - GalaxyDMO Project</p>
-            </div>
-            <div class="flex items-center gap-4 text-xs">
-                <a href="https://github.com/jmigrade/GalaxyDMO" target="_blank" rel="noopener" class="text-wikilink hover:underline">Repositório GitHub</a>
-                <span>•</span>
-                <span>Digimon Masters Online fan tool</span>
+            <div class="calc-form">
+                <div class="form-group">
+                    <label>Best Handmade Candy pretendidos:</label>
+                    <input type="number" id="targetBest" value="250" min="1" oninput="calculateCandy()">
+                </div>
+
+                <div class="form-group">
+                    <label>Handmade Candy que já possui:</label>
+                    <input type="number" id="ownedHandmade" value="0" min="0" oninput="calculateCandy()">
+                </div>
+
+                <div class="form-group">
+                    <label>Candy que possui no inventário (opcional):</label>
+                    <input type="number" id="ownedCandy" value="0" min="0" oninput="calculateCandy()">
+                </div>
+
+                <div class="form-group">
+                    <label>High-quality Candy no inventário (opcional):</label>
+                    <input type="number" id="ownedHQ" value="0" min="0" oninput="calculateCandy()">
+                </div>
+
+                <div class="results-box">
+                    <h3>Totais de Materiais Necessários:</h3>
+                    
+                    <div class="result-item">
+                        <span>Handmade Candy a fabricar:</span>
+                        <span class="result-value" id="resToCraftHandmade">250</span>
+                    </div>
+
+                    <div class="result-item">
+                        <span>Total de Candy necessário:</span>
+                        <span class="result-value" id="resTotalCandy">1000</span>
+                    </div>
+
+                    <div class="result-item">
+                        <span>Total de High-quality Candy necessário:</span>
+                        <span class="result-value" id="resTotalHQ">750</span>
+                    </div>
+
+                    <div class="result-item" style="margin-top: 6px; font-weight: bold; color: var(--color-candy);">
+                        <span>Faltam no seu inventário:</span>
+                        <span class="result-value" id="resMissingInfo" style="color: #f87171;">-</span>
+                    </div>
+                </div>
             </div>
         </div>
-    </footer>
+    </div>
 
     <script>
-        function filterTools() {
-            const query = document.getElementById('toolSearch').value.toLowerCase();
-            const cards = document.querySelectorAll('.tool-card');
-            let visibleCount = 0;
+        function openCandyModal() {
+            document.getElementById('candyModal').classList.add('active');
+            calculateCandy();
+        }
 
-            cards.forEach(card => {
-                const text = card.innerText.toLowerCase();
-                if (text.includes(query)) {
-                    card.style.display = 'flex';
-                    visibleCount++;
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-
-            const noResults = document.getElementById('noResults');
-            const cardCount = document.getElementById('cardCount');
-            
-            if (visibleCount === 0) {
-                noResults.classList.remove('hidden');
-            } else {
-                noResults.classList.add('hidden');
+        function closeCandyModal(event) {
+            if (!event || event.target.id === 'candyModal' || event.target.classList.contains('close-btn')) {
+                document.getElementById('candyModal').classList.remove('active');
             }
+        }
 
-            cardCount.textContent = `${visibleCount} Módulo${visibleCount === 1 ? '' : 's'}`;
+        function calculateCandy() {
+            const target = parseInt(document.getElementById('targetBest').value) || 0;
+            const ownedHandmade = parseInt(document.getElementById('ownedHandmade').value) || 0;
+            const ownedCandy = parseInt(document.getElementById('ownedCandy').value) || 0;
+            const ownedHQ = parseInt(document.getElementById('ownedHQ').value) || 0;
+
+            // Quantos Handmade Candy ainda precisam de ser fabricados
+            const neededHandmadeToCraft = Math.max(0, target - ownedHandmade);
+
+            // Materiais para a receita direta do Best Handmade Candy
+            const directCandy = target * 2;
+            const directHQ = target * 2;
+
+            // Materiais para fabricar o restante de Handmade Candy
+            const craftCandy = neededHandmadeToCraft * 2;
+            const craftHQ = neededHandmadeToCraft * 1;
+
+            // Totais
+            const totalCandyNeeded = directCandy + craftCandy;
+            const totalHQNeeded = directHQ + craftHQ;
+
+            // Faltantes considerando o inventário
+            const missingCandy = Math.max(0, totalCandyNeeded - ownedCandy);
+            const missingHQ = Math.max(0, totalHQNeeded - ownedHQ);
+
+            document.getElementById('resToCraftHandmade').innerText = neededHandmadeToCraft;
+            document.getElementById('resTotalCandy').innerText = totalCandyNeeded;
+            document.getElementById('resTotalHQ').innerText = totalHQNeeded;
+
+            if (ownedCandy > 0 || ownedHQ > 0) {
+                document.getElementById('resMissingInfo').innerText = `${missingCandy} Candy / ${missingHQ} High-quality`;
+            } else {
+                document.getElementById('resMissingInfo').innerText = `${totalCandyNeeded} Candy / ${totalHQNeeded} High-quality`;
+            }
         }
     </script>
 </body>
