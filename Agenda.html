@@ -129,6 +129,7 @@
             gap: 10px;
         }
 
+        /* ESTILOS DO BOTÃO DE NOTIFICAÇÕES (NEUTRO vs ATIVO) */
         .notif-btn {
             background: rgba(0, 210, 255, 0.15);
             color: var(--color-digivice);
@@ -144,6 +145,17 @@
         .notif-btn:hover {
             background: var(--color-digivice);
             color: #000;
+        }
+
+        .notif-btn.active {
+            background: rgba(35, 134, 54, 0.2);
+            color: #3fb950;
+            border-color: #3fb950;
+        }
+
+        .notif-btn.active:hover {
+            background: #238636;
+            color: #fff;
         }
 
         .test-sound-btn {
@@ -290,7 +302,7 @@
                 <span id="current-time-local" class="clock-display">--:--:--</span>
             </div>
             <div class="actions-group">
-                <button id="enable-notif-btn" class="notif-btn" onclick="requestNotificationPermission()">
+                <button id="enable-notif-btn" class="notif-btn" onclick="toggleNotifications()">
                     🔔 Ativar Notificações
                 </button>
                 <button class="test-sound-btn" onclick="testSoundAndNotif()" title="Testar Som do Alerta">
@@ -415,14 +427,11 @@
                     const osc = audioCtx.createOscillator();
                     const gain = audioCtx.createGain();
                     
-                    // Onda quadrada ('square') = Som metálico/buzzer de relógio digital
                     osc.type = 'square'; 
-                    // Frequência de 3000 Hz = A frequência mais irritante e audível do buzzer
                     osc.frequency.setValueAtTime(3000, startTime); 
                     
-                    // Ganho constante e corte seco instantâneo (sem fading suave)
                     gain.gain.setValueAtTime(0.85, startTime);
-                    gain.gain.setValueAtTime(0, startTime + 0.08); // Bip seco de 0.08 segundos
+                    gain.gain.setValueAtTime(0, startTime + 0.08); 
                     
                     osc.connect(gain);
                     gain.connect(audioCtx.destination);
@@ -431,7 +440,6 @@
                     osc.stop(startTime + 0.08);
                 }
 
-                // Dispara um bloco clássico de 4 bipes rápidos de despertador (BIP-BIP-BIP-BIP)
                 function playPiezoBurst(baseTime) {
                     singlePiezoBeep(baseTime);
                     singlePiezoBeep(baseTime + 0.12);
@@ -441,13 +449,8 @@
 
                 const now = audioCtx.currentTime;
 
-                // Série 1: BIP-BIP-BIP-BIP
                 playPiezoBurst(now);
-
-                // Série 2: BIP-BIP-BIP-BIP (Pausa de 1.5s)
                 playPiezoBurst(now + 1.5);
-
-                // Série 3: BIP-BIP-BIP-BIP (Pausa de mais 1.5s)
                 playPiezoBurst(now + 3.0);
 
             } catch (e) {
@@ -460,23 +463,56 @@
             sendNotification("🔔 Alarme Despertador Ativo!", "O alarme piezoelétrico de despertador está a soar!");
         }
 
-        function requestNotificationPermission() {
+        /* LÓGICA DE ATIVAR / DESATIVAR E ATUALIZAR ESTADO VISUAL DO BOTÃO */
+        function isNotifEnabled() {
+            return localStorage.getItem('global_notifications_enabled') === 'true';
+        }
+
+        function updateNotifButtonUI() {
+            const btn = document.getElementById('enable-notif-btn');
+            const enabled = isNotifEnabled();
+
+            if (enabled && "Notification" in window && Notification.permission === "granted") {
+                btn.innerText = "✅ Notificações Ativas";
+                btn.classList.add('active');
+            } else {
+                btn.innerText = "🔔 Ativar Notificações";
+                btn.classList.remove('active');
+            }
+        }
+
+        function toggleNotifications() {
             initAudioContext();
-            if ("Notification" in window) {
+            
+            if (!("Notification" in window)) {
+                alert("O seu navegador não suporta Notificações.");
+                return;
+            }
+
+            const currentlyEnabled = isNotifEnabled();
+
+            if (!currentlyEnabled) {
                 Notification.requestPermission().then(permission => {
                     if (permission === "granted") {
-                        const btn = document.getElementById('enable-notif-btn');
-                        btn.innerText = "✅ Notificações Ativas";
-                        btn.style.borderColor = "#3fb950";
-                        btn.style.color = "#3fb950";
+                        localStorage.setItem('global_notifications_enabled', 'true');
+                        updateNotifButtonUI();
+                        sendNotification("🔔 Notificações Ligadas", "Receberá alertas para os eventos selecionados!");
+                    } else {
+                        alert("Por favor, permita as notificações nas definições do navegador.");
                     }
                 });
+            } else {
+                localStorage.setItem('global_notifications_enabled', 'false');
+                updateNotifButtonUI();
             }
         }
 
         function sendNotification(title, body) {
-            if ("Notification" in window && Notification.permission === "granted") {
-                new Notification(title, { body: body, icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Checklist.png' });
+            if (isNotifEnabled() && "Notification" in window && Notification.permission === "granted") {
+                new Notification(title, { 
+                    body: body, 
+                    icon: 'https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Checklist.png' 
+                });
             }
         }
 
@@ -558,15 +594,10 @@
             document.getElementById('tz-select').value = userTz;
 
             renderSchedule();
+            updateNotifButtonUI();
+
             setInterval(updateClockAndCheckEvents, 1000);
             updateClockAndCheckEvents();
-
-            if ("Notification" in window && Notification.permission === "granted") {
-                const btn = document.getElementById('enable-notif-btn');
-                btn.innerText = "✅ Notificações Ativas";
-                btn.style.borderColor = "#3fb950";
-                btn.style.color = "#3fb950";
-            }
         });
     </script>
 
