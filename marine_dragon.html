@@ -37,7 +37,7 @@
 
         .container {
             width: 100%;
-            max-width: 980px;
+            max-width: 1200px; /* Alargado ligeiramente para caber melhor o layout em colunas */
             display: flex;
             flex-direction: column;
             gap: 25px;
@@ -95,9 +95,9 @@
         }
 
         .section-box h2 {
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             color: var(--accent-color);
-            margin-bottom: 16px;
+            margin-bottom: 14px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             border-bottom: 1px solid var(--border-color);
@@ -155,6 +155,20 @@
             color: var(--text-muted);
         }
 
+        /* LAYOUT EM COLUNAS LADO A LADO */
+        .craft-columns-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            align-items: start;
+        }
+
+        .craft-column-right {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
         /* TABELAS DE CRAFT */
         .table-container {
             overflow-x: auto;
@@ -164,11 +178,11 @@
             width: 100%;
             border-collapse: collapse;
             text-align: left;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
         }
 
         th, td {
-            padding: 12px 14px;
+            padding: 10px 12px;
             border-bottom: 1px solid var(--border-color);
         }
 
@@ -177,7 +191,7 @@
             color: var(--accent-purple);
             font-weight: 700;
             text-transform: uppercase;
-            font-size: 0.78rem;
+            font-size: 0.75rem;
             letter-spacing: 0.5px;
         }
 
@@ -197,15 +211,15 @@
         .material-req {
             color: #ff7b00;
             font-family: monospace;
-            font-size: 0.9rem;
-            line-height: 1.6;
+            font-size: 0.88rem;
+            line-height: 1.5;
         }
 
         .item-icon {
-            width: 26px;
-            height: 26px;
+            width: 24px;
+            height: 24px;
             vertical-align: middle;
-            margin-right: 8px;
+            margin-right: 6px;
             object-fit: contain;
         }
 
@@ -216,7 +230,7 @@
             border: 1px solid var(--color-tera);
             padding: 2px 6px;
             border-radius: 4px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: bold;
             margin-top: 4px;
         }
@@ -226,7 +240,11 @@
             font-weight: bold;
         }
 
-        @media (max-width: 600px) {
+        /* RESPONSIVIDADE (Em telemóveis volta a ficar empilhado para legibilidade) */
+        @media (max-width: 900px) {
+            .craft-columns-grid {
+                grid-template-columns: 1fr;
+            }
             .page-header {
                 padding-top: 50px;
             }
@@ -234,7 +252,7 @@
                 top: 16px;
             }
             th, td {
-                padding: 10px 8px;
+                padding: 8px 6px;
                 font-size: 0.8rem;
             }
         }
@@ -273,235 +291,244 @@
             </div>
         </div>
 
-        <!-- 1. MATERIAL CRAFT -->
-        <div class="section-box">
-            <h2>1. Material Craft</h2>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Item Produzido</th>
-                            <th>Materiais Necessários</th>
-                            <th>Taxa de Sucesso</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="item-name">
-                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Blue_Chrome_Digizoid.png" alt="Blue Chrome Digizoid" class="item-icon">
-                                Blue Chrome Digizoid (x2)
-                            </td>
-                            <td class="material-req">
-                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Hydroelectric_Power_Generator.png" alt="Hydroelectric Power" class="item-icon">
-                                Hydroelectric Power... x 4
-                            </td>
-                            <td class="success-rate">100%</td>
-                        </tr>
-                        <tr>
-                            <td class="item-name">
-                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Hydroelectric_Power_Generator.png" alt="Hydroelectric Power" class="item-icon">
-                                Hydroelectric Power...
-                            </td>
-                            <td class="material-req">
-                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Blue_Chrome_Digizoid.png" alt="Blue Chrome Digizoid" class="item-icon">
-                                Blue Chrome Digizoid... x 4
-                            </td>
-                            <td class="success-rate">100%</td>
-                        </tr>
-                        <tr>
-                            <td class="item-name">
-                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Hydroelectric_Power_Generator.png" alt="Hydroelectric Power" class="item-icon">
-                                Hydroelectric Power...
-                            </td>
-                            <td class="material-req">
-                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Submerged_Turbine_Blade.png" alt="Submerged Turbine" class="item-icon">
-                                Submerged Turbine... x 1
-                            </td>
-                            <td class="success-rate">100%</td>
-                        </tr>
-                        <tr>
-                            <td class="item-name">
-                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Submerged_Turbine_Blade.png" alt="Submerged Turbine" class="item-icon">
-                                Submerged Turbine...
-                            </td>
-                            <td class="material-req">
-                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Hydroelectric_Power_Generator.png" alt="Hydroelectric Power" class="item-icon">
-                                Hydroelectric Power... x 1
-                            </td>
-                            <td class="success-rate">100%</td>
-                        </tr>
-                        <tr>
-                            <td class="item-name">
-                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Giga_Precision_Sight.png" alt="Giga Precision Sight" class="item-icon">
-                                Giga Precision Sight... (x2)
-                            </td>
-                            <td class="material-req">
-                                <div>
-                                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Giga_Precision_Sight.png" alt="Giga Precision Sight" class="item-icon">
-                                    Giga Precision Sight... x 3
-                                </div>
-                                <div>
-                                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Submerged_Turbine_Blade.png" alt="Submerged Turbine" class="item-icon">
-                                    Submerged Turbine... x 7
-                                </div>
-                            </td>
-                            <td class="success-rate">100%</td>
-                        </tr>
-                        <tr>
-                            <td class="item-name">
-                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Essence_of_the_Iron_Dragon.png" alt="Essence of the Iron Dragon" class="item-icon">
-                                Essence of the Iron...
-                            </td>
-                            <td class="material-req">
-                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Essence_of_the_Iron_Dragon.png" alt="Essence of the Iron Dragon" class="item-icon">
-                                Essence of the Iron... x 1
-                            </td>
-                            <td class="success-rate">100%</td>
-                        </tr>
-                        <tr>
-                            <td class="item-name">
-                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Oxidized_Metal_Scale.png" alt="Oxidized Metal Scale" class="item-icon">
-                                Oxidized Metal Scale...
-                            </td>
-                            <td class="material-req">
-                                <div>
-                                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Essence_of_the_Iron_Dragon.png" alt="Essence of the Iron Dragon" class="item-icon">
-                                    Essence of the Iron... x 2
-                                </div>
-                                <div>
-                                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Giga_Precision_Sight.png" alt="Giga Precision Sight" class="item-icon">
-                                    Giga Precision Sight... x 2
-                                </div>
-                                <div>
-                                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Submerged_Turbine_Blade.png" alt="Submerged Turbine" class="item-icon">
-                                    Submerged Turbine... x 8
-                                </div>
-                                <div>
-                                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Corrupted_Data_Code.png" alt="Corrupted Data Code" class="item-icon">
-                                    Corrupted Data Code x 4
-                                </div>
-                                <div>
-                                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Essence_of_the_Vacuum.png" alt="Essence of the Vacuum" class="item-icon">
-                                    Essence of the Vacuum x 3
-                                </div>
-                            </td>
-                            <td class="success-rate">100%</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- 2. RING CRAFT -->
-        <div class="section-box">
-            <h2>2. Ring Craft</h2>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Item Produzido</th>
-                            <th>Materiais Necessários</th>
-                            <th>Taxa de Sucesso</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Metal Sea Ring (Broken) -->
-                        <tr>
-                            <td class="item-name">
-                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Metal_Sea_Ring_Broken.png" alt="Metal Sea Ring (Broken)" class="item-icon" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Checklist.png'">
-                                Metal Sea Ring(Broken)
-                            </td>
-                            <td class="material-req">
-                                <div>
+        <!-- LAYOUT LADO A LADO (MATERIAL ESQUERDA | RING & KEYRING DIREITA) -->
+        <div class="craft-columns-grid">
+            
+            <!-- LADO ESQUERDO: 1. MATERIAL CRAFT -->
+            <div class="section-box">
+                <h2>1. Material Craft</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Item Produzido</th>
+                                <th>Materiais Necessários</th>
+                                <th>Taxa</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="item-name">
                                     <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Blue_Chrome_Digizoid.png" alt="Blue Chrome Digizoid" class="item-icon">
-                                    Blue Chrome Digizoid... x 10
-                                </div>
-                                <div>
+                                    Blue Chrome Digizoid (x2)
+                                </td>
+                                <td class="material-req">
                                     <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Hydroelectric_Power_Generator.png" alt="Hydroelectric Power" class="item-icon">
                                     Hydroelectric Power... x 4
-                                </div>
-                                <div>
+                                </td>
+                                <td class="success-rate">100%</td>
+                            </tr>
+                            <tr>
+                                <td class="item-name">
+                                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Hydroelectric_Power_Generator.png" alt="Hydroelectric Power" class="item-icon">
+                                    Hydroelectric Power...
+                                </td>
+                                <td class="material-req">
+                                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Blue_Chrome_Digizoid.png" alt="Blue Chrome Digizoid" class="item-icon">
+                                    Blue Chrome Digizoid... x 4
+                                </td>
+                                <td class="success-rate">100%</td>
+                            </tr>
+                            <tr>
+                                <td class="item-name">
+                                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Hydroelectric_Power_Generator.png" alt="Hydroelectric Power" class="item-icon">
+                                    Hydroelectric Power...
+                                </td>
+                                <td class="material-req">
                                     <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Submerged_Turbine_Blade.png" alt="Submerged Turbine" class="item-icon">
                                     Submerged Turbine... x 1
-                                </div>
-                            </td>
-                            <td class="success-rate">100%</td>
-                        </tr>
-
-                        <!-- MetalSeadramon Ring -->
-                        <tr>
-                            <td class="item-name">
-                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/MetalSeadramon_Ring.png" alt="MetalSeadramon Ring" class="item-icon" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Checklist.png'">
-                                MetalSeadramon Ring<br>
-                                <span class="cost-tag">Custo: 10 Tera</span>
-                            </td>
-                            <td class="material-req">
-                                <div>
-                                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Metal_Sea_Ring_Broken.png" alt="Metal Sea Ring (Broken)" class="item-icon" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Checklist.png'">
-                                    Metal Sea Ring(Broken) x 1
-                                </div>
-                                <div>
-                                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Blue_Chrome_Digizoid.png" alt="Blue Chrome Digizoid" class="item-icon">
-                                    Blue Chrome Digizoid... x 15
-                                </div>
-                                <div>
-                                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Hydroelectric_Power_Generator.png" alt="Hydroelectric Power" class="item-icon">
-                                    Hydroelectric Power... x 6
-                                </div>
-                                <div>
+                                </td>
+                                <td class="success-rate">100%</td>
+                            </tr>
+                            <tr>
+                                <td class="item-name">
                                     <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Submerged_Turbine_Blade.png" alt="Submerged Turbine" class="item-icon">
-                                    Submerged Turbine... x 3
-                                </div>
-                            </td>
-                            <td class="success-rate">100%</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- 3. KEYRING CRAFT -->
-        <div class="section-box">
-            <h2>3. KeyRing Craft</h2>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Item Produzido</th>
-                            <th>Materiais Necessários</th>
-                            <th>Taxa de Sucesso</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Abyssal Liquid Keyring -->
-                        <tr>
-                            <td class="item-name">
-                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Abyssal_Liquid_Keyring.png" alt="Abyssal Liquid Keyring" class="item-icon" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Checklist.png'">
-                                Abyssal Liquid Keyring<br>
-                                <span class="cost-tag">Custo: 20 Tera</span>
-                            </td>
-                            <td class="material-req">
-                                <div>
-                                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Max_Key_Ring_Material.png" alt="Max Key Ring Material" class="item-icon" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Checklist.png'">
-                                    Max Key Ring Material x 1
-                                </div>
-                                <div>
-                                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Essence_of_the_Iron_Dragon.png" alt="Essence of the Iron Dragon" class="item-icon">
-                                    Essence of the Iron... x 5
-                                </div>
-                                <div>
+                                    Submerged Turbine...
+                                </td>
+                                <td class="material-req">
+                                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Hydroelectric_Power_Generator.png" alt="Hydroelectric Power" class="item-icon">
+                                    Hydroelectric Power... x 1
+                                </td>
+                                <td class="success-rate">100%</td>
+                            </tr>
+                            <tr>
+                                <td class="item-name">
                                     <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Giga_Precision_Sight.png" alt="Giga Precision Sight" class="item-icon">
-                                    Giga Precision Sight... x 10
-                                </div>
-                                <div>
-                                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Regenerative_Shielding.png" alt="Regenerative Shielding" class="item-icon" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Checklist.png'">
-                                    Regenerative Shielding... x 15
-                                </div>
-                            </td>
-                            <td class="success-rate">100%</td>
-                        </tr>
-                    </tbody>
-                </table>
+                                    Giga Precision Sight... (x2)
+                                </td>
+                                <td class="material-req">
+                                    <div>
+                                        <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Giga_Precision_Sight.png" alt="Giga Precision Sight" class="item-icon">
+                                        Giga Precision Sight... x 3
+                                    </div>
+                                    <div>
+                                        <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Submerged_Turbine_Blade.png" alt="Submerged Turbine" class="item-icon">
+                                        Submerged Turbine... x 7
+                                    </div>
+                                </td>
+                                <td class="success-rate">100%</td>
+                            </tr>
+                            <tr>
+                                <td class="item-name">
+                                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Essence_of_the_Iron_Dragon.png" alt="Essence of the Iron Dragon" class="item-icon">
+                                    Essence of the Iron...
+                                </td>
+                                <td class="material-req">
+                                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Essence_of_the_Iron_Dragon.png" alt="Essence of the Iron Dragon" class="item-icon">
+                                    Essence of the Iron... x 1
+                                </td>
+                                <td class="success-rate">100%</td>
+                            </tr>
+                            <tr>
+                                <td class="item-name">
+                                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Oxidized_Metal_Scale.png" alt="Oxidized Metal Scale" class="item-icon">
+                                    Oxidized Metal Scale...
+                                </td>
+                                <td class="material-req">
+                                    <div>
+                                        <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Essence_of_the_Iron_Dragon.png" alt="Essence of the Iron Dragon" class="item-icon">
+                                        Essence of the Iron... x 2
+                                    </div>
+                                    <div>
+                                        <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Giga_Precision_Sight.png" alt="Giga Precision Sight" class="item-icon">
+                                        Giga Precision Sight... x 2
+                                    </div>
+                                    <div>
+                                        <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Submerged_Turbine_Blade.png" alt="Submerged Turbine" class="item-icon">
+                                        Submerged Turbine... x 8
+                                    </div>
+                                    <div>
+                                        <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Corrupted_Data_Code.png" alt="Corrupted Data Code" class="item-icon">
+                                        Corrupted Data Code x 4
+                                    </div>
+                                    <div>
+                                        <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Essence_of_the_Vacuum.png" alt="Essence of the Vacuum" class="item-icon">
+                                        Essence of the Vacuum x 3
+                                    </div>
+                                </td>
+                                <td class="success-rate">100%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- LADO DIREITO: 2. RING CRAFT & 3. KEYRING CRAFT -->
+            <div class="craft-column-right">
+                
+                <!-- 2. RING CRAFT -->
+                <div class="section-box">
+                    <h2>2. Ring Craft</h2>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Item Produzido</th>
+                                    <th>Materiais Necessários</th>
+                                    <th>Taxa</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Metal Sea Ring (Broken) -->
+                                <tr>
+                                    <td class="item-name">
+                                        <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Metal_Sea_Ring_Broken.png" alt="Metal Sea Ring (Broken)" class="item-icon" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Checklist.png'">
+                                        Metal Sea Ring(Broken)
+                                    </td>
+                                    <td class="material-req">
+                                        <div>
+                                            <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Blue_Chrome_Digizoid.png" alt="Blue Chrome Digizoid" class="item-icon">
+                                            Blue Chrome Digizoid... x 10
+                                        </div>
+                                        <div>
+                                            <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Hydroelectric_Power_Generator.png" alt="Hydroelectric Power" class="item-icon">
+                                            Hydroelectric Power... x 4
+                                        </div>
+                                        <div>
+                                            <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Submerged_Turbine_Blade.png" alt="Submerged Turbine" class="item-icon">
+                                            Submerged Turbine... x 1
+                                        </div>
+                                    </td>
+                                    <td class="success-rate">100%</td>
+                                </tr>
+
+                                <!-- MetalSeadramon Ring -->
+                                <tr>
+                                    <td class="item-name">
+                                        <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/MetalSeadramon_Ring.png" alt="MetalSeadramon Ring" class="item-icon" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Checklist.png'">
+                                        MetalSeadramon Ring<br>
+                                        <span class="cost-tag">Custo: 10 Tera</span>
+                                    </td>
+                                    <td class="material-req">
+                                        <div>
+                                            <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Metal_Sea_Ring_Broken.png" alt="Metal Sea Ring (Broken)" class="item-icon" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Checklist.png'">
+                                            Metal Sea Ring(Broken) x 1
+                                        </div>
+                                        <div>
+                                            <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Blue_Chrome_Digizoid.png" alt="Blue Chrome Digizoid" class="item-icon">
+                                            Blue Chrome Digizoid... x 15
+                                        </div>
+                                        <div>
+                                            <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Hydroelectric_Power_Generator.png" alt="Hydroelectric Power" class="item-icon">
+                                            Hydroelectric Power... x 6
+                                        </div>
+                                        <div>
+                                            <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Submerged_Turbine_Blade.png" alt="Submerged Turbine" class="item-icon">
+                                            Submerged Turbine... x 3
+                                        </div>
+                                    </td>
+                                    <td class="success-rate">100%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 3. KEYRING CRAFT -->
+                <div class="section-box">
+                    <h2>3. KeyRing Craft</h2>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Item Produzido</th>
+                                    <th>Materiais Necessários</th>
+                                    <th>Taxa</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Abyssal Liquid Keyring -->
+                                <tr>
+                                    <td class="item-name">
+                                        <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Abyssal_Liquid_Keyring.png" alt="Abyssal Liquid Keyring" class="item-icon" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Checklist.png'">
+                                        Abyssal Liquid Keyring<br>
+                                        <span class="cost-tag">Custo: 20 Tera</span>
+                                    </td>
+                                    <td class="material-req">
+                                        <div>
+                                            <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Max_Key_Ring_Material.png" alt="Max Key Ring Material" class="item-icon" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Checklist.png'">
+                                            Max Key Ring Material x 1
+                                        </div>
+                                        <div>
+                                            <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Essence_of_the_Iron_Dragon.png" alt="Essence of the Iron Dragon" class="item-icon">
+                                            Essence of the Iron... x 5
+                                        </div>
+                                        <div>
+                                            <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Giga_Precision_Sight.png" alt="Giga Precision Sight" class="item-icon">
+                                            Giga Precision Sight... x 10
+                                        </div>
+                                        <div>
+                                            <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Regenerative_Shielding.png" alt="Regenerative Shielding" class="item-icon" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Checklist.png'">
+                                            Regenerative Shielding... x 15
+                                        </div>
+                                    </td>
+                                    <td class="success-rate">100%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
             </div>
         </div>
 
