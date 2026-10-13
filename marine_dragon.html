@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marine Dragon Domain - Digimon Galaxy</title>
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --text-color: #f0f6fc;
+            --text-muted: #8b949e;
+            --border-color: #30363d;
+            --accent-color: #00d2ff; /* Azul Ciano correspondente ao tema Marine */
+            --accent-purple: #a855f7;
+            --accent-green: #238636;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 30px 15px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 980px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* HEADER */
+        .page-header {
+            text-align: center;
+            padding: 24px 20px;
+            background: linear-gradient(135deg, #1f293d, #111827);
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.15);
+            position: relative;
+        }
+
+        .back-btn {
+            position: absolute;
+            left: 20px;
+            top: 24px;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: opacity 0.2s;
+        }
+
+        .back-btn:hover {
+            opacity: 0.8;
+        }
+
+        .page-header h1 {
+            font-size: 1.8rem;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .page-header p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        /* SECÇÕES DE CONTEÚDO */
+        .section-box {
+            background: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .section-box h2 {
+            font-size: 1.2rem;
+            color: var(--accent-color);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+
+        /* DUNGEON INFO GRID */
+        .dg-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .dg-card {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .dg-card h3 {
+            font-size: 1.05rem;
+            color: #fff;
+        }
+
+        .dg-badge-normal {
+            display: inline-block;
+            background: rgba(0, 210, 255, 0.2);
+            color: var(--accent-color);
+            border: 1px solid var(--accent-color);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            width: fit-content;
+        }
+
+        .dg-badge-hard {
+            display: inline-block;
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid #ef4444;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            width: fit-content;
+        }
+
+        .dg-info-text {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        /* TABELAS DE CRAFT */
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        th, td {
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: #1c2128;
+            color: var(--accent-purple);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.78rem;
+            letter-spacing: 0.5px;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        .item-name {
+            font-weight: bold;
+            color: #f0f6fc;
+        }
+
+        .material-req {
+            color: #ff7b00;
+            font-family: monospace;
+            font-size: 0.95rem;
+        }
+
+        .success-rate {
+            color: #3fb950;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            .page-header {
+                padding-top: 50px;
+            }
+            .back-btn {
+                top: 16px;
+            }
+            th, td {
+                padding: 10px 8px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- HEADER -->
+        <header class="page-header">
+            <a href="index.html" class="back-btn">← Voltar ao Hub</a>
+            <h1>Marine Dragon Domain</h1>
+            <p>Guia de Dungeons, Drops e Recipe Crafting de Acessórios</p>
+        </header>
+
+        <!-- DUNGEONS INFO -->
+        <div class="section-box">
+            <h2>Requisitos e Informações da Dungeon</h2>
+            <div class="dg-grid">
+                <!-- NORMAL -->
+                <div class="dg-card">
+                    <span class="dg-badge-normal">NORMAL</span>
+                    <h3>Marine Dragon Domain</h3>
+                    <p class="dg-info-text"><strong>Condição:</strong> Nenhuma condição especial.</p>
+                    <p class="dg-info-text"><strong>Entrada:</strong> Marine Dragon Domain Entry Ticket [NORMAL] x 1</p>
+                    <p class="dg-info-text"><strong>Máx. Participantes:</strong> 4 Jogadores</p>
+                </div>
+                <!-- HARD -->
+                <div class="dg-card">
+                    <span class="dg-badge-hard">HARD</span>
+                    <h3>Marine Dragon Domain (Hard)</h3>
+                    <p class="dg-info-text"><strong>Condição:</strong> Nenhuma condição especial.</p>
+                    <p class="dg-info-text"><strong>Entrada:</strong> Marine Dragon Domain Entry Ticket (Hard) x 1</p>
+                    <p class="dg-info-text"><strong>Máx. Participantes:</strong> 4 Jogadores</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TABELA DE CRAFT / ITEM MAKING -->
+        <div class="section-box">
+            <h2>Receitas de Craft (Item Making)</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Item Produzido</th>
+                            <th>Materiais Necessários</th>
+                            <th>Taxa de Sucesso</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="item-name">Blue Chrome Digizoid (x2)</td>
+                            <td class="material-req">Hydroelectric Power... x 4</td>
+                            <td class="success-rate">100%</td>
+                        </tr>
+                        <tr>
+                            <td class="item-name">Hydroelectric Power...</td>
+                            <td class="material-req">Blue Chrome Digizoid... x 4</td>
+                            <td class="success-rate">100%</td>
+                        </tr>
+                        <tr>
+                            <td class="item-name">Hydroelectric Power...</td>
+                            <td class="material-req">Submerged Turbine... x 1</td>
+                            <td class="success-rate">100%</td>
+                        </tr>
+                        <tr>
+                            <td class="item-name">Submerged Turbine...</td>
+                            <td class="material-req">Hydroelectric Power... x 1</td>
+                            <td class="success-rate">100%</td>
+                        </tr>
+                        <tr>
+                            <td class="item-name">Giga Precision Sight... (x2)</td>
+                            <td class="material-req">Giga Precision Sight... x 3<br>Submerged Turbine... x 7</td>
+                            <td class="success-rate">100%</td>
+                        </tr>
+                        <tr>
+                            <td class="item-name">Essence of the Iron...</td>
+                            <td class="material-req">Essence of the Iron... x 1</td>
+                            <td class="success-rate">100%</td>
+                        </tr>
+                        <tr>
+                            <td class="item-name">Oxidized Metal Scale...</td>
+                            <td class="material-req">Essence of the Iron... x 2<br>Giga Precision Sight... x 2<br>Submerged Turbine... x 8<br>Corrupted Data Code x 4<br>Essence of the Vacuum x 3</td>
+                            <td class="success-rate">100%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
