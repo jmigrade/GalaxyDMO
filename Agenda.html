@@ -389,8 +389,8 @@
             });
         }
 
-        // Som de Alerta (Onda Quadrada estilo alarme digital/sirene):
-        // 3 beeps rápidos (1240Hz) -> pausa de 2s -> 3 beeps rápidos (1240Hz)
+        // Som de Alerta Agressivo:
+        // [3 beeps curtos e incisivos] -> pausa 2s -> [3 beeps] -> pausa 2s -> [3 beeps]
         function playBeep() {
             try {
                 const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -399,30 +399,36 @@
                     const osc = ctx.createOscillator();
                     const gain = ctx.createGain();
                     
-                    osc.type = 'square'; // Onda quadrada para som de alarme marcante
-                    osc.frequency.setValueAtTime(1240, startTime); // Tom agudo de alerta
+                    osc.type = 'sawtooth'; // Onda dente-de-serra para um som mais cortante e agressivo
+                    osc.frequency.setValueAtTime(1500, startTime);
+                    osc.frequency.exponentialRampToValueAtTime(2000, startTime + 0.08); // Rápido tom ascendente de alarme
                     
-                    gain.gain.setValueAtTime(0.15, startTime);
-                    gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.09);
+                    gain.gain.setValueAtTime(0.2, startTime);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.08);
                     
                     osc.connect(gain);
                     gain.connect(ctx.destination);
                     
                     osc.start(startTime);
-                    osc.stop(startTime + 0.09);
+                    osc.stop(startTime + 0.08);
+                }
+
+                function playBeepGroup(baseTime) {
+                    singleBeep(baseTime);
+                    singleBeep(baseTime + 0.12);
+                    singleBeep(baseTime + 0.24);
                 }
 
                 const now = ctx.currentTime;
 
-                // Primeiro grupo de 3 beeps (BEEP BEEP BEEP)
-                singleBeep(now);
-                singleBeep(now + 0.14);
-                singleBeep(now + 0.28);
+                // Grupo 1: 3 beeps rápidos
+                playBeepGroup(now);
 
-                // Segundo grupo de 3 beeps após 2 segundos de pausa (2.28s depois do início)
-                singleBeep(now + 2.28);
-                singleBeep(now + 2.42);
-                singleBeep(now + 2.56);
+                // Grupo 2: 3 beeps após 2 segundos de pausa (2.24s depois do início)
+                playBeepGroup(now + 2.24);
+
+                // Grupo 3: 3 beeps após mais 2 segundos de pausa (4.48s depois do início)
+                playBeepGroup(now + 4.48);
 
             } catch (e) {
                 console.log("AudioContext bloqueado pelo navegador");
