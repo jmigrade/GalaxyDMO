@@ -129,7 +129,6 @@
             gap: 10px;
         }
 
-        /* ESTILOS DO BOTÃO DE NOTIFICAÇÕES (NEUTRO vs ATIVO) */
         .notif-btn {
             background: rgba(0, 210, 255, 0.15);
             color: var(--color-digivice);
@@ -359,7 +358,8 @@
             { id: "ev_24", start: "23:00", end: "23:10", name: "Quantidade de drop", bonus: "x1.5" }
         ];
 
-        let alertedEvents = new Set();
+        let alertedBeforeEvents = new Set();
+        let alertedStartEvents = new Set();
         let audioCtx = null;
 
         function initAudioContext() {
@@ -392,7 +392,7 @@
             renderSchedule();
         }
 
-        function getTargetDateFromBRTTime(timeStr, timeZone) {
+        function getTargetDateFromBRTTime(timeStr) {
             const [hours, minutes] = timeStr.split(':').map(Number);
             const now = new Date();
             const year = now.getFullYear();
@@ -460,10 +460,9 @@
 
         function testSoundAndNotif() {
             playBeep();
-            sendNotification("🔔 Alarme Despertador Ativo!", "O alarme piezoelétrico de despertador está a soar!");
+            sendNotification("🔔 Alerta Despertador Ativo!", "O alarme piezoelétrico de despertador está a soar!");
         }
 
-        /* LÓGICA DE ATIVAR / DESATIVAR E ATUALIZAR ESTADO VISUAL DO BOTÃO */
         function isNotifEnabled() {
             return localStorage.getItem('global_notifications_enabled') === 'true';
         }
@@ -531,8 +530,8 @@
             tbody.innerHTML = '';
 
             eventsBRT.forEach(ev => {
-                const startDate = getTargetDateFromBRTTime(ev.start, 'America/Sao_Paulo');
-                const endDate = getTargetDateFromBRTTime(ev.end, 'America/Sao_Paulo');
+                const startDate = getTargetDateFromBRTTime(ev.start);
+                const endDate = getTargetDateFromBRTTime(ev.end);
 
                 const brtStart = formatTimeInZone(startDate, 'America/Sao_Paulo');
                 const brtEnd = formatTimeInZone(endDate, 'America/Sao_Paulo');
@@ -568,22 +567,41 @@
             document.getElementById('current-time-local').innerText = `${localTimeStr} (${tzLabel})`;
 
             eventsBRT.forEach(ev => {
-                const startDate = getTargetDateFromBRTTime(ev.start, 'America/Sao_Paulo');
-                const endDate = getTargetDateFromBRTTime(ev.end, 'America/Sao_Paulo');
+                const startDate = getTargetDateFromBRTTime(ev.start);
+                const endDate = getTargetDateFromBRTTime(ev.end);
+                
+                // Calculamos o horário de aviso prévio (Exatamente 5 minutos antes do início)
+                const beforeDate = new Date(startDate.getTime() - 5 * 60000);
+                
                 const row = document.getElementById(`row-${ev.id}`);
 
+                // 1. VERIFICAR AVISO PRÉVIO (5 MINUTOS ANTES)
+                // Tolerância de 5 segundos para garantir que deteta o segundo exato
+                const timeToBefore = now.getTime() - beforeDate.getTime();
+                if (timeToBefore >= 0 && timeToBefore < 5000) {
+                    if (isAlarmEnabled(ev.id) && !alertedBeforeEvents.has(ev.id)) {
+                        alertedBeforeEvents.add(ev.id);
+                        playBeep();
+                        sendNotification(`⚠️ Em Breve (5 min): ${ev.name}`, `O evento (${ev.bonus}) começa daqui a 5 minutos!`);
+                    }
+                }
+
+                // 2. VERIFICAR INÍCIO DO EVENTO
                 if (now >= startDate && now <= endDate) {
                     if (row) row.classList.add('active-event');
 
-                    if (isAlarmEnabled(ev.id) && !alertedEvents.has(ev.id)) {
-                        alertedEvents.add(ev.id);
+                    if (isAlarmEnabled(ev.id) && !alertedStartEvents.has(ev.id)) {
+                        alertedStartEvents.add(ev.id);
                         playBeep();
                         sendNotification(`🔔 Evento Ativo: ${ev.name}`, `O evento (${ev.bonus}) começou agora!`);
                     }
                 } else {
                     if (row) row.classList.remove('active-event');
+                    
+                    // Limpar estados antigos quando o evento já passou para poder repetir no dia seguinte
                     if (now > endDate) {
-                        alertedEvents.delete(ev.id);
+                        alertedBeforeEvents.delete(ev.id);
+                        alertedStartEvents.delete(ev.id);
                     }
                 }
             });
