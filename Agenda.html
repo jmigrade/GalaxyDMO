@@ -123,6 +123,12 @@
             color: var(--color-digivice);
         }
 
+        .actions-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
         .notif-btn {
             background: rgba(0, 210, 255, 0.15);
             color: var(--color-digivice);
@@ -138,6 +144,26 @@
         .notif-btn:hover {
             background: var(--color-digivice);
             color: #000;
+        }
+
+        .test-sound-btn {
+            background: rgba(168, 85, 247, 0.15);
+            color: var(--accent-color);
+            border: 1px solid var(--accent-color);
+            padding: 6px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .test-sound-btn:hover {
+            background: var(--accent-color);
+            color: #fff;
+            transform: scale(1.05);
         }
 
         /* TABELA DE HORÁRIOS */
@@ -263,9 +289,14 @@
                 <span>Hora Local: </span>
                 <span id="current-time-local" class="clock-display">--:--:--</span>
             </div>
-            <button id="enable-notif-btn" class="notif-btn" onclick="requestNotificationPermission()">
-                🔔 Ativar Notificações
-            </button>
+            <div class="actions-group">
+                <button id="enable-notif-btn" class="notif-btn" onclick="requestNotificationPermission()">
+                    🔔 Ativar Notificações
+                </button>
+                <button class="test-sound-btn" onclick="testSoundAndNotif()" title="Testar Som do Alerta">
+                    🔔
+                </button>
+            </div>
         </div>
 
         <!-- TABELA DIRETA -->
@@ -318,11 +349,9 @@
 
         let alertedEvents = new Set();
 
-        // Obter fuso selecionado pelo utilizador (salva preferência)
         function getUserTimezone() {
             let tz = localStorage.getItem('user_timezone');
             if (!tz) {
-                // Tenta detetar automaticamente se está em Portugal ou Brasil pelo navegador
                 const browserTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
                 if (browserTz && browserTz.includes('Europe/Lisbon')) {
                     tz = 'Europe/Lisbon';
@@ -339,7 +368,6 @@
             renderSchedule();
         }
 
-        // Converte hora de Brasília (BRT) para uma Date específica no fuso alvo
         function getTargetDateFromBRTTime(timeStr, timeZone) {
             const [hours, minutes] = timeStr.split(':').map(Number);
             const now = new Date();
@@ -349,9 +377,7 @@
             const hh = String(hours).padStart(2, '0');
             const mm = String(minutes).padStart(2, '0');
 
-            // Cria o objeto date em BRT (UTC-3)
-            const brtDate = new Date(`${year}-${month}-${day}T${hh}:${mm}:00-03:00`);
-            return brtDate;
+            return new Date(`${year}-${month}-${day}T${hh}:${mm}:00-03:00`);
         }
 
         function formatTimeInZone(dateObj, timeZone) {
@@ -380,13 +406,19 @@
             }
         }
 
+        function testSoundAndNotif() {
+            playBeep();
+            sendNotification("🔔 Teste de Alerta", "O som e as notificações do Digimon Galaxy estão a funcionar perfeitamente!");
+        }
+
         function requestNotificationPermission() {
             if ("Notification" in window) {
                 Notification.requestPermission().then(permission => {
                     if (permission === "granted") {
-                        document.getElementById('enable-notif-btn').innerText = "✅ Notificações Ativas";
-                        document.getElementById('enable-notif-btn').style.borderColor = "#3fb950";
-                        document.getElementById('enable-notif-btn').style.color = "#3fb950";
+                        const btn = document.getElementById('enable-notif-btn');
+                        btn.innerText = "✅ Notificações Ativas";
+                        btn.style.borderColor = "#3fb950";
+                        btn.style.color = "#3fb950";
                     }
                 });
             }
@@ -440,17 +472,14 @@
             });
         }
 
-        // Verificação em tempo real com base no fuso escolhido pelo utilizador
         function updateClockAndCheckEvents() {
             const now = new Date();
             const userTz = getUserTimezone();
 
-            // Atualiza relógio local no fuso escolhido
             const localTimeStr = now.toLocaleTimeString('pt-PT', { timeZone: userTz, hour12: false });
             const tzLabel = userTz === 'Europe/Lisbon' ? 'Portugal (PT)' : 'Brasil (BRT)';
             document.getElementById('current-time-local').innerText = `${localTimeStr} (${tzLabel})`;
 
-            // Verificar eventos ativos
             eventsBRT.forEach(ev => {
                 const startDate = getTargetDateFromBRTTime(ev.start, 'America/Sao_Paulo');
                 const endDate = getTargetDateFromBRTTime(ev.end, 'America/Sao_Paulo');
@@ -482,7 +511,10 @@
             updateClockAndCheckEvents();
 
             if ("Notification" in window && Notification.permission === "granted") {
-                document.getElementById('enable-notif-btn').innerText = "✅ Notificações Ativas";
+                const btn = document.getElementById('enable-notif-btn');
+                btn.innerText = "✅ Notificações Ativas";
+                btn.style.borderColor = "#3fb950";
+                btn.style.color = "#3fb950";
             }
         });
     </script>
