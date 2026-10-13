@@ -16,6 +16,7 @@
             --accent-green: #238636;
             --color-tera: #ff7b00;
             --color-candy: #eab308;
+            --color-danger: #f87171;
         }
 
         * {
@@ -38,7 +39,7 @@
 
         .container {
             width: 100%;
-            max-width: 1400px; /* Alargado para caber as 3 colunas em ecrãs largos */
+            max-width: 1400px;
             display: flex;
             flex-direction: column;
             gap: 25px;
@@ -156,10 +157,10 @@
             color: var(--text-muted);
         }
 
-        /* LAYOUT EM 3 COLUNAS (CALCULADORA | MATERIAL | RING & KEYRING) */
+        /* LAYOUT EM 3 COLUNAS */
         .craft-columns-grid {
             display: grid;
-            grid-template-columns: 320px 1fr 1fr;
+            grid-template-columns: 360px 1fr 1fr;
             gap: 20px;
             align-items: start;
         }
@@ -177,6 +178,15 @@
             gap: 12px;
         }
 
+        .calc-subtitle {
+            font-size: 0.82rem;
+            color: var(--accent-purple);
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+        }
+
         .form-group {
             display: flex;
             flex-direction: column;
@@ -186,15 +196,18 @@
         .form-group label {
             font-size: 0.82rem;
             color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .form-group input {
             background: rgba(0,0,0,0.4);
             border: 1px solid var(--border-color);
             border-radius: 6px;
-            padding: 8px 10px;
+            padding: 7px 10px;
             color: var(--text-color);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             outline: none;
         }
 
@@ -202,8 +215,26 @@
             border-color: var(--accent-color);
         }
 
+        .inventory-inputs {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 240px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .inventory-inputs::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .inventory-inputs::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
         .results-box {
-            margin-top: 10px;
+            margin-top: 6px;
             background: rgba(0,0,0,0.3);
             border-radius: 8px;
             padding: 12px;
@@ -232,6 +263,12 @@
         .result-item:last-child {
             border-bottom: none;
             padding-bottom: 0;
+        }
+
+        .result-item-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .result-value {
@@ -294,6 +331,13 @@
             object-fit: contain;
         }
 
+        .calc-icon {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+            vertical-align: middle;
+        }
+
         .cost-tag {
             display: inline-block;
             background: rgba(255, 123, 0, 0.15);
@@ -311,7 +355,7 @@
             font-weight: bold;
         }
 
-        /* RESPONSIVIDADE (Adaptação para portáteis e telemóveis) */
+        /* RESPONSIVIDADE */
         @media (max-width: 1200px) {
             .craft-columns-grid {
                 grid-template-columns: 1fr 1fr;
@@ -373,55 +417,144 @@
         <!-- LAYOUT EM 3 COLUNAS -->
         <div class="craft-columns-grid">
             
-            <!-- COLUNA 1 (ESQUERDA): CALCULADORA DE CRAFT -->
+            <!-- COLUNA 1 (ESQUERDA): CALCULADORA DE CRAFT COM INVENTÁRIO -->
             <div class="section-box calc-section">
                 <h2>🧮 Calculadora de Materiais</h2>
                 <div class="calc-form">
+                    
+                    <span class="calc-subtitle">1. Meta de Acessórios:</span>
                     <div class="form-group">
-                        <label>MetalSeadramon Ring pretendidos:</label>
+                        <label>
+                            <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/MetalSeadramon_Ring.png" class="calc-icon" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Checklist.png'">
+                            MetalSeadramon Ring:
+                        </label>
                         <input type="number" id="targetRing" value="1" min="0" oninput="calculateMarineCraft()">
                     </div>
 
                     <div class="form-group">
-                        <label>Abyssal Liquid Keyring pretendidos:</label>
+                        <label>
+                            <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Abyssal_Liquid_Keyring.png" class="calc-icon" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Checklist.png'">
+                            Abyssal Liquid Keyring:
+                        </label>
                         <input type="number" id="targetKeyring" value="1" min="0" oninput="calculateMarineCraft()">
                     </div>
 
+                    <span class="calc-subtitle" style="margin-top: 6px;">2. Materiais no Inventário (Opcional):</span>
+                    <div class="inventory-inputs">
+                        <div class="form-group">
+                            <label>
+                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Blue_Chrome_Digizoid.png" class="calc-icon">
+                                Blue Chrome Digizoid:
+                            </label>
+                            <input type="number" id="ownBlueChrome" value="0" min="0" oninput="calculateMarineCraft()">
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Hydroelectric_Power_Generator.png" class="calc-icon">
+                                Hydroelectric Power:
+                            </label>
+                            <input type="number" id="ownHydroPower" value="0" min="0" oninput="calculateMarineCraft()">
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Submerged_Turbine_Blade.png" class="calc-icon">
+                                Submerged Turbine Blade:
+                            </label>
+                            <input type="number" id="ownTurbine" value="0" min="0" oninput="calculateMarineCraft()">
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Giga_Precision_Sight.png" class="calc-icon">
+                                Giga Precision Sight:
+                            </label>
+                            <input type="number" id="ownGigaSight" value="0" min="0" oninput="calculateMarineCraft()">
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Essence_of_the_Iron_Dragon.png" class="calc-icon">
+                                Essence of Iron Dragon:
+                            </label>
+                            <input type="number" id="ownEssenceIron" value="0" min="0" oninput="calculateMarineCraft()">
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Regenerative_Shielding.png" class="calc-icon" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Checklist.png'">
+                                Regenerative Shielding:
+                            </label>
+                            <input type="number" id="ownRegenShield" value="0" min="0" oninput="calculateMarineCraft()">
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Max_Key_Ring_Material.png" class="calc-icon" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Checklist.png'">
+                                Max Key Ring Material:
+                            </label>
+                            <input type="number" id="ownMaxKeyMat" value="0" min="0" oninput="calculateMarineCraft()">
+                        </div>
+                    </div>
+
+                    <!-- CAIXA DE RESULTADOS / FALTANTES -->
                     <div class="results-box">
-                        <h3>Materiais Totais Necessários:</h3>
+                        <h3>Materiais Que Faltam Farmar:</h3>
                         
                         <div class="result-item">
-                            <span>Blue Chrome Digizoid:</span>
+                            <span class="result-item-label">
+                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Blue_Chrome_Digizoid.png" class="calc-icon">
+                                Blue Chrome Digizoid:
+                            </span>
                             <span class="result-value" id="resBlueChrome">25</span>
                         </div>
 
                         <div class="result-item">
-                            <span>Hydroelectric Power:</span>
+                            <span class="result-item-label">
+                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Hydroelectric_Power_Generator.png" class="calc-icon">
+                                Hydroelectric Power:
+                            </span>
                             <span class="result-value" id="resHydroPower">10</span>
                         </div>
 
                         <div class="result-item">
-                            <span>Submerged Turbine Blade:</span>
+                            <span class="result-item-label">
+                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Submerged_Turbine_Blade.png" class="calc-icon">
+                                Submerged Turbine:
+                            </span>
                             <span class="result-value" id="resTurbine">4</span>
                         </div>
 
                         <div class="result-item">
-                            <span>Giga Precision Sight:</span>
+                            <span class="result-item-label">
+                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Giga_Precision_Sight.png" class="calc-icon">
+                                Giga Precision Sight:
+                            </span>
                             <span class="result-value" id="resGigaSight">10</span>
                         </div>
 
                         <div class="result-item">
-                            <span>Essence of Iron Dragon:</span>
+                            <span class="result-item-label">
+                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Essence_of_the_Iron_Dragon.png" class="calc-icon">
+                                Essence of Iron Dragon:
+                            </span>
                             <span class="result-value" id="resEssenceIron">5</span>
                         </div>
 
                         <div class="result-item">
-                            <span>Regenerative Shielding:</span>
+                            <span class="result-item-label">
+                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Regenerative_Shielding.png" class="calc-icon" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Checklist.png'">
+                                Regenerative Shielding:
+                            </span>
                             <span class="result-value" id="resRegenShield">15</span>
                         </div>
 
                         <div class="result-item">
-                            <span>Max Key Ring Material:</span>
+                            <span class="result-item-label">
+                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Max_Key_Ring_Material.png" class="calc-icon" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Checklist.png'">
+                                Max Key Ring Material:
+                            </span>
                             <span class="result-value" id="resMaxKeyMat">1</span>
                         </div>
 
@@ -430,6 +563,7 @@
                             <span class="result-value" id="resTotalTera" style="color: var(--color-tera);">30 T</span>
                         </div>
                     </div>
+
                 </div>
             </div>
 
@@ -676,39 +810,52 @@
     <!-- JAVASCRIPT DA CALCULADORA -->
     <script>
         function calculateMarineCraft() {
+            // Metas
             const rings = Math.max(0, parseInt(document.getElementById('targetRing').value) || 0);
             const keyrings = Math.max(0, parseInt(document.getElementById('targetKeyring').value) || 0);
 
-            // Totais para MetalSeadramon Ring (inclui o Broken Ring prévio):
-            // 1 Broken Ring = 10 Blue Chrome + 4 Hydro Power + 1 Turbine
-            // 1 MetalSeadramon Ring = 1 Broken Ring + 15 Blue Chrome + 6 Hydro Power + 3 Turbine
-            // Total por Ring = 25 Blue Chrome + 10 Hydro Power + 4 Turbine + 10 Tera
-            const totalBlueChrome = rings * 25;
-            const totalHydroPower = rings * 10;
-            const totalTurbine = rings * 4;
+            // Inventário
+            const ownBlueChrome = Math.max(0, parseInt(document.getElementById('ownBlueChrome').value) || 0);
+            const ownHydroPower = Math.max(0, parseInt(document.getElementById('ownHydroPower').value) || 0);
+            const ownTurbine = Math.max(0, parseInt(document.getElementById('ownTurbine').value) || 0);
+            const ownGigaSight = Math.max(0, parseInt(document.getElementById('ownGigaSight').value) || 0);
+            const ownEssenceIron = Math.max(0, parseInt(document.getElementById('ownEssenceIron').value) || 0);
+            const ownRegenShield = Math.max(0, parseInt(document.getElementById('ownRegenShield').value) || 0);
+            const ownMaxKeyMat = Math.max(0, parseInt(document.getElementById('ownMaxKeyMat').value) || 0);
 
-            // Totais para Abyssal Liquid Keyring:
-            // 1 Keyring = 1 Max Key Ring Material + 5 Essence of Iron Dragon + 10 Giga Precision Sight + 15 Regenerative Shielding + 20 Tera
-            const totalMaxKeyMat = keyrings * 1;
-            const totalEssenceIron = keyrings * 5;
-            const totalGigaSight = keyrings * 10;
-            const totalRegenShield = keyrings * 15;
+            // Totais brutos necessários
+            const reqBlueChrome = rings * 25;
+            const reqHydroPower = rings * 10;
+            const reqTurbine = rings * 4;
 
-            // Custo total em Tera
+            const reqMaxKeyMat = keyrings * 1;
+            const reqEssenceIron = keyrings * 5;
+            const reqGigaSight = keyrings * 10;
+            const reqRegenShield = keyrings * 15;
+
+            // Subtração pelo inventário (o resultado não desce abaixo de 0)
+            const missingBlueChrome = Math.max(0, reqBlueChrome - ownBlueChrome);
+            const missingHydroPower = Math.max(0, reqHydroPower - ownHydroPower);
+            const missingTurbine = Math.max(0, reqTurbine - ownTurbine);
+            const missingGigaSight = Math.max(0, reqGigaSight - ownGigaSight);
+            const missingEssenceIron = Math.max(0, reqEssenceIron - ownEssenceIron);
+            const missingRegenShield = Math.max(0, reqRegenShield - ownRegenShield);
+            const missingMaxKeyMat = Math.max(0, reqMaxKeyMat - ownMaxKeyMat);
+
+            // Custo em Tera
             const totalTera = (rings * 10) + (keyrings * 20);
 
-            // Atualização dos valores na UI
-            document.getElementById('resBlueChrome').innerText = totalBlueChrome;
-            document.getElementById('resHydroPower').innerText = totalHydroPower;
-            document.getElementById('resTurbine').innerText = totalTurbine;
-            document.getElementById('resGigaSight').innerText = totalGigaSight;
-            document.getElementById('resEssenceIron').innerText = totalEssenceIron;
-            document.getElementById('resRegenShield').innerText = totalRegenShield;
-            document.getElementById('resMaxKeyMat').innerText = totalMaxKeyMat;
+            // Atualizar UI
+            document.getElementById('resBlueChrome').innerText = missingBlueChrome;
+            document.getElementById('resHydroPower').innerText = missingHydroPower;
+            document.getElementById('resTurbine').innerText = missingTurbine;
+            document.getElementById('resGigaSight').innerText = missingGigaSight;
+            document.getElementById('resEssenceIron').innerText = missingEssenceIron;
+            document.getElementById('resRegenShield').innerText = missingRegenShield;
+            document.getElementById('resMaxKeyMat').innerText = missingMaxKeyMat;
             document.getElementById('resTotalTera').innerText = `${totalTera} T`;
         }
 
-        // Executar cálculo inicial ao carregar a página
         document.addEventListener('DOMContentLoaded', calculateMarineCraft);
     </script>
 
