@@ -12,13 +12,12 @@
             --text-muted: #8b949e;
             --border-color: #30363d;
             
-            /* Cores customizadas por card */
             --color-checklist: #238636;  /* Verde */
             --color-digivice: #00d2ff;   /* Azul Ciano */
             --color-beast: #a855f7;      /* Roxo */
             --color-goggles: #ff7b00;    /* Laranja */
             --color-spiral: #ec4899;     /* Rosa */
-            --color-candy: #eab308;      /* Amarelo/Ouro para o Evento Candy */
+            --color-candy: #eab308;      /* Amarelo/Ouro */
         }
 
         * {
@@ -93,7 +92,6 @@
             cursor: pointer;
         }
 
-        /* Efeito de brilho lateral nas cores respetivas */
         .hub-card::before {
             content: '';
             position: absolute;
@@ -116,13 +114,6 @@
             border-color: var(--text-muted);
             box-shadow: 0 6px 20px rgba(0,0,0,0.4);
         }
-
-        .hub-card.checklist:hover { border-color: var(--color-checklist); }
-        .hub-card.digivice:hover { border-color: var(--color-digivice); }
-        .hub-card.beast:hover { border-color: var(--color-beast); }
-        .hub-card.goggles:hover { border-color: var(--color-goggles); }
-        .hub-card.spiral:hover { border-color: var(--color-spiral); }
-        .hub-card.candy:hover { border-color: var(--color-candy); }
 
         /* ÍCONES DOS CARDS */
         .card-icon-box {
@@ -363,7 +354,7 @@
                 </div>
             </a>
             
-             <!-- D-ARK Digivice -->
+            <!-- D-ARK Digivice -->
             <a href="dark_digivice.html" class="hub-card spiral">
                 <div class="card-icon-box">
                     <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png" alt="Spiral Key" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Kaiser_Goggles.png'">
@@ -371,6 +362,17 @@
                 <div class="card-info">
                     <span class="card-title">D-ARK Digivice</span>
                     <span class="card-desc">Guia de Evolução e Materiais de Craft</span>
+                </div>
+            </a>
+
+            <!-- Agenda de Eventos (Dentro da Grelha) -->
+            <a href="Agenda.html" class="hub-card spiral">
+                <div class="card-icon-box">
+                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/gemini.jpeg" alt="Agenda de Eventos" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Checklist.png'">
+                </div>
+                <div class="card-info">
+                    <span class="card-title">AGENDA DE EVENTOS</span>
+                    <span class="card-desc">Horários e Alertas do Jogo</span>
                 </div>
             </a>
 
@@ -387,17 +389,6 @@
 
         </div>
     </div>
-            <!-- Agenda -->
-            <a href="Agenda.html" class="hub-card spiral">
-                <div class="card-icon-box">
-                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/gemini.jpeg" alt="Agenda de Eventos" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Checklist.png'">
-                </div>
-                <div class="card-info">
-                    <span class="card-title">Agenda Evento</span>
-                    <span class="card-desc">Horários e Alertas do Jogo</span>
-                </div>
-            </a>
-    
 
     <!-- MODAL CALCULADORA DE CANDY -->
     <div class="modal-overlay" id="candyModal" onclick="closeCandyModal(event)">
@@ -473,22 +464,15 @@
             const ownedCandy = parseInt(document.getElementById('ownedCandy').value) || 0;
             const ownedHQ = parseInt(document.getElementById('ownedHQ').value) || 0;
 
-            // Quantos Handmade Candy ainda precisam de ser fabricados
             const neededHandmadeToCraft = Math.max(0, target - ownedHandmade);
-
-            // Materiais para a receita direta do Best Handmade Candy
             const directCandy = target * 2;
             const directHQ = target * 2;
-
-            // Materiais para fabricar o restante de Handmade Candy
             const craftCandy = neededHandmadeToCraft * 2;
             const craftHQ = neededHandmadeToCraft * 1;
 
-            // Totais
             const totalCandyNeeded = directCandy + craftCandy;
             const totalHQNeeded = directHQ + craftHQ;
 
-            // Faltantes considerando o inventário
             const missingCandy = Math.max(0, totalCandyNeeded - ownedCandy);
             const missingHQ = Math.max(0, totalHQNeeded - ownedHQ);
 
