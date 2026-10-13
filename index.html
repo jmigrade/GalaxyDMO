@@ -19,6 +19,7 @@
             --color-goggles: #ff7b00;    /* Laranja */
             --color-spiral: #ec4899;     /* Rosa */
             --color-candy: #eab308;      /* Amarelo/Ouro para o Evento Candy */
+            --color-agenda: #3b82f6;     /* Azul para a Agenda */
         }
 
         * {
@@ -110,6 +111,7 @@
         .hub-card.goggles::before { background-color: var(--color-goggles); }
         .hub-card.spiral::before { background-color: var(--color-spiral); }
         .hub-card.candy::before { background-color: var(--color-candy); }
+        .hub-card.agenda::before { background-color: var(--color-agenda); }
 
         .hub-card:hover {
             transform: translateY(-4px);
@@ -123,6 +125,7 @@
         .hub-card.goggles:hover { border-color: var(--color-goggles); }
         .hub-card.spiral:hover { border-color: var(--color-spiral); }
         .hub-card.candy:hover { border-color: var(--color-candy); }
+        .hub-card.agenda:hover { border-color: var(--color-agenda); }
 
         /* ÍCONES DOS CARDS */
         .card-icon-box {
@@ -163,6 +166,7 @@
         .goggles .card-title { color: var(--color-goggles); }
         .spiral .card-title { color: var(--color-spiral); }
         .candy .card-title { color: var(--color-candy); }
+        .agenda .card-title { color: var(--color-agenda); }
 
         .card-desc {
             font-size: 0.85rem;
@@ -170,7 +174,7 @@
             line-height: 1.3;
         }
 
-        /* MODAL CALCULADORA CANDY */
+        /* MODAIS */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -192,12 +196,15 @@
 
         .modal-content {
             background: var(--card-bg);
-            border: 1px solid var(--color-candy);
+            border: 1px solid var(--border-color);
             border-radius: 14px;
             width: 100%;
-            max-width: 500px;
+            max-width: 700px;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
             padding: 24px;
-            box-shadow: 0 0 25px rgba(234, 179, 8, 0.2);
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
             position: relative;
         }
 
@@ -212,7 +219,10 @@
 
         .modal-header h2 {
             font-size: 1.3rem;
-            color: var(--color-candy);
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .close-btn {
@@ -228,10 +238,71 @@
             color: var(--text-color);
         }
 
+        /* TABELA DA AGENDA */
+        .agenda-table-container {
+            overflow-y: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: rgba(0,0,0,0.2);
+        }
+
+        .agenda-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+
+        .agenda-table th {
+            background: #1f293d;
+            color: var(--text-muted);
+            padding: 12px 16px;
+            font-weight: 600;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .agenda-table td {
+            padding: 10px 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .agenda-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .agenda-table tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .badge-bonus {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .timezone-info {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* CALCULADORA CANDY STYLES */
         .calc-form {
             display: flex;
             flex-direction: column;
             gap: 14px;
+            overflow-y: auto;
         }
 
         .form-group {
@@ -308,6 +379,28 @@
         <!-- GRELHA DE NAVEGAÇÃO -->
         <div class="cards-grid">
             
+            <!-- Agenda Diária no Game -->
+            <div class="hub-card agenda" onclick="openAgendaModal()">
+                <div class="card-icon-box">
+                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Checklist.png" alt="Agenda" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/CheckList.png'">
+                </div>
+                <div class="card-info">
+                    <span class="card-title">AGENDA DO JOGO</span>
+                    <span class="card-desc">Horários dos eventos diários (Hora de Portugal)</span>
+                </div>
+            </div>
+
+            <!-- Candy Craft Event (Calculadora) -->
+            <div class="hub-card candy" onclick="openCandyModal()">
+                <div class="card-icon-box">
+                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Checklist.png" alt="Candy Event" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/CheckList.png'">
+                </div>
+                <div class="card-info">
+                    <span class="card-title">CANDY CRAFT EVENT</span>
+                    <span class="card-desc">Calculadora de Materiais para Best Handmade Candy</span>
+                </div>
+            </div>
+
             <!-- Checklist Diário -->
             <a href="checklist.html" class="hub-card checklist">
                 <div class="card-icon-box">
@@ -374,17 +467,35 @@
                 </div>
             </a>
 
-            <!-- Candy Craft Event (Calculadora) -->
-            <div class="hub-card candy" onclick="openCandyModal()">
-                <div class="card-icon-box">
-                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Checklist.png" alt="Candy Event" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/CheckList.png'">
-                </div>
-                <div class="card-info">
-                    <span class="card-title">CANDY CRAFT EVENT</span>
-                    <span class="card-desc">Calculadora de Materiais para Best Handmade Candy</span>
-                </div>
-            </div>
+        </div>
+    </div>
 
+    <!-- MODAL AGENDA DO JOGO -->
+    <div class="modal-overlay" id="agendaModal" onclick="closeAgendaModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2>📅 Agenda de hoje no Game</h2>
+                <button class="close-btn" onclick="closeAgendaModal()">&times;</button>
+            </div>
+            <div class="timezone-info">
+                <span>Horários convertidos automaticamente para: <strong>Portugal Continental (WET/WEST)</strong></span>
+                <span style="color: var(--color-agenda);">Base original: BRT (UTC-3)</span>
+            </div>
+            <div class="agenda-table-container">
+                <table class="agenda-table">
+                    <thead>
+                        <tr>
+                            <th>Início</th>
+                            <th>Fim</th>
+                            <th>Evento</th>
+                            <th>Bónus</th>
+                        </tr>
+                    </thead>
+                    <tbody id="agendaTableBody">
+                        <!-- Preenchido via JavaScript com conversão de fuso -->
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -392,7 +503,7 @@
     <div class="modal-overlay" id="candyModal" onclick="closeCandyModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <div class="modal-header">
-                <h2>Candy Craft Calculator</h2>
+                <h2>🍬 Candy Craft Calculator</h2>
                 <button class="close-btn" onclick="closeCandyModal()">&times;</button>
             </div>
 
@@ -445,6 +556,89 @@
     </div>
 
     <script>
+        // Dados originais da agenda em horário BRT (UTC-3)
+        const rawAgendaData = [
+            { start: "00:00", end: "00:10", event: "Bits dos monstros", bonus: "x1.5" },
+            { start: "01:00", end: "01:10", event: "Drop de fragmentos e materiais", bonus: "x1.5" },
+            { start: "02:00", end: "02:10", event: "Fadiga recupera mais rápido", bonus: "x2" },
+            { start: "03:00", end: "03:10", event: "Drop de scan data", bonus: "x1.5" },
+            { start: "04:00", end: "04:15", event: "Craft com menos material", bonus: "-10%" },
+            { start: "05:00", end: "05:30", event: "Chance de chocagem", bonus: "x2" },
+            { start: "06:00", end: "06:10", event: "Fadiga enche mais devagar", bonus: "x2" },
+            { start: "07:00", end: "07:10", event: "Drop de selos", bonus: "x2" },
+            { start: "08:00", end: "08:10", event: "Drop de digiclone", bonus: "x1.5" },
+            { start: "09:00", end: "10:00", event: "EXP (Digimon e Tamer)", bonus: "x5" },
+            { start: "10:00", end: "10:10", event: "Drop de ovos", bonus: "x1.5" },
+            { start: "11:00", end: "11:10", event: "Quantidade de drop", bonus: "x1.5" },
+            { start: "12:00", end: "12:10", event: "Bits dos monstros", bonus: "x1.5" },
+            { start: "13:00", end: "13:15", event: "Chance de drop (todos os itens)", bonus: "x1.5" },
+            { start: "14:00", end: "14:10", event: "Drop de fragmentos e materiais", bonus: "x1.5" },
+            { start: "15:00", end: "16:00", event: "EXP (Digimon e Tamer)", bonus: "x5" },
+            { start: "16:00", end: "16:10", event: "Recompensa do scanner", bonus: "x1.5" },
+            { start: "17:00", end: "17:10", event: "Drop dentro de dungeon", bonus: "x1.5" },
+            { start: "18:00", end: "18:10", event: "Bits dos monstros", bonus: "x1.5" },
+            { start: "19:00", end: "19:30", event: "Chance de enchant", bonus: "x2" },
+            { start: "20:00", end: "20:15", event: "Chance de drop (todos os itens)", bonus: "x1.5" },
+            { start: "21:00", end: "22:00", event: "EXP (Digimon e Tamer)", bonus: "x5" },
+            { start: "22:00", end: "22:10", event: "Drop de ovos", bonus: "x1.5" },
+            { start: "22:15", end: "22:25", event: "Invasão de monstros", bonus: "—" },
+            { start: "23:00", end: "23:10", event: "Quantidade de drop", bonus: "x1.5" }
+        ];
+
+        // Função para converter hora "HH:MM" de BRT (UTC-3) para o fuso de Portugal (Europe/Lisbon)
+        function convertTimeToPortugal(timeStr) {
+            const [hours, minutes] = timeStr.split(':').map(Number);
+            
+            // Cria uma data base (hoje) UTC e define a hora em BRT (UTC-3)
+            const now = new Date();
+            const year = now.getUTCFullYear();
+            const month = now.getUTCMonth();
+            const day = now.getUTCDate();
+
+            // BRT é UTC-3. Logo, o timestamp UTC correspondente é hours + 3
+            const utcHours = hours + 3;
+            const dateUTC = new Date(Date.UTC(year, month, day, utcHours, minutes));
+
+            // Formata para o fuso de Portugal (Europe/Lisbon)
+            return new Intl.DateTimeFormat('pt-PT', {
+                timeZone: 'Europe/Lisbon',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            }).format(dateUTC);
+        }
+
+        // Preenche a tabela da agenda com horários convertidos
+        function populateAgendaTable() {
+            const tbody = document.getElementById('agendaTableBody');
+            tbody.innerHTML = '';
+
+            rawAgendaData.forEach(item => {
+                const ptStart = convertTimeToPortugal(item.start);
+                const ptEnd = convertTimeToPortugal(item.end);
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td style="font-weight: 600; color: #60a5fa;">${ptStart}</td>
+                    <td style="font-weight: 600; color: #93c5fd;">${ptEnd}</td>
+                    <td>${item.event}</td>
+                    <td><span class="badge-bonus">${item.bonus}</span></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function openAgendaModal() {
+            populateAgendaTable();
+            document.getElementById('agendaModal').classList.add('active');
+        }
+
+        function closeAgendaModal(event) {
+            if (!event || event.target.id === 'agendaModal' || event.target.classList.contains('close-btn')) {
+                document.getElementById('agendaModal').classList.remove('active');
+            }
+        }
+
         function openCandyModal() {
             document.getElementById('candyModal').classList.add('active');
             calculateCandy();
@@ -462,22 +656,17 @@
             const ownedCandy = parseInt(document.getElementById('ownedCandy').value) || 0;
             const ownedHQ = parseInt(document.getElementById('ownedHQ').value) || 0;
 
-            // Quantos Handmade Candy ainda precisam de ser fabricados
             const neededHandmadeToCraft = Math.max(0, target - ownedHandmade);
 
-            // Materiais para a receita direta do Best Handmade Candy
             const directCandy = target * 2;
             const directHQ = target * 2;
 
-            // Materiais para fabricar o restante de Handmade Candy
             const craftCandy = neededHandmadeToCraft * 2;
             const craftHQ = neededHandmadeToCraft * 1;
 
-            // Totais
             const totalCandyNeeded = directCandy + craftCandy;
             const totalHQNeeded = directHQ + craftHQ;
 
-            // Faltantes considerando o inventário
             const missingCandy = Math.max(0, totalCandyNeeded - ownedCandy);
             const missingHQ = Math.max(0, totalHQNeeded - ownedHQ);
 
@@ -488,7 +677,7 @@
             if (ownedCandy > 0 || ownedHQ > 0) {
                 document.getElementById('resMissingInfo').innerText = `${missingCandy} Candy / ${missingHQ} High-quality`;
             } else {
-                document.getElementById('resMissingInfo').innerText = `${totalCandyNeeded} Candy / ${totalHQNeeded} High-quality`;
+                document.getElementById('resMissingInfo').innerText = `${totalCandy` + `Needed} Candy / ${totalHQNeeded} High-quality`;
             }
         }
     </script>
