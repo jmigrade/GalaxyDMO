@@ -11,7 +11,7 @@
             --text-color: #f0f6fc;
             --text-muted: #8b949e;
             --border-color: #30363d;
-            --accent-color: #00d2ff; /* Azul Ciano correspondente ao tema Marine */
+            --accent-color: #00d2ff;
             --accent-purple: #a855f7;
             --accent-green: #238636;
         }
@@ -196,7 +196,16 @@
         .material-req {
             color: #ff7b00;
             font-family: monospace;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .item-icon {
+            width: 26px;
+            height: 26px;
+            vertical-align: middle;
+            margin-right: 8px;
+            object-fit: contain;
         }
 
         .success-rate {
@@ -264,41 +273,121 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <!-- 1. Blue Chrome Digizoid -->
                         <tr>
-                            <td class="item-name">Blue Chrome Digizoid (x2)</td>
-                            <td class="material-req">Hydroelectric Power... x 4</td>
+                            <td class="item-name">
+                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Blue_Chrome_Digizoid.png" alt="Blue Chrome Digizoid" class="item-icon">
+                                Blue Chrome Digizoid (x2)
+                            </td>
+                            <td class="material-req">
+                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Hydroelectric_Power_Generator.png" alt="Hydroelectric Power" class="item-icon">
+                                Hydroelectric Power... x 4
+                            </td>
                             <td class="success-rate">100%</td>
                         </tr>
+
+                        <!-- 2. Hydroelectric Power Generator (Opção A) -->
                         <tr>
-                            <td class="item-name">Hydroelectric Power...</td>
-                            <td class="material-req">Blue Chrome Digizoid... x 4</td>
+                            <td class="item-name">
+                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Hydroelectric_Power_Generator.png" alt="Hydroelectric Power" class="item-icon">
+                                Hydroelectric Power...
+                            </td>
+                            <td class="material-req">
+                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Blue_Chrome_Digizoid.png" alt="Blue Chrome Digizoid" class="item-icon">
+                                Blue Chrome Digizoid... x 4
+                            </td>
                             <td class="success-rate">100%</td>
                         </tr>
+
+                        <!-- 3. Hydroelectric Power Generator (Opção B) -->
                         <tr>
-                            <td class="item-name">Hydroelectric Power...</td>
-                            <td class="material-req">Submerged Turbine... x 1</td>
+                            <td class="item-name">
+                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Hydroelectric_Power_Generator.png" alt="Hydroelectric Power" class="item-icon">
+                                Hydroelectric Power...
+                            </td>
+                            <td class="material-req">
+                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Submerged_Turbine_Blade.png" alt="Submerged Turbine" class="item-icon">
+                                Submerged Turbine... x 1
+                            </td>
                             <td class="success-rate">100%</td>
                         </tr>
+
+                        <!-- 4. Submerged Turbine Blade -->
                         <tr>
-                            <td class="item-name">Submerged Turbine...</td>
-                            <td class="material-req">Hydroelectric Power... x 1</td>
+                            <td class="item-name">
+                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Submerged_Turbine_Blade.png" alt="Submerged Turbine" class="item-icon">
+                                Submerged Turbine...
+                            </td>
+                            <td class="material-req">
+                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Hydroelectric_Power_Generator.png" alt="Hydroelectric Power" class="item-icon">
+                                Hydroelectric Power... x 1
+                            </td>
                             <td class="success-rate">100%</td>
                         </tr>
+
+                        <!-- 5. Giga Precision Sight -->
                         <tr>
-                            <td class="item-name">Giga Precision Sight... (x2)</td>
-                            <td class="material-req">Giga Precision Sight... x 3<br>Submerged Turbine... x 7</td>
+                            <td class="item-name">
+                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Giga_Precision_Sight.png" alt="Giga Precision Sight" class="item-icon">
+                                Giga Precision Sight... (x2)
+                            </td>
+                            <td class="material-req">
+                                <div>
+                                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Giga_Precision_Sight.png" alt="Giga Precision Sight" class="item-icon">
+                                    Giga Precision Sight... x 3
+                                </div>
+                                <div>
+                                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Submerged_Turbine_Blade.png" alt="Submerged Turbine" class="item-icon">
+                                    Submerged Turbine... x 7
+                                </div>
+                            </td>
                             <td class="success-rate">100%</td>
                         </tr>
+
+                        <!-- 6. Essence of the Iron Dragon -->
                         <tr>
-                            <td class="item-name">Essence of the Iron...</td>
-                            <td class="material-req">Essence of the Iron... x 1</td>
+                            <td class="item-name">
+                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Essence_of_the_Iron_Dragon.png" alt="Essence of the Iron Dragon" class="item-icon">
+                                Essence of the Iron...
+                            </td>
+                            <td class="material-req">
+                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Essence_of_the_Iron_Dragon.png" alt="Essence of the Iron Dragon" class="item-icon">
+                                Essence of the Iron... x 1
+                            </td>
                             <td class="success-rate">100%</td>
                         </tr>
+
+                        <!-- 7. Oxidized Metal Scale -->
                         <tr>
-                            <td class="item-name">Oxidized Metal Scale...</td>
-                            <td class="material-req">Essence of the Iron... x 2<br>Giga Precision Sight... x 2<br>Submerged Turbine... x 8<br>Corrupted Data Code x 4<br>Essence of the Vacuum x 3</td>
+                            <td class="item-name">
+                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Oxidized_Metal_Scale.png" alt="Oxidized Metal Scale" class="item-icon">
+                                Oxidized Metal Scale...
+                            </td>
+                            <td class="material-req">
+                                <div>
+                                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Essence_of_the_Iron_Dragon.png" alt="Essence of the Iron Dragon" class="item-icon">
+                                    Essence of the Iron... x 2
+                                </div>
+                                <div>
+                                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Giga_Precision_Sight.png" alt="Giga Precision Sight" class="item-icon">
+                                    Giga Precision Sight... x 2
+                                </div>
+                                <div>
+                                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Submerged_Turbine_Blade.png" alt="Submerged Turbine" class="item-icon">
+                                    Submerged Turbine... x 8
+                                </div>
+                                <div>
+                                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Corrupted_Data_Code.png" alt="Corrupted Data Code" class="item-icon">
+                                    Corrupted Data Code x 4
+                                </div>
+                                <div>
+                                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Essence_of_the_Vacuum.png" alt="Essence of the Vacuum" class="item-icon">
+                                    Essence of the Vacuum x 3
+                                </div>
+                            </td>
                             <td class="success-rate">100%</td>
                         </tr>
+
                     </tbody>
                 </table>
             </div>
