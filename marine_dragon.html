@@ -109,7 +109,7 @@
         /* DUNGEON INFO GRID */
         .dg-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 20px;
         }
 
@@ -117,14 +117,14 @@
             background: rgba(0, 0, 0, 0.3);
             border: 1px solid var(--border-color);
             border-radius: 10px;
-            padding: 16px;
+            padding: 18px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
         }
 
         .dg-card h3 {
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             color: #fff;
         }
 
@@ -155,6 +155,48 @@
         .dg-info-text {
             font-size: 0.88rem;
             color: var(--text-muted);
+        }
+
+        /* DROPS SECTION */
+        .drops-box {
+            margin-top: 6px;
+            padding-top: 10px;
+            border-top: 1px dashed var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .drops-title {
+            font-size: 0.82rem;
+            color: var(--accent-purple);
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .drops-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .drop-item-chip {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-size: 0.8rem;
+            color: var(--text-color);
+        }
+
+        .drop-item-chip img {
+            width: 22px;
+            height: 22px;
+            object-fit: contain;
         }
 
         /* LAYOUT EM 3 COLUNAS */
@@ -391,7 +433,7 @@
             <p>Guia de Dungeons, Drops e Recipe Crafting de Acessórios</p>
         </header>
 
-        <!-- DUNGEONS INFO -->
+        <!-- DUNGEONS INFO COM RECOMPENSAS / DROPS -->
         <div class="section-box">
             <h2>Requisitos e Informações da Dungeon</h2>
             <div class="dg-grid">
@@ -402,7 +444,35 @@
                     <p class="dg-info-text"><strong>Condição:</strong> Nenhuma condição especial.</p>
                     <p class="dg-info-text"><strong>Entrada:</strong> Marine Dragon Domain Entry Ticket [NORMAL] x 1</p>
                     <p class="dg-info-text"><strong>Máx. Participantes:</strong> 4 Jogadores</p>
+                    
+                    <!-- DROPS NORMAL -->
+                    <div class="drops-box">
+                        <span class="drops-title">🎁 Recompensas (Monster Reward):</span>
+                        <div class="drops-list">
+                            <div class="drop-item-chip" title="Regenerative Shielding">
+                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Regenerative_Shielding.png" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Checklist.png'">
+                                <span>Regenerative Shielding</span>
+                            </div>
+                            <div class="drop-item-chip" title="Metal Sea Ring (Broken)">
+                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Metal_Sea_Ring_Broken.png" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Checklist.png'">
+                                <span>Metal Sea Ring (Broken)</span>
+                            </div>
+                            <div class="drop-item-chip" title="Blue Chrome Digizoid">
+                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Blue_Chrome_Digizoid.png">
+                                <span>Blue Chrome Digizoid</span>
+                            </div>
+                            <div class="drop-item-chip" title="Hydroelectric Power Generator">
+                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Hydroelectric_Power_Generator.png">
+                                <span>Hydroelectric Power</span>
+                            </div>
+                            <div class="drop-item-chip" title="Submerged Turbine Blade">
+                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Submerged_Turbine_Blade.png">
+                                <span>Submerged Turbine</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
                 <!-- HARD -->
                 <div class="dg-card">
                     <span class="dg-badge-hard">HARD</span>
@@ -410,6 +480,37 @@
                     <p class="dg-info-text"><strong>Condição:</strong> Nenhuma condição especial.</p>
                     <p class="dg-info-text"><strong>Entrada:</strong> Marine Dragon Domain Entry Ticket (Hard) x 1</p>
                     <p class="dg-info-text"><strong>Máx. Participantes:</strong> 4 Jogadores</p>
+
+                    <!-- DROPS HARD -->
+                    <div class="drops-box">
+                        <span class="drops-title">🎁 Recompensas (Monster Reward):</span>
+                        <div class="drops-list">
+                            <div class="drop-item-chip" title="Blue Chrome Digizoid">
+                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Blue_Chrome_Digizoid.png">
+                                <span>Blue Chrome Digizoid</span>
+                            </div>
+                            <div class="drop-item-chip" title="Hydroelectric Power Generator">
+                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Hydroelectric_Power_Generator.png">
+                                <span>Hydroelectric Power</span>
+                            </div>
+                            <div class="drop-item-chip" title="Metal Sea Ring (Broken)">
+                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Metal_Sea_Ring_Broken.png" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Checklist.png'">
+                                <span>Metal Sea Ring (Broken)</span>
+                            </div>
+                            <div class="drop-item-chip" title="Submerged Turbine Blade">
+                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Submerged_Turbine_Blade.png">
+                                <span>Submerged Turbine</span>
+                            </div>
+                            <div class="drop-item-chip" title="Giga Precision Sight">
+                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Giga_Precision_Sight.png">
+                                <span>Giga Precision Sight</span>
+                            </div>
+                            <div class="drop-item-chip" title="Essence of the Iron Dragon">
+                                <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Essence_of_the_Iron_Dragon.png">
+                                <span>Essence of Iron Dragon</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -498,7 +599,7 @@
                         </div>
                     </div>
 
-                    <!-- CAIXA DE RESULTADOS / FALTANTES -->
+                    <!-- CAIXA DE RESULTADOS -->
                     <div class="results-box">
                         <h3>Materiais Que Faltam Farmar:</h3>
                         
@@ -810,11 +911,9 @@
     <!-- JAVASCRIPT DA CALCULADORA -->
     <script>
         function calculateMarineCraft() {
-            // Metas
             const rings = Math.max(0, parseInt(document.getElementById('targetRing').value) || 0);
             const keyrings = Math.max(0, parseInt(document.getElementById('targetKeyring').value) || 0);
 
-            // Inventário
             const ownBlueChrome = Math.max(0, parseInt(document.getElementById('ownBlueChrome').value) || 0);
             const ownHydroPower = Math.max(0, parseInt(document.getElementById('ownHydroPower').value) || 0);
             const ownTurbine = Math.max(0, parseInt(document.getElementById('ownTurbine').value) || 0);
@@ -823,7 +922,6 @@
             const ownRegenShield = Math.max(0, parseInt(document.getElementById('ownRegenShield').value) || 0);
             const ownMaxKeyMat = Math.max(0, parseInt(document.getElementById('ownMaxKeyMat').value) || 0);
 
-            // Totais brutos necessários
             const reqBlueChrome = rings * 25;
             const reqHydroPower = rings * 10;
             const reqTurbine = rings * 4;
@@ -833,7 +931,6 @@
             const reqGigaSight = keyrings * 10;
             const reqRegenShield = keyrings * 15;
 
-            // Subtração pelo inventário (o resultado não desce abaixo de 0)
             const missingBlueChrome = Math.max(0, reqBlueChrome - ownBlueChrome);
             const missingHydroPower = Math.max(0, reqHydroPower - ownHydroPower);
             const missingTurbine = Math.max(0, reqTurbine - ownTurbine);
@@ -842,10 +939,8 @@
             const missingRegenShield = Math.max(0, reqRegenShield - ownRegenShield);
             const missingMaxKeyMat = Math.max(0, reqMaxKeyMat - ownMaxKeyMat);
 
-            // Custo em Tera
             const totalTera = (rings * 10) + (keyrings * 20);
 
-            // Atualizar UI
             document.getElementById('resBlueChrome').innerText = missingBlueChrome;
             document.getElementById('resHydroPower').innerText = missingHydroPower;
             document.getElementById('resTurbine').innerText = missingTurbine;
