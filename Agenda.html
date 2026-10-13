@@ -36,7 +36,7 @@
         }
 
         .container {
-            width: 50%;
+            width: 80%;
             max-width: 980px;
             display: flex;
             flex-direction: column;
@@ -413,7 +413,7 @@
             });
         }
 
-        // SOM DE DESPERTADOR DIGITAL PIEZOELÉTRICO (3000 Hz / Onda Quadrada Estridente)
+        // SOM DE DESPERTADOR DIGITAL PIEZOELÉTRICO (3000 Hz / Volume 50%)
         function playBeep() {
             try {
                 if (!audioCtx) {
@@ -430,7 +430,8 @@
                     osc.type = 'square'; 
                     osc.frequency.setValueAtTime(3000, startTime); 
                     
-                    gain.gain.setValueAtTime(0.85, startTime);
+                    // Ganho reduzido para 0.42 (~50% do volume anterior de 0.85)
+                    gain.gain.setValueAtTime(0.42, startTime);
                     gain.gain.setValueAtTime(0, startTime + 0.08); 
                     
                     osc.connect(gain);
@@ -570,13 +571,10 @@
                 const startDate = getTargetDateFromBRTTime(ev.start);
                 const endDate = getTargetDateFromBRTTime(ev.end);
                 
-                // Calculamos o horário de aviso prévio (Exatamente 5 minutos antes do início)
                 const beforeDate = new Date(startDate.getTime() - 5 * 60000);
                 
                 const row = document.getElementById(`row-${ev.id}`);
 
-                // 1. VERIFICAR AVISO PRÉVIO (5 MINUTOS ANTES)
-                // Tolerância de 5 segundos para garantir que deteta o segundo exato
                 const timeToBefore = now.getTime() - beforeDate.getTime();
                 if (timeToBefore >= 0 && timeToBefore < 5000) {
                     if (isAlarmEnabled(ev.id) && !alertedBeforeEvents.has(ev.id)) {
@@ -586,7 +584,6 @@
                     }
                 }
 
-                // 2. VERIFICAR INÍCIO DO EVENTO
                 if (now >= startDate && now <= endDate) {
                     if (row) row.classList.add('active-event');
 
@@ -598,7 +595,6 @@
                 } else {
                     if (row) row.classList.remove('active-event');
                     
-                    // Limpar estados antigos quando o evento já passou para poder repetir no dia seguinte
                     if (now > endDate) {
                         alertedBeforeEvents.delete(ev.id);
                         alertedStartEvents.delete(ev.id);
