@@ -18,6 +18,7 @@
             --color-beast: #a855f7;      /* Roxo */
             --color-goggles: #ff7b00;    /* Laranja */
             --color-spiral: #ec4899;     /* Rosa */
+            --color-candy: #eab308;      /* Amarelo/Ouro para o Evento Candy */
         }
 
         * {
@@ -89,6 +90,7 @@
             transition: all 0.25s ease;
             position: relative;
             overflow: hidden;
+            cursor: pointer;
         }
 
         /* Efeito de brilho lateral nas cores respetivas */
@@ -107,6 +109,7 @@
         .hub-card.beast::before { background-color: var(--color-beast); }
         .hub-card.goggles::before { background-color: var(--color-goggles); }
         .hub-card.spiral::before { background-color: var(--color-spiral); }
+        .hub-card.candy::before { background-color: var(--color-candy); }
 
         .hub-card:hover {
             transform: translateY(-4px);
@@ -119,6 +122,7 @@
         .hub-card.beast:hover { border-color: var(--color-beast); }
         .hub-card.goggles:hover { border-color: var(--color-goggles); }
         .hub-card.spiral:hover { border-color: var(--color-spiral); }
+        .hub-card.candy:hover { border-color: var(--color-candy); }
 
         /* ÍCONES DOS CARDS */
         .card-icon-box {
@@ -158,11 +162,137 @@
         .beast .card-title { color: var(--color-beast); }
         .goggles .card-title { color: var(--color-goggles); }
         .spiral .card-title { color: var(--color-spiral); }
+        .candy .card-title { color: var(--color-candy); }
 
         .card-desc {
             font-size: 0.85rem;
             color: var(--text-muted);
             line-height: 1.3;
+        }
+
+        /* MODAL CALCULADORA CANDY */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border: 1px solid var(--color-candy);
+            border-radius: 14px;
+            width: 100%;
+            max-width: 500px;
+            padding: 24px;
+            box-shadow: 0 0 25px rgba(234, 179, 8, 0.2);
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+        }
+
+        .modal-header h2 {
+            font-size: 1.3rem;
+            color: var(--color-candy);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .close-btn:hover {
+            color: var(--text-color);
+        }
+
+        .calc-form {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .form-group input {
+            background: rgba(0,0,0,0.4);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px 14px;
+            color: var(--text-color);
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: var(--color-candy);
+        }
+
+        .results-box {
+            margin-top: 10px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            padding: 16px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .results-box h3 {
+            font-size: 0.95rem;
+            color: var(--color-candy);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 6px;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .result-value {
+            font-weight: bold;
+            color: #58a6ff;
         }
     </style>
 </head>
@@ -243,8 +373,124 @@
                     <span class="card-desc">Guia de Evolução e Materiais de Craft</span>
                 </div>
             </a>
+
+            <!-- Candy Craft Event (Calculadora) -->
+            <div class="hub-card candy" onclick="openCandyModal()">
+                <div class="card-icon-box">
+                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Checklist.png" alt="Candy Event" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/CheckList.png'">
+                </div>
+                <div class="card-info">
+                    <span class="card-title">CANDY CRAFT EVENT</span>
+                    <span class="card-desc">Calculadora de Materiais para Best Handmade Candy</span>
+                </div>
+            </div>
+
         </div>
     </div>
 
+    <!-- MODAL CALCULADORA DE CANDY -->
+    <div class="modal-overlay" id="candyModal" onclick="closeCandyModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2>Candy Craft Calculator</h2>
+                <button class="close-btn" onclick="closeCandyModal()">&times;</button>
+            </div>
+
+            <div class="calc-form">
+                <div class="form-group">
+                    <label>Best Handmade Candy pretendidos:</label>
+                    <input type="number" id="targetBest" value="250" min="1" oninput="calculateCandy()">
+                </div>
+
+                <div class="form-group">
+                    <label>Handmade Candy que já possui:</label>
+                    <input type="number" id="ownedHandmade" value="0" min="0" oninput="calculateCandy()">
+                </div>
+
+                <div class="form-group">
+                    <label>Candy que possui no inventário (opcional):</label>
+                    <input type="number" id="ownedCandy" value="0" min="0" oninput="calculateCandy()">
+                </div>
+
+                <div class="form-group">
+                    <label>High-quality Candy no inventário (opcional):</label>
+                    <input type="number" id="ownedHQ" value="0" min="0" oninput="calculateCandy()">
+                </div>
+
+                <div class="results-box">
+                    <h3>Totais de Materiais Necessários:</h3>
+                    
+                    <div class="result-item">
+                        <span>Handmade Candy a fabricar:</span>
+                        <span class="result-value" id="resToCraftHandmade">250</span>
+                    </div>
+
+                    <div class="result-item">
+                        <span>Total de Candy necessário:</span>
+                        <span class="result-value" id="resTotalCandy">1000</span>
+                    </div>
+
+                    <div class="result-item">
+                        <span>Total de High-quality Candy necessário:</span>
+                        <span class="result-value" id="resTotalHQ">750</span>
+                    </div>
+
+                    <div class="result-item" style="margin-top: 6px; font-weight: bold; color: var(--color-candy);">
+                        <span>Faltam no seu inventário:</span>
+                        <span class="result-value" id="resMissingInfo" style="color: #f87171;">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openCandyModal() {
+            document.getElementById('candyModal').classList.add('active');
+            calculateCandy();
+        }
+
+        function closeCandyModal(event) {
+            if (!event || event.target.id === 'candyModal' || event.target.classList.contains('close-btn')) {
+                document.getElementById('candyModal').classList.remove('active');
+            }
+        }
+
+        function calculateCandy() {
+            const target = parseInt(document.getElementById('targetBest').value) || 0;
+            const ownedHandmade = parseInt(document.getElementById('ownedHandmade').value) || 0;
+            const ownedCandy = parseInt(document.getElementById('ownedCandy').value) || 0;
+            const ownedHQ = parseInt(document.getElementById('ownedHQ').value) || 0;
+
+            // Quantos Handmade Candy ainda precisam de ser fabricados
+            const neededHandmadeToCraft = Math.max(0, target - ownedHandmade);
+
+            // Materiais para a receita direta do Best Handmade Candy
+            const directCandy = target * 2;
+            const directHQ = target * 2;
+
+            // Materiais para fabricar o restante de Handmade Candy
+            const craftCandy = neededHandmadeToCraft * 2;
+            const craftHQ = neededHandmadeToCraft * 1;
+
+            // Totais
+            const totalCandyNeeded = directCandy + craftCandy;
+            const totalHQNeeded = directHQ + craftHQ;
+
+            // Faltantes considerando o inventário
+            const missingCandy = Math.max(0, totalCandyNeeded - ownedCandy);
+            const missingHQ = Math.max(0, totalHQNeeded - ownedHQ);
+
+            document.getElementById('resToCraftHandmade').innerText = neededHandmadeToCraft;
+            document.getElementById('resTotalCandy').innerText = totalCandyNeeded;
+            document.getElementById('resTotalHQ').innerText = totalHQNeeded;
+
+            if (ownedCandy > 0 || ownedHQ > 0) {
+                document.getElementById('resMissingInfo').innerText = `${missingCandy} Candy / ${missingHQ} High-quality`;
+            } else {
+                document.getElementById('resMissingInfo').innerText = `${totalCandyNeeded} Candy / ${totalHQNeeded} High-quality`;
+            }
+        }
+    </script>
 </body>
 </html>
