@@ -318,6 +318,11 @@
         </div>
     </div>
 
+    <!-- ELEMENTO DE ÁUDIO COM O SOM REAL DO DIGIVICE -->
+    <audio id="digivice-audio" preload="auto">
+        <source src="digivice-sound.mp3" type="audio/mpeg">
+    </audio>
+
     <script>
         const eventsBRT = [
             { id: "ev_0", start: "00:00", end: "00:10", name: "Bits dos monstros", bonus: "x1.5" },
@@ -389,48 +394,20 @@
             });
         }
 
-        // SOM CLÁSSICO DO DIGIVICE (Padrão exato do vídeo com 6 bipes rápidos e agudos)
+        // FUNÇÃO QUE REPRODUZ O FICHEIRO MP3 DO DIGIVICE
         function playBeep() {
-            try {
-                const ctx = new (window.AudioContext || window.webkitAudioContext)();
-                
-                function singleDigiviceBeep(startTime) {
-                    const osc = ctx.createOscillator();
-                    const gain = ctx.createGain();
-                    
-                    osc.type = 'sine';
-                    // Frequência idêntica ao bipe digital clássico do Digivice
-                    osc.frequency.setValueAtTime(2093.00, startTime); // Nota C7 (Agudo característico)
-                    osc.frequency.exponentialRampToValueAtTime(2793.83, startTime + 0.05);
-                    
-                    gain.gain.setValueAtTime(0.22, startTime);
-                    gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.06);
-                    
-                    osc.connect(gain);
-                    gain.connect(ctx.destination);
-                    
-                    osc.start(startTime);
-                    osc.stop(startTime + 0.06);
-                }
-
-                const now = ctx.currentTime;
-
-                // Sequência exata de 6 bipes rápidos do Digivice (Digivice sound x6)
-                singleDigiviceBeep(now);
-                singleDigiviceBeep(now + 0.08);
-                singleDigiviceBeep(now + 0.16);
-                singleDigiviceBeep(now + 0.24);
-                singleDigiviceBeep(now + 0.32);
-                singleDigiviceBeep(now + 0.40);
-
-            } catch (e) {
-                console.log("AudioContext bloqueado pelo navegador");
+            const audio = document.getElementById('digivice-audio');
+            if (audio) {
+                audio.currentTime = 0;
+                audio.play().catch(err => {
+                    console.log("Reprodução de áudio bloqueada pelo navegador: ", err);
+                });
             }
         }
 
         function testSoundAndNotif() {
             playBeep();
-            sendNotification("🔔 Alerta do Digivice", "O som clássico de 6 bipes do Digivice está a soar!");
+            sendNotification("🔔 Alerta do Digivice", "O som original do Digivice está a tocar perfeitamente!");
         }
 
         function requestNotificationPermission() {
