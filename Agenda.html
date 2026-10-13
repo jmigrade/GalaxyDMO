@@ -3,419 +3,263 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digimon Galaxy Hub</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        galaxy: {
-                            900: '#0b0d19',
-                            800: '#13172d',
-                            700: '#1d2342',
-                            accent: '#6366f1',
-                            glow: '#818cf8',
-                            cyan: '#06b6d4'
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Agenda de Hoje no Game - Digimon Galaxy</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        :root {
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --text-color: #f0f6fc;
+            --text-muted: #8b949e;
+            --border-color: #30363d;
+            --accent-color: #a855f7;
+            --accent-green: #238636;
+            --color-digivice: #00d2ff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0b0d19;
-            color: #e2e8f0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 30px 15px;
         }
-        .glow-box {
-            box-shadow: 0 0 20px rgba(99, 102, 241, 0.15);
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
-        .glow-box-cyan {
-            box-shadow: 0 0 20px rgba(6, 182, 212, 0.15);
+
+        /* HEADER */
+        .page-header {
+            text-align: center;
+            padding: 24px 20px;
+            background: linear-gradient(135deg, #1f293d, #111827);
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.15);
+            position: relative;
         }
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
+
+        .back-btn {
+            position: absolute;
+            left: 20px;
+            top: 24px;
+            color: var(--color-digivice);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: opacity 0.2s;
         }
-        ::-webkit-scrollbar-track {
-            background: #0b0d19;
+
+        .back-btn:hover {
+            opacity: 0.8;
         }
-        ::-webkit-scrollbar-thumb {
-            background: #1d2342;
-            border-radius: 4px;
+
+        .page-header h1 {
+            font-size: 1.8rem;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #6366f1;
+
+        .page-header p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        /* TABELA DE HORÁRIOS */
+        .table-container {
+            background: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            overflow-x: auto;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.92rem;
+        }
+
+        th, td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: #1c2128;
+            color: var(--accent-color);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        .bonus-badge {
+            display: inline-block;
+            background: rgba(35, 134, 54, 0.2);
+            color: #3fb950;
+            border: 1px solid rgba(35, 134, 54, 0.4);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+
+        .time-cell {
+            font-family: monospace;
+            font-size: 0.95rem;
+            color: var(--color-digivice);
+            white-space: nowrap;
+        }
+
+        @media (max-width: 600px) {
+            .page-header {
+                padding-top: 50px;
+            }
+            .back-btn {
+                top: 16px;
+            }
+            th, td {
+                padding: 10px 12px;
+                font-size: 0.85rem;
+            }
         }
     </style>
 </head>
-<body class="min-h-screen bg-galaxy-900 text-slate-200 flex flex-col justify-between">
+<body>
 
-    <!-- Header / Navbar -->
-    <header class="border-b border-slate-800 bg-galaxy-800/80 backdrop-blur-md sticky top-0 z-40">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-wrap justify-between items-center gap-4">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-cyan-400 flex items-center justify-center text-white shadow-lg shadow-indigo-500/30">
-                    <i class="fa-solid font-bold text-xl fa-space-shuttle"></i>
-                </div>
-                <div>
-                    <h1 class="font-bold text-xl text-white tracking-wide">DIGIMON GALAXY <span class="text-indigo-400">HUB</span></h1>
-                    <p class="text-xs text-slate-400">Guia de Eventos & Calculadoras DMO</p>
-                </div>
-            </div>
+    <div class="container">
+        <!-- HEADER -->
+        <header class="page-header">
+            <a href="index.html" class="back-btn">← Voltar ao Hub</a>
+            <h1>Agenda do Jogo</h1>
+            <p>Horários convertidos automaticamente para o fuso horário de <strong>Portugal (Hora Continental)</strong></p>
+        </header>
 
-            <!-- Quick Action Modals Triggers -->
-            <div class="flex items-center gap-3">
-                <button onclick="openModal('agendaModal')" class="px-4 py-2 bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 rounded-xl transition-all flex items-center gap-2 text-sm font-medium">
-                    <i class="fa-solid fa-calendar-days text-indigo-400"></i>
-                    <span>Agenda de Horários</span>
-                </button>
-                <button onclick="openModal('candyModal')" class="px-4 py-2 bg-cyan-600/20 hover:bg-cyan-600/30 text-cyan-300 border border-cyan-500/30 rounded-xl transition-all flex items-center gap-2 text-sm font-medium">
-                    <i class="fa-solid fa-candy-cane text-cyan-400"></i>
-                    <span>Calculadora Candy</span>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Content Grid -->
-    <main class="max-w-6xl mx-auto px-4 py-8 flex-1 w-full grid grid-cols-1 md:grid-cols-2 gap-6">
-
-        <!-- Card: Agenda Quick View -->
-        <div class="bg-galaxy-800/50 border border-slate-800 rounded-2xl p-6 glow-box flex flex-col justify-between">
-            <div>
-                <div class="flex justify-between items-start mb-4">
-                    <div class="p-3 bg-indigo-500/10 rounded-xl text-indigo-400">
-                        <i class="fa-solid fa-clock text-2xl"></i>
-                    </div>
-                    <span class="px-3 py-1 bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 rounded-full text-xs font-semibold">
-                        Acesso Rápido
-                    </span>
-                </div>
-                <h2 class="text-xl font-bold text-white mb-2">Agenda de Buffs & Eventos</h2>
-                <p class="text-sm text-slate-400 mb-6">
-                    Acompanhe todos os bónus e eventos do jogo ajustados com suporte ao fuso horário de Portugal (WET/WEST) e Brasil (BRT).
-                </p>
-            </div>
-            <button onclick="openModal('agendaModal')" class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-indigo-600/20 flex justify-center items-center gap-2">
-                <i class="fa-solid fa-list-check"></i>
-                <span>Abrir Horários Completos</span>
-            </button>
-        </div>
-
-        <!-- Card: Candy Calculator Quick View -->
-        <div class="bg-galaxy-800/50 border border-slate-800 rounded-2xl p-6 glow-box-cyan flex flex-col justify-between">
-            <div>
-                <div class="flex justify-between items-start mb-4">
-                    <div class="p-3 bg-cyan-500/10 rounded-xl text-cyan-400">
-                        <i class="fa-solid fa-calculator text-2xl"></i>
-                    </div>
-                    <span class="px-3 py-1 bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 rounded-full text-xs font-semibold">
-                        Ferramentas
-                    </span>
-                </div>
-                <h2 class="text-xl font-bold text-white mb-2">Calculadora de Candy Craft</h2>
-                <p class="text-sm text-slate-400 mb-6">
-                    Calcule instantaneamente a quantidade exata de ingredientes necessários para fabricar seus Best Handmade Candies.
-                </p>
-            </div>
-            <button onclick="openModal('candyModal')" class="w-full py-3 bg-cyan-600 hover:bg-cyan-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-cyan-600/20 flex justify-center items-center gap-2">
-                <i class="fa-solid fa-wand-magic-sparkles"></i>
-                <span>Calcular Materiais</span>
-            </button>
-        </div>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="border-t border-slate-800/80 bg-galaxy-900 py-6 text-center text-xs text-slate-500">
-        <p>Digimon Galaxy Hub &copy; 2026 - Ferramenta criada para a comunidade de Digimon Masters Online.</p>
-    </footer>
-
-    <!-- MODAL 1: Agenda de Horários -->
-    <div id="agendaModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-galaxy-800 border border-slate-700 rounded-2xl max-w-4xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
-            <!-- Modal Header -->
-            <div class="p-5 border-b border-slate-700/80 flex justify-between items-center bg-galaxy-900/50">
-                <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-calendar-days text-indigo-400 text-xl"></i>
-                    <div>
-                        <h3 class="text-lg font-bold text-white">Agenda de Horários dos Eventos</h3>
-                        <p class="text-xs text-slate-400">Horários base BRT (UTC-3) adaptados para Portugal (WET/WEST)</p>
-                    </div>
-                </div>
-                <button onclick="closeModal('agendaModal')" class="w-8 h-8 rounded-lg bg-slate-700/50 hover:bg-slate-700 text-slate-300 flex items-center justify-center transition-colors">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-
-            <!-- Modal Body Table -->
-            <div class="p-6 overflow-y-auto flex-1">
-                <div class="overflow-x-auto rounded-xl border border-slate-700/60 bg-galaxy-900/40">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="border-b border-slate-700 bg-galaxy-800 text-xs font-semibold text-slate-300 uppercase tracking-wider">
-                                <th class="p-3">Horário (BRT / Brasil)</th>
-                                <th class="p-3 text-indigo-300">Horário (PT / Portugal)</th>
-                                <th class="p-3">Evento / Buff</th>
-                                <th class="p-3 text-right">Multiplicador / Bónus</th>
-                            </tr>
-                        </thead>
-                        <tbody id="agendaTableBody" class="divide-y divide-slate-800/60 text-sm">
-                            <!-- Populated dynamically by JavaScript -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Modal Footer -->
-            <div class="p-4 border-t border-slate-700/80 bg-galaxy-900/50 flex justify-end">
-                <button onclick="closeModal('agendaModal')" class="px-5 py-2 bg-slate-700 hover:bg-slate-600 text-white font-medium rounded-xl transition-all">
-                    Fechar
-                </button>
-            </div>
+        <!-- TABELA DIRECTA -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Início (PT)</th>
+                        <th>Fim (PT)</th>
+                        <th>Evento</th>
+                        <th>Bônus</th>
+                    </tr>
+                </thead>
+                <tbody id="schedule-body">
+                    <!-- Preenchido via JavaScript -->
+                </tbody>
+            </table>
         </div>
     </div>
 
-    <!-- MODAL 2: Candy Calculator -->
-    <div id="candyModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-galaxy-800 border border-slate-700 rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
-            <!-- Modal Header -->
-            <div class="p-5 border-b border-slate-700/80 flex justify-between items-center bg-galaxy-900/50">
-                <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-calculator text-cyan-400 text-xl"></i>
-                    <div>
-                        <h3 class="text-lg font-bold text-white">Calculadora Candy Craft</h3>
-                        <p class="text-xs text-slate-400">Calcule as quantidades necessárias para os seus doces</p>
-                    </div>
-                </div>
-                <button onclick="closeModal('candyModal')" class="w-8 h-8 rounded-lg bg-slate-700/50 hover:bg-slate-700 text-slate-300 flex items-center justify-center transition-colors">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-
-            <!-- Modal Body Forms and Calculation -->
-            <div class="p-6 overflow-y-auto space-y-6">
-                <!-- Inputs Section -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-300 mb-1">
-                            Target Best Handmade Candy
-                        </label>
-                        <input type="number" id="targetBestHandmade" value="250" min="0" 
-                            class="w-full px-3 py-2 bg-galaxy-900 border border-slate-700 rounded-xl text-white focus:outline-none focus:border-cyan-500 transition-colors">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-300 mb-1">
-                            Owned Handmade Candy
-                        </label>
-                        <input type="number" id="ownedHandmade" value="0" min="0" 
-                            class="w-full px-3 py-2 bg-galaxy-900 border border-slate-700 rounded-xl text-white focus:outline-none focus:border-cyan-500 transition-colors">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-300 mb-1">
-                            Owned Candy
-                        </label>
-                        <input type="number" id="ownedCandy" value="0" min="0" 
-                            class="w-full px-3 py-2 bg-galaxy-900 border border-slate-700 rounded-xl text-white focus:outline-none focus:border-cyan-500 transition-colors">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-300 mb-1">
-                            Owned High-quality Candy
-                        </label>
-                        <input type="number" id="ownedHighQualityCandy" value="0" min="0" 
-                            class="w-full px-3 py-2 bg-galaxy-900 border border-slate-700 rounded-xl text-white focus:outline-none focus:border-cyan-500 transition-colors">
-                    </div>
-                </div>
-
-                <!-- Results Section -->
-                <div class="bg-galaxy-900/80 border border-cyan-500/20 rounded-xl p-5 space-y-3">
-                    <h4 class="text-sm font-bold text-cyan-400 border-b border-slate-800 pb-2 uppercase tracking-wider">
-                        Resultado do Cálculo
-                    </h4>
-                    
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-                        <div class="flex justify-between items-center p-2 rounded-lg bg-galaxy-800/40">
-                            <span class="text-slate-400">Handmade Candy Necessário:</span>
-                            <span id="resHandmadeNeeded" class="font-bold text-white">0</span>
-                        </div>
-                        <div class="flex justify-between items-center p-2 rounded-lg bg-galaxy-800/40">
-                            <span class="text-slate-400">Total Candy Necessário:</span>
-                            <span id="resTotalCandyNeeded" class="font-bold text-white">0</span>
-                        </div>
-                        <div class="flex justify-between items-center p-2 rounded-lg bg-galaxy-800/40">
-                            <span class="text-slate-400">Total HQ Candy Necessário:</span>
-                            <span id="resTotalHQNeeded" class="font-bold text-white">0</span>
-                        </div>
-                        <div class="flex justify-between items-center p-2 rounded-lg bg-cyan-950/40 border border-cyan-500/30">
-                            <span class="text-cyan-300 font-medium">Candy em Falta:</span>
-                            <span id="resMissingCandy" class="font-bold text-cyan-400">0</span>
-                        </div>
-                        <div class="flex justify-between items-center p-2 rounded-lg bg-cyan-950/40 border border-cyan-500/30 sm:col-span-2">
-                            <span class="text-cyan-300 font-medium">High-quality Candy em Falta:</span>
-                            <span id="resMissingHQ" class="font-bold text-cyan-400">0</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal Footer -->
-            <div class="p-4 border-t border-slate-700/80 bg-galaxy-900/50 flex justify-end">
-                <button onclick="closeModal('candyModal')" class="px-5 py-2 bg-slate-700 hover:bg-slate-600 text-white font-medium rounded-xl transition-all">
-                    Fechar
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- JavaScript Logic -->
     <script>
-        // Modal helpers
-        function openModal(id) {
-            const modal = document.getElementById(id);
-            if (modal) {
-                modal.classList.remove('hidden');
-            }
-        }
-
-        function closeModal(id) {
-            const modal = document.getElementById(id);
-            if (modal) {
-                modal.classList.add('hidden');
-            }
-        }
-
-        // Close modal when clicking outside content
-        window.addEventListener('click', function(e) {
-            ['agendaModal', 'candyModal'].forEach(id => {
-                const modal = document.getElementById(id);
-                if (e.target === modal) {
-                    closeModal(id);
-                }
-            });
-        });
-
-        // Agenda Event Data
-        const agendaEvents = [
-            { brt: "00:00 - 00:10", startH: 0, startM: 0, endH: 0, endM: 10, title: "Bits dos monstros", bonus: "x1.5" },
-            { brt: "01:00 - 01:10", startH: 1, startM: 0, endH: 1, endM: 10, title: "Drop de fragmentos e materiais", bonus: "x1.5" },
-            { brt: "02:00 - 02:10", startH: 2, startM: 0, endH: 2, endM: 10, title: "Fadiga recupera mais rápido", bonus: "x2" },
-            { brt: "03:00 - 03:10", startH: 3, startM: 0, endH: 3, endM: 10, title: "Drop de scan data", bonus: "x1.5" },
-            { brt: "04:00 - 04:15", startH: 4, startM: 0, endH: 4, endM: 15, title: "Craft com menos material", bonus: "-10%" },
-            { brt: "05:00 - 05:30", startH: 5, startM: 0, endH: 5, endM: 30, title: "Chance de chocagem", bonus: "x2" },
-            { brt: "06:00 - 06:10", startH: 6, startM: 0, endH: 6, endM: 10, title: "Fadiga enche mais devagar", bonus: "x2" },
-            { brt: "07:00 - 07:10", startH: 7, startM: 0, endH: 7, endM: 10, title: "Drop de selos", bonus: "x2" },
-            { brt: "08:00 - 08:10", startH: 8, startM: 0, endH: 8, endM: 10, title: "Drop de digiclone", bonus: "x1.5" },
-            { brt: "09:00 - 10:00", startH: 9, startM: 0, endH: 10, endM: 0, title: "EXP (Digimon e Tamer)", bonus: "x5" },
-            { brt: "10:00 - 10:10", startH: 10, startM: 0, endH: 10, endM: 10, title: "Drop de ovos", bonus: "x1.5" },
-            { brt: "11:00 - 11:10", startH: 11, startM: 0, endH: 11, endM: 10, title: "Quantidade de drop", bonus: "x1.5" },
-            { brt: "12:00 - 12:10", startH: 12, startM: 0, endH: 12, endM: 10, title: "Bits dos monstros", bonus: "x1.5" },
-            { brt: "13:00 - 13:15", startH: 13, startM: 0, endH: 13, endM: 15, title: "Chance de drop (todos os itens)", bonus: "x1.5" },
-            { brt: "14:00 - 14:10", startH: 14, startM: 0, endH: 14, endM: 10, title: "Drop de fragmentos e materiais", bonus: "x1.5" },
-            { brt: "15:00 - 16:00", startH: 15, startM: 0, endH: 16, endM: 0, title: "EXP (Digimon e Tamer)", bonus: "x5" },
-            { brt: "16:00 - 16:10", startH: 16, startM: 0, endH: 16, endM: 10, title: "Recompensa do scanner", bonus: "x1.5" },
-            { brt: "17:00 - 17:10", startH: 17, startM: 0, endH: 17, endM: 10, title: "Drop dentro de dungeon", bonus: "x1.5" },
-            { brt: "18:00 - 18:10", startH: 18, startM: 0, endH: 18, endM: 10, title: "Bits dos monstros", bonus: "x1.5" },
-            { brt: "19:00 - 19:30", startH: 19, startM: 0, endH: 19, endM: 30, title: "Chance de enchant", bonus: "x2" },
-            { brt: "20:00 - 20:15", startH: 20, startM: 0, endH: 20, endM: 15, title: "Chance de drop (todos os itens)", bonus: "x1.5" },
-            { brt: "21:00 - 22:00", startH: 21, startM: 0, endH: 22, endM: 0, title: "EXP (Digimon e Tamer)", bonus: "x5" },
-            { brt: "22:00 - 22:10", startH: 22, startM: 0, endH: 22, endM: 10, title: "Drop de ovos", bonus: "x1.5" },
-            { brt: "22:15 - 22:25", startH: 22, startM: 15, endH: 22, endM: 25, title: "Invasão de monstros", bonus: "—" },
-            { brt: "23:00 - 23:10", startH: 23, startM: 0, endH: 23, endM: 10, title: "Quantidade de drop", bonus: "x1.5" }
+        // Eventos na hora original de Brasília (BRT / UTC-3)
+        const eventsBRT = [
+            { start: "00:00", end: "00:10", name: "Bits dos monstros", bonus: "x1.5" },
+            { start: "01:00", end: "01:10", name: "Drop de fragmentos e materiais", bonus: "x1.5" },
+            { start: "02:00", end: "02:10", name: "Fadiga recupera mais rápido", bonus: "x2" },
+            { start: "03:00", end: "03:10", name: "Drop de scan data", bonus: "x1.5" },
+            { start: "04:00", end: "04:15", name: "Craft com menos material", bonus: "-10%" },
+            { start: "05:00", end: "05:30", name: "Chance de chocagem", bonus: "x2" },
+            { start: "06:00", end: "06:10", name: "Fadiga enche mais devagar", bonus: "x2" },
+            { start: "07:00", end: "07:10", name: "Drop de selos", bonus: "x2" },
+            { start: "08:00", end: "08:10", name: "Drop de digiclone", bonus: "x1.5" },
+            { start: "09:00", end: "10:00", name: "EXP (Digimon e Tamer)", bonus: "x5" },
+            { start: "10:00", end: "10:10", name: "Drop de ovos", bonus: "x1.5" },
+            { start: "11:00", end: "11:10", name: "Quantidade de drop", bonus: "x1.5" },
+            { start: "12:00", end: "12:10", name: "Bits dos monstros", bonus: "x1.5" },
+            { start: "13:00", end: "13:15", name: "Chance de drop (todos os itens)", bonus: "x1.5" },
+            { start: "14:00", end: "14:10", name: "Drop de fragmentos e materiais", bonus: "x1.5" },
+            { start: "15:00", end: "16:00", name: "EXP (Digimon e Tamer)", bonus: "x5" },
+            { start: "16:00", end: "16:10", name: "Recompensa do scanner", bonus: "x1.5" },
+            { start: "17:00", end: "17:10", name: "Drop dentro de dungeon", bonus: "x1.5" },
+            { start: "18:00", end: "18:10", name: "Bits dos monstros", bonus: "x1.5" },
+            { start: "19:00", end: "19:30", name: "Chance de enchant", bonus: "x2" },
+            { start: "20:00", end: "20:15", name: "Chance de drop (todos os itens)", bonus: "x1.5" },
+            { start: "21:00", end: "22:00", name: "EXP (Digimon e Tamer)", bonus: "x5" },
+            { start: "22:00", end: "22:10", name: "Drop de ovos", bonus: "x1.5" },
+            { start: "22:15", end: "22:25", name: "Invasão de monstros", bonus: "—" },
+            { start: "23:00", end: "23:10", name: "Quantidade de drop", bonus: "x1.5" }
         ];
 
-        function convertBRTToPortugal(h, m) {
-            // Helper to get Portugal offset vs BRT dynamically or +3 / +4 hours depending on PT Daylight Saving Time
-            // BRT is always UTC-3. Portugal is UTC+0 (WET) or UTC+1 (WEST).
-            // Difference is 3 hours during winter (WET), 4 hours during summer (WEST).
-            const today = new Date();
-            // Create BRT Date object for standard reference
-            const year = today.getFullYear();
-            const month = today.getMonth();
-            const day = today.getDate();
+        // Função para converter HH:MM de BRT (UTC-3) para o fuso horário de Portugal (Europe/Lisbon)
+        function convertBRTToPortugal(timeStr) {
+            const [hours, minutes] = timeStr.split(':').map(Number);
+            const now = new Date();
+            
+            // Criar data assumindo horário de Brasília (BRT é UTC-3)
+            // Formatamos no ISO string com offset -03:00
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hh = String(hours).padStart(2, '0');
+            const mm = String(minutes).padStart(2, '0');
 
-            // Construct ISO String for America/Sao_Paulo baseline
-            const dateBRT = new Date(Date.UTC(year, month, day, h + 3, m)); // UTC value for BRT time
+            const brtDate = new Date(`${year}-${month}-${day}T${hh}:${mm}:00-03:00`);
 
-            // Format directly into Portugal timezone
-            const ptTimeStr = new Intl.DateTimeFormat('pt-PT', {
+            // Converter para hora de Portugal (Europe/Lisbon)
+            const portugalTimeStr = brtDate.toLocaleTimeString('pt-PT', {
                 timeZone: 'Europe/Lisbon',
                 hour: '2-digit',
                 minute: '2-digit',
                 hour12: false
-            }).format(dateBRT);
-
-            return ptTimeStr;
-        }
-
-        function populateAgenda() {
-            const tbody = document.getElementById('agendaTableBody');
-            if (!tbody) return;
-
-            tbody.innerHTML = agendaEvents.map(ev => {
-                const ptStart = convertBRTToPortugal(ev.startH, ev.startM);
-                const ptEnd = convertBRTToPortugal(ev.endH, ev.endM);
-                const ptRange = `${ptStart} - ${ptEnd}`;
-
-                return `
-                    <tr class="hover:bg-slate-800/40 transition-colors">
-                        <td class="p-3 text-slate-400 font-mono text-xs">${ev.brt}</td>
-                        <td class="p-3 text-indigo-400 font-semibold font-mono text-xs">${ptRange}</td>
-                        <td class="p-3 text-white font-medium">${ev.title}</td>
-                        <td class="p-3 text-right font-bold text-cyan-400">${ev.bonus}</td>
-                    </tr>
-                `;
-            }).join('');
-        }
-
-        function calculateCandy() {
-            const targetBest = Math.max(0, parseInt(document.getElementById('targetBestHandmade').value) || 0);
-            const ownedHandmade = Math.max(0, parseInt(document.getElementById('ownedHandmade').value) || 0);
-            const ownedCandy = Math.max(0, parseInt(document.getElementById('ownedCandy').value) || 0);
-            const ownedHQ = Math.max(0, parseInt(document.getElementById('ownedHighQualityCandy').value) || 0);
-
-            // Calculations
-            let handmadeNeeded = targetBest - ownedHandmade;
-            if (handmadeNeeded < 0) handmadeNeeded = 0;
-
-            const totalCandyNeeded = (targetBest * 2) + (handmadeNeeded * 2);
-            const totalHQNeeded = (targetBest * 2) + (handmadeNeeded * 1);
-
-            const missingCandy = Math.max(0, totalCandyNeeded - ownedCandy);
-            const missingHQ = Math.max(0, totalHQNeeded - ownedHQ);
-
-            // Update DOM
-            document.getElementById('resHandmadeNeeded').textContent = handmadeNeeded.toLocaleString();
-            document.getElementById('resTotalCandyNeeded').textContent = totalCandyNeeded.toLocaleString();
-            document.getElementById('resTotalHQNeeded').textContent = totalHQNeeded.toLocaleString();
-            document.getElementById('resMissingCandy').textContent = missingCandy.toLocaleString();
-            document.getElementById('resMissingHQ').textContent = missingHQ.toLocaleString();
-        }
-
-        // Initialization
-        document.addEventListener('DOMContentLoaded', function() {
-            // Fill agenda table
-            populateAgenda();
-
-            // Bind inputs for live calculator update
-            const inputs = ['targetBestHandmade', 'ownedHandmade', 'ownedCandy', 'ownedHighQualityCandy'];
-            inputs.forEach(id => {
-                const el = document.getElementById(id);
-                if (el) {
-                    el.addEventListener('input', calculateCandy);
-                    el.addEventListener('change', calculateCandy);
-                }
             });
 
-            // Initial calculation run
-            calculateCandy();
-        });
+            return portugalTimeStr;
+        }
+
+        // Preencher a tabela ao carregar
+        function renderSchedule() {
+            const tbody = document.getElementById('schedule-body');
+            tbody.innerHTML = '';
+
+            eventsBRT.forEach(ev => {
+                const ptStart = convertBRTToPortugal(ev.start);
+                const ptEnd = convertBRTToPortugal(ev.end);
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="time-cell">${ptStart}</td>
+                    <td class="time-cell">${ptEnd}</td>
+                    <td><strong>${ev.name}</strong></td>
+                    <td><span class="bonus-badge">${ev.bonus}</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', renderSchedule);
     </script>
+
 </body>
 </html>
