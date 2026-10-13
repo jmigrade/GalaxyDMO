@@ -401,7 +401,7 @@
             });
         }
 
-        // SOM DE ALARME DIGIVICE - VOLUME 100% E BEEP SUPER AGUDO
+        // SOM DE DESPERTADOR DIGITAL PIEZOELÉTRICO (3000 Hz / Onda Quadrada Estridente)
         function playBeep() {
             try {
                 if (!audioCtx) {
@@ -411,42 +411,44 @@
                     audioCtx.resume();
                 }
                 
-                function singleDigiviceBeep(startTime) {
+                function singlePiezoBeep(startTime) {
                     const osc = audioCtx.createOscillator();
                     const gain = audioCtx.createGain();
                     
-                    osc.type = 'sine';
-                    // Frequência elevada (3500 Hz com rampa até 4200 Hz) para tom estridente e muito agudo
-                    osc.frequency.setValueAtTime(3500, startTime); 
-                    osc.frequency.exponentialRampToValueAtTime(4200, startTime + 0.06); 
+                    // Onda quadrada ('square') = Som metálico/buzzer de relógio digital
+                    osc.type = 'square'; 
+                    // Frequência de 3000 Hz = A frequência mais irritante e audível do buzzer
+                    osc.frequency.setValueAtTime(3000, startTime); 
                     
-                    // Gain a 0.95 (~100% de volume sem clipping de som)
-                    gain.gain.setValueAtTime(0.95, startTime);
-                    gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.07);
+                    // Ganho constante e corte seco instantâneo (sem fading suave)
+                    gain.gain.setValueAtTime(0.85, startTime);
+                    gain.gain.setValueAtTime(0, startTime + 0.08); // Bip seco de 0.08 segundos
                     
                     osc.connect(gain);
                     gain.connect(audioCtx.destination);
                     
                     osc.start(startTime);
-                    osc.stop(startTime + 0.07);
+                    osc.stop(startTime + 0.08);
                 }
 
-                function playDigiviceBurst(baseTime) {
-                    singleDigiviceBeep(baseTime);
-                    singleDigiviceBeep(baseTime + 0.10);
-                    singleDigiviceBeep(baseTime + 0.20);
+                // Dispara um bloco clássico de 4 bipes rápidos de despertador (BIP-BIP-BIP-BIP)
+                function playPiezoBurst(baseTime) {
+                    singlePiezoBeep(baseTime);
+                    singlePiezoBeep(baseTime + 0.12);
+                    singlePiezoBeep(baseTime + 0.24);
+                    singlePiezoBeep(baseTime + 0.36);
                 }
 
                 const now = audioCtx.currentTime;
 
-                // Grupo 1 (3 beeps agudos)
-                playDigiviceBurst(now);
+                // Série 1: BIP-BIP-BIP-BIP
+                playPiezoBurst(now);
 
-                // Grupo 2 (3 beeps após 2s de pausa)
-                playDigiviceBurst(now + 2.0);
+                // Série 2: BIP-BIP-BIP-BIP (Pausa de 1.5s)
+                playPiezoBurst(now + 1.5);
 
-                // Grupo 3 (3 beeps após mais 2s de pausa)
-                playDigiviceBurst(now + 4.0);
+                // Série 3: BIP-BIP-BIP-BIP (Pausa de mais 1.5s)
+                playPiezoBurst(now + 3.0);
 
             } catch (e) {
                 console.log("Erro ao reproduzir áudio:", e);
@@ -455,7 +457,7 @@
 
         function testSoundAndNotif() {
             playBeep();
-            sendNotification("🔔 Digivice Ativo!", "O alarme do Digivice está a soar em volume máximo!");
+            sendNotification("🔔 Alarme Despertador Ativo!", "O alarme piezoelétrico de despertador está a soar!");
         }
 
         function requestNotificationPermission() {
