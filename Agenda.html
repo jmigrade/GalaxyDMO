@@ -431,7 +431,7 @@
                     osc.frequency.setValueAtTime(3000, startTime); 
                     
                     // Ganho reduzido para 0.42 (~50% do volume anterior de 0.85)
-                    gain.gain.setValueAtTime(0.42, startTime);
+                    gain.gain.setValueAtTime(0.30, startTime);
                     gain.gain.setValueAtTime(0, startTime + 0.08); 
                     
                     osc.connect(gain);
