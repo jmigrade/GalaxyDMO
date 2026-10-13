@@ -14,6 +14,7 @@
             --accent-color: #a855f7;
             --accent-green: #238636;
             --color-digivice: #00d2ff;
+            --color-brt: #ff7b00;
         }
 
         * {
@@ -36,7 +37,7 @@
 
         .container {
             width: 100%;
-            max-width: 900px;
+            max-width: 950px;
             display: flex;
             flex-direction: column;
             gap: 20px;
@@ -133,14 +134,21 @@
             font-size: 0.85rem;
         }
 
-        .time-cell {
+        .time-cell-pt {
             font-family: monospace;
             font-size: 0.95rem;
             color: var(--color-digivice);
             white-space: nowrap;
         }
 
-        @media (max-width: 600px) {
+        .time-cell-brt {
+            font-family: monospace;
+            font-size: 0.95rem;
+            color: var(--color-brt);
+            white-space: nowrap;
+        }
+
+        @media (max-width: 650px) {
             .page-header {
                 padding-top: 50px;
             }
@@ -148,8 +156,8 @@
                 top: 16px;
             }
             th, td {
-                padding: 10px 12px;
-                font-size: 0.85rem;
+                padding: 10px 10px;
+                font-size: 0.82rem;
             }
         }
     </style>
@@ -161,16 +169,16 @@
         <header class="page-header">
             <a href="index.html" class="back-btn">← Voltar ao Hub</a>
             <h1>Agenda do Jogo</h1>
-            <p>Horários convertidos automaticamente para o fuso horário de <strong>Portugal (Hora Continental)</strong></p>
+            <p>Comparativo de horários entre <strong>Brasil (BRT)</strong> e <strong>Portugal (PT)</strong></p>
         </header>
 
-        <!-- TABELA DIRECTA -->
+        <!-- TABELA DIRETA -->
         <div class="table-container">
             <table>
                 <thead>
                     <tr>
-                        <th>Início (PT)</th>
-                        <th>Fim (PT)</th>
+                        <th>Horário (BRT)</th>
+                        <th>Horário (PT)</th>
                         <th>Evento</th>
                         <th>Bônus</th>
                     </tr>
@@ -217,8 +225,6 @@
             const [hours, minutes] = timeStr.split(':').map(Number);
             const now = new Date();
             
-            // Criar data assumindo horário de Brasília (BRT é UTC-3)
-            // Formatamos no ISO string com offset -03:00
             const year = now.getFullYear();
             const month = String(now.getMonth() + 1).padStart(2, '0');
             const day = String(now.getDate()).padStart(2, '0');
@@ -227,7 +233,6 @@
 
             const brtDate = new Date(`${year}-${month}-${day}T${hh}:${mm}:00-03:00`);
 
-            // Converter para hora de Portugal (Europe/Lisbon)
             const portugalTimeStr = brtDate.toLocaleTimeString('pt-PT', {
                 timeZone: 'Europe/Lisbon',
                 hour: '2-digit',
@@ -244,13 +249,15 @@
             tbody.innerHTML = '';
 
             eventsBRT.forEach(ev => {
+                const brtRange = `${ev.start} - ${ev.end}`;
                 const ptStart = convertBRTToPortugal(ev.start);
                 const ptEnd = convertBRTToPortugal(ev.end);
+                const ptRange = `${ptStart} - ${ptEnd}`;
 
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td class="time-cell">${ptStart}</td>
-                    <td class="time-cell">${ptEnd}</td>
+                    <td class="time-cell-brt">${brtRange}</td>
+                    <td class="time-cell-pt">${ptRange}</td>
                     <td><strong>${ev.name}</strong></td>
                     <td><span class="bonus-badge">${ev.bonus}</span></td>
                 `;
