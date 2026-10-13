@@ -11,7 +11,6 @@
             --text-color: #f0f6fc;
             --text-muted: #8b949e;
             --border-color: #30363d;
-            --header-bg: #121824;
             
             /* Cores customizadas por card */
             --color-checklist: #238636;  /* Verde */
@@ -35,73 +34,27 @@
             color: var(--text-color);
             display: flex;
             flex-direction: column;
+            align-items: center;
             min-height: 100vh;
+            padding: 30px 20px;
         }
 
-        /* WIKI TOP BAR / HEADER */
-        .wiki-topbar {
-            background-color: var(--header-bg);
-            border-bottom: 1px solid var(--border-color);
-            padding: 12px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .wiki-logo {
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: var(--color-digivice);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .wiki-search-container {
-            display: flex;
-            align-items: center;
-            background: rgba(0,0,0,0.3);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 6px 14px;
-            width: 300px;
-        }
-
-        .wiki-search-container input {
-            background: transparent;
-            border: none;
-            color: var(--text-color);
-            outline: none;
-            width: 100%;
-            font-size: 0.85rem;
-        }
-
-        /* HUB CONTAINER PRINCIPAL */
         .hub-container {
             width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
+            max-width: 1000px;
             display: flex;
             flex-direction: column;
             gap: 24px;
-            padding: 30px 20px;
-            flex: 1;
         }
 
-        /* BANNER DO HUB */
+        /* HEADER DO HUB */
         .hub-header {
-            text-align: left;
-            padding: 30px;
-            background: linear-gradient(135deg, rgba(0, 210, 255, 0.08), rgba(22, 27, 34, 0.8));
-            border-radius: 12px;
+            text-align: center;
+            padding: 24px;
+            background: linear-gradient(135deg, #1f293d, #111827);
+            border-radius: 14px;
             border: 1px solid var(--border-color);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.15);
         }
 
         .hub-header h1 {
@@ -109,7 +62,7 @@
             color: var(--color-digivice);
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .hub-header p {
@@ -120,15 +73,15 @@
         /* GRELHA DE CARDS */
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
         }
 
         .hub-card {
             background: var(--card-bg);
-            border-radius: 10px;
+            border-radius: 12px;
             border: 1px solid var(--border-color);
-            padding: 20px;
+            padding: 24px;
             text-decoration: none;
             color: var(--text-color);
             display: flex;
@@ -159,8 +112,8 @@
         .hub-card.candy::before { background-color: var(--color-candy); }
 
         .hub-card:hover {
-            transform: translateY(-3px);
-            background-color: #1c212c;
+            transform: translateY(-4px);
+            border-color: var(--text-muted);
             box-shadow: 0 6px 20px rgba(0,0,0,0.4);
         }
 
@@ -173,9 +126,9 @@
 
         /* ÍCONES DOS CARDS */
         .card-icon-box {
-            width: 50px;
-            height: 50px;
-            border-radius: 8px;
+            width: 54px;
+            height: 54px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -199,7 +152,7 @@
         }
 
         .card-title {
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             font-weight: 700;
             letter-spacing: 0.5px;
         }
@@ -212,7 +165,7 @@
         .candy .card-title { color: var(--color-candy); }
 
         .card-desc {
-            font-size: 0.82rem;
+            font-size: 0.85rem;
             color: var(--text-muted);
             line-height: 1.3;
         }
@@ -345,20 +298,10 @@
 </head>
 <body>
 
-    <!-- WIKI TOP BAR -->
-    <header class="wiki-topbar">
-        <a href="index.html" class="wiki-logo">
-            🛡️ Digimon Galaxy Hub
-        </a>
-        <div class="wiki-search-container">
-            <input type="text" placeholder="Pesquisar guias ou ferramentas...">
-        </div>
-    </header>
-
     <div class="hub-container">
-        <!-- HEADER DO HUB -->
+        <!-- HEADER -->
         <header class="hub-header">
-            <h1>Central de Guias & Calculadoras</h1>
+            <h1>Digimon Galaxy Hub</h1>
             <p>Selecione um guia ou ferramenta abaixo para começar</p>
         </header>
 
@@ -412,4 +355,142 @@
             <!-- Spiral Key Ring -->
             <a href="spiral_key.html" class="hub-card spiral">
                 <div class="card-icon-box">
-                    <img src="
+                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png" alt="Spiral Key" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Kaiser_Goggles.png'">
+                </div>
+                <div class="card-info">
+                    <span class="card-title">SPIRAL KEY RING</span>
+                    <span class="card-desc">Guia de Evolução e Materiais de Craft</span>
+                </div>
+            </a>
+            
+             <!-- D-ARK Digivice -->
+            <a href="dark_digivice.html" class="hub-card spiral">
+                <div class="card-icon-box">
+                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png" alt="Spiral Key" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Kaiser_Goggles.png'">
+                </div>
+                <div class="card-info">
+                    <span class="card-title">D-ARK Digivice</span>
+                    <span class="card-desc">Guia de Evolução e Materiais de Craft</span>
+                </div>
+            </a>
+
+            <!-- Candy Craft Event (Calculadora) -->
+            <div class="hub-card candy" onclick="openCandyModal()">
+                <div class="card-icon-box">
+                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Checklist.png" alt="Candy Event" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/CheckList.png'">
+                </div>
+                <div class="card-info">
+                    <span class="card-title">CANDY CRAFT EVENT</span>
+                    <span class="card-desc">Calculadora de Materiais para Best Handmade Candy</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- MODAL CALCULADORA DE CANDY -->
+    <div class="modal-overlay" id="candyModal" onclick="closeCandyModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2>Candy Craft Calculator</h2>
+                <button class="close-btn" onclick="closeCandyModal()">&times;</button>
+            </div>
+
+            <div class="calc-form">
+                <div class="form-group">
+                    <label>Best Handmade Candy pretendidos:</label>
+                    <input type="number" id="targetBest" value="250" min="1" oninput="calculateCandy()">
+                </div>
+
+                <div class="form-group">
+                    <label>Handmade Candy que já possui:</label>
+                    <input type="number" id="ownedHandmade" value="0" min="0" oninput="calculateCandy()">
+                </div>
+
+                <div class="form-group">
+                    <label>Candy que possui no inventário (opcional):</label>
+                    <input type="number" id="ownedCandy" value="0" min="0" oninput="calculateCandy()">
+                </div>
+
+                <div class="form-group">
+                    <label>High-quality Candy no inventário (opcional):</label>
+                    <input type="number" id="ownedHQ" value="0" min="0" oninput="calculateCandy()">
+                </div>
+
+                <div class="results-box">
+                    <h3>Totais de Materiais Necessários:</h3>
+                    
+                    <div class="result-item">
+                        <span>Handmade Candy a fabricar:</span>
+                        <span class="result-value" id="resToCraftHandmade">250</span>
+                    </div>
+
+                    <div class="result-item">
+                        <span>Total de Candy necessário:</span>
+                        <span class="result-value" id="resTotalCandy">1000</span>
+                    </div>
+
+                    <div class="result-item">
+                        <span>Total de High-quality Candy necessário:</span>
+                        <span class="result-value" id="resTotalHQ">750</span>
+                    </div>
+
+                    <div class="result-item" style="margin-top: 6px; font-weight: bold; color: var(--color-candy);">
+                        <span>Faltam no seu inventário:</span>
+                        <span class="result-value" id="resMissingInfo" style="color: #f87171;">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openCandyModal() {
+            document.getElementById('candyModal').classList.add('active');
+            calculateCandy();
+        }
+
+        function closeCandyModal(event) {
+            if (!event || event.target.id === 'candyModal' || event.target.classList.contains('close-btn')) {
+                document.getElementById('candyModal').classList.remove('active');
+            }
+        }
+
+        function calculateCandy() {
+            const target = parseInt(document.getElementById('targetBest').value) || 0;
+            const ownedHandmade = parseInt(document.getElementById('ownedHandmade').value) || 0;
+            const ownedCandy = parseInt(document.getElementById('ownedCandy').value) || 0;
+            const ownedHQ = parseInt(document.getElementById('ownedHQ').value) || 0;
+
+            // Quantos Handmade Candy ainda precisam de ser fabricados
+            const neededHandmadeToCraft = Math.max(0, target - ownedHandmade);
+
+            // Materiais para a receita direta do Best Handmade Candy
+            const directCandy = target * 2;
+            const directHQ = target * 2;
+
+            // Materiais para fabricar o restante de Handmade Candy
+            const craftCandy = neededHandmadeToCraft * 2;
+            const craftHQ = neededHandmadeToCraft * 1;
+
+            // Totais
+            const totalCandyNeeded = directCandy + craftCandy;
+            const totalHQNeeded = directHQ + craftHQ;
+
+            // Faltantes considerando o inventário
+            const missingCandy = Math.max(0, totalCandyNeeded - ownedCandy);
+            const missingHQ = Math.max(0, totalHQNeeded - ownedHQ);
+
+            document.getElementById('resToCraftHandmade').innerText = neededHandmadeToCraft;
+            document.getElementById('resTotalCandy').innerText = totalCandyNeeded;
+            document.getElementById('resTotalHQ').innerText = totalHQNeeded;
+
+            if (ownedCandy > 0 || ownedHQ > 0) {
+                document.getElementById('resMissingInfo').innerText = `${missingCandy} Candy / ${missingHQ} High-quality`;
+            } else {
+                document.getElementById('resMissingInfo').innerText = `${totalCandyNeeded} Candy / ${totalHQNeeded} High-quality`;
+            }
+        }
+    </script>
+</body>
+</html>
