@@ -318,10 +318,11 @@
         </div>
     </div>
 
-    <!-- ELEMENTO DE ÁUDIO COM O SOM REAL DO DIGIVICE -->
-    <audio id="Digivice" preload="auto">
-    <source src="Digivice.mp4" type="audio/mp4">
-</audio>
+    <!-- ELEMENTO DE ÁUDIO COM O FICHEIRO DO DIGIVICE -->
+    <audio id="digivice-audio" preload="auto">
+        <source src="digivice-sound.mp4" type="audio/mp4">
+        <source src="digivice-sound.mp3" type="audio/mpeg">
+    </audio>
 
     <script>
         const eventsBRT = [
@@ -353,6 +354,24 @@
         ];
 
         let alertedEvents = new Set();
+        let audioUnlocked = false;
+
+        // Desbloqueia a permissão de som no primeiro clique do utilizador na página
+        function unlockAudio() {
+            if (!audioUnlocked) {
+                const audio = document.getElementById('digivice-audio');
+                if (audio) {
+                    audio.volume = 1.0;
+                    audio.play().then(() => {
+                        audio.pause();
+                        audio.currentTime = 0;
+                        audioUnlocked = true;
+                    }).catch(() => {});
+                }
+            }
+        }
+
+        document.addEventListener('click', unlockAudio, { once: true });
 
         function getUserTimezone() {
             let tz = localStorage.getItem('user_timezone');
@@ -394,23 +413,53 @@
             });
         }
 
-        // FUNÇÃO QUE REPRODUZ O FICHEIRO MP3 DO DIGIVICE
+        // Toca o ficheiro de áudio com fallback
         function playBeep() {
+            unlockAudio();
             const audio = document.getElementById('digivice-audio');
             if (audio) {
                 audio.currentTime = 0;
+                audio.volume = 1.0;
                 audio.play().catch(err => {
-                    console.log("Reprodução de áudio bloqueada pelo navegador: ", err);
+                    console.log("Falha ao tocar áudio MP4/MP3:", err);
+                    playSynthesizedFallback();
                 });
+            } else {
+                playSynthesizedFallback();
             }
+        }
+
+        // Caso o ficheiro de áudio falhe, gera os 6 bipes sintéticos do Digivice
+        function playSynthesizedFallback() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                function singleBeep(time) {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(2093, time);
+                    osc.frequency.exponentialRampToValueAtTime(2793, time + 0.05);
+                    gain.gain.setValueAtTime(0.3, time);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, time + 0.06);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(time);
+                    osc.stop(time + 0.06);
+                }
+                const now = ctx.currentTime;
+                for (let i = 0; i < 6; i++) {
+                    singleBeep(now + (i * 0.08));
+                }
+            } catch(e) {}
         }
 
         function testSoundAndNotif() {
             playBeep();
-            sendNotification("🔔 Alerta do Digivice", "O som original do Digivice está a tocar perfeitamente!");
+            sendNotification("🔔 Alerta do Digivice", "O alerta do Digimon Galaxy está a soar!");
         }
 
         function requestNotificationPermission() {
+            unlockAudio();
             if ("Notification" in window) {
                 Notification.requestPermission().then(permission => {
                     if (permission === "granted") {
@@ -434,6 +483,7 @@
         }
 
         function toggleAlarm(id) {
+            unlockAudio();
             const current = isAlarmEnabled(id);
             localStorage.setItem('alarm_' + id, !current);
         }
