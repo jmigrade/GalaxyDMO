@@ -3,683 +3,419 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digimon Galaxy - Hub</title>
+    <title>Digimon Galaxy Hub</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        galaxy: {
+                            900: '#0b0d19',
+                            800: '#13172d',
+                            700: '#1d2342',
+                            accent: '#6366f1',
+                            glow: '#818cf8',
+                            cyan: '#06b6d4'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --bg-color: #0d1117;
-            --card-bg: #161b22;
-            --text-color: #f0f6fc;
-            --text-muted: #8b949e;
-            --border-color: #30363d;
-            
-            /* Cores customizadas por card */
-            --color-checklist: #238636;  /* Verde */
-            --color-digivice: #00d2ff;   /* Azul Ciano */
-            --color-beast: #a855f7;      /* Roxo */
-            --color-goggles: #ff7b00;    /* Laranja */
-            --color-spiral: #ec4899;     /* Rosa */
-            --color-candy: #eab308;      /* Amarelo/Ouro para o Evento Candy */
-            --color-agenda: #3b82f6;     /* Azul para a Agenda */
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            padding: 30px 20px;
+            font-family: 'Inter', sans-serif;
+            background-color: #0b0d19;
+            color: #e2e8f0;
         }
-
-        .hub-container {
-            width: 100%;
-            max-width: 1000px;
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
+        .glow-box {
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.15);
         }
-
-        /* HEADER DO HUB */
-        .hub-header {
-            text-align: center;
-            padding: 24px;
-            background: linear-gradient(135deg, #1f293d, #111827);
-            border-radius: 14px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 0 20px rgba(0, 210, 255, 0.15);
+        .glow-box-cyan {
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.15);
         }
-
-        .hub-header h1 {
-            font-size: 1.8rem;
-            color: var(--color-digivice);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 6px;
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
         }
-
-        .hub-header p {
-            font-size: 0.95rem;
-            color: var(--text-muted);
+        ::-webkit-scrollbar-track {
+            background: #0b0d19;
         }
-
-        /* GRELHA DE CARDS */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+        ::-webkit-scrollbar-thumb {
+            background: #1d2342;
+            border-radius: 4px;
         }
-
-        .hub-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            padding: 24px;
-            text-decoration: none;
-            color: var(--text-color);
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            transition: all 0.25s ease;
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        /* Efeito de brilho lateral nas cores respetivas */
-        .hub-card::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 5px;
-            transition: width 0.25s ease;
-        }
-
-        .hub-card.checklist::before { background-color: var(--color-checklist); }
-        .hub-card.digivice::before { background-color: var(--color-digivice); }
-        .hub-card.beast::before { background-color: var(--color-beast); }
-        .hub-card.goggles::before { background-color: var(--color-goggles); }
-        .hub-card.spiral::before { background-color: var(--color-spiral); }
-        .hub-card.candy::before { background-color: var(--color-candy); }
-        .hub-card.agenda::before { background-color: var(--color-agenda); }
-
-        .hub-card:hover {
-            transform: translateY(-4px);
-            border-color: var(--text-muted);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
-        }
-
-        .hub-card.checklist:hover { border-color: var(--color-checklist); }
-        .hub-card.digivice:hover { border-color: var(--color-digivice); }
-        .hub-card.beast:hover { border-color: var(--color-beast); }
-        .hub-card.goggles:hover { border-color: var(--color-goggles); }
-        .hub-card.spiral:hover { border-color: var(--color-spiral); }
-        .hub-card.candy:hover { border-color: var(--color-candy); }
-        .hub-card.agenda:hover { border-color: var(--color-agenda); }
-
-        /* ÍCONES DOS CARDS */
-        .card-icon-box {
-            width: 54px;
-            height: 54px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            background: rgba(0,0,0,0.3);
-            border: 1px solid var(--border-color);
-            padding: 6px;
-        }
-
-        .card-icon-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        /* TEXTOS DOS CARDS */
-        .card-info {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .card-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-
-        .checklist .card-title { color: var(--color-checklist); }
-        .digivice .card-title { color: var(--color-digivice); }
-        .beast .card-title { color: var(--color-beast); }
-        .goggles .card-title { color: var(--color-goggles); }
-        .spiral .card-title { color: var(--color-spiral); }
-        .candy .card-title { color: var(--color-candy); }
-        .agenda .card-title { color: var(--color-agenda); }
-
-        .card-desc {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            line-height: 1.3;
-        }
-
-        /* MODAIS */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.75);
-            backdrop-filter: blur(4px);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            width: 100%;
-            max-width: 700px;
-            max-height: 85vh;
-            display: flex;
-            flex-direction: column;
-            padding: 24px;
-            box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
-            position: relative;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 12px;
-        }
-
-        .modal-header h2 {
-            font-size: 1.3rem;
-            color: var(--text-color);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .close-btn {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-size: 1.5rem;
-            cursor: pointer;
-            line-height: 1;
-        }
-
-        .close-btn:hover {
-            color: var(--text-color);
-        }
-
-        /* TABELA DA AGENDA */
-        .agenda-table-container {
-            overflow-y: auto;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            background: rgba(0,0,0,0.2);
-        }
-
-        .agenda-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.9rem;
-            text-align: left;
-        }
-
-        .agenda-table th {
-            background: #1f293d;
-            color: var(--text-muted);
-            padding: 12px 16px;
-            font-weight: 600;
-            border-bottom: 1px solid var(--border-color);
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-
-        .agenda-table td {
-            padding: 10px 16px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .agenda-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .agenda-table tr:hover {
-            background: rgba(255, 255, 255, 0.02);
-        }
-
-        .badge-bonus {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            background: rgba(59, 130, 246, 0.15);
-            color: #60a5fa;
-            border: 1px solid rgba(59, 130, 246, 0.3);
-        }
-
-        .timezone-info {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-bottom: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        /* CALCULADORA CANDY STYLES */
-        .calc-form {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            overflow-y: auto;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .form-group label {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        .form-group input {
-            background: rgba(0,0,0,0.4);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 10px 14px;
-            color: var(--text-color);
-            font-size: 1rem;
-            outline: none;
-        }
-
-        .form-group input:focus {
-            border-color: var(--color-candy);
-        }
-
-        .results-box {
-            margin-top: 10px;
-            background: rgba(0,0,0,0.3);
-            border-radius: 10px;
-            padding: 16px;
-            border: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .results-box h3 {
-            font-size: 0.95rem;
-            color: var(--color-candy);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .result-item {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.9rem;
-            border-bottom: 1px dashed var(--border-color);
-            padding-bottom: 6px;
-        }
-
-        .result-item:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
-        }
-
-        .result-value {
-            font-weight: bold;
-            color: #58a6ff;
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6366f1;
         }
     </style>
 </head>
-<body>
+<body class="min-h-screen bg-galaxy-900 text-slate-200 flex flex-col justify-between">
 
-    <div class="hub-container">
-        <!-- HEADER -->
-        <header class="hub-header">
-            <h1>Digimon Galaxy Hub</h1>
-            <p>Selecione um guia ou ferramenta abaixo para começar</p>
-        </header>
-
-        <!-- GRELHA DE NAVEGAÇÃO -->
-        <div class="cards-grid">
-            
-            <!-- Agenda Diária no Game -->
-            <div class="hub-card agenda" onclick="openAgendaModal()">
-                <div class="card-icon-box">
-                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Checklist.png" alt="Agenda" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/CheckList.png'">
+    <!-- Header / Navbar -->
+    <header class="border-b border-slate-800 bg-galaxy-800/80 backdrop-blur-md sticky top-0 z-40">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-wrap justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-cyan-400 flex items-center justify-center text-white shadow-lg shadow-indigo-500/30">
+                    <i class="fa-solid font-bold text-xl fa-space-shuttle"></i>
                 </div>
-                <div class="card-info">
-                    <span class="card-title">AGENDA DO JOGO</span>
-                    <span class="card-desc">Horários dos eventos diários (Hora de Portugal)</span>
+                <div>
+                    <h1 class="font-bold text-xl text-white tracking-wide">DIGIMON GALAXY <span class="text-indigo-400">HUB</span></h1>
+                    <p class="text-xs text-slate-400">Guia de Eventos & Calculadoras DMO</p>
                 </div>
             </div>
 
-            <!-- Candy Craft Event (Calculadora) -->
-            <div class="hub-card candy" onclick="openCandyModal()">
-                <div class="card-icon-box">
-                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Checklist.png" alt="Candy Event" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/CheckList.png'">
-                </div>
-                <div class="card-info">
-                    <span class="card-title">CANDY CRAFT EVENT</span>
-                    <span class="card-desc">Calculadora de Materiais para Best Handmade Candy</span>
-                </div>
+            <!-- Quick Action Modals Triggers -->
+            <div class="flex items-center gap-3">
+                <button onclick="openModal('agendaModal')" class="px-4 py-2 bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 rounded-xl transition-all flex items-center gap-2 text-sm font-medium">
+                    <i class="fa-solid fa-calendar-days text-indigo-400"></i>
+                    <span>Agenda de Horários</span>
+                </button>
+                <button onclick="openModal('candyModal')" class="px-4 py-2 bg-cyan-600/20 hover:bg-cyan-600/30 text-cyan-300 border border-cyan-500/30 rounded-xl transition-all flex items-center gap-2 text-sm font-medium">
+                    <i class="fa-solid fa-candy-cane text-cyan-400"></i>
+                    <span>Calculadora Candy</span>
+                </button>
             </div>
-
-            <!-- Checklist Diário -->
-            <a href="checklist.html" class="hub-card checklist">
-                <div class="card-icon-box">
-                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Checklist.png" alt="Checklist" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/CheckList.png'">
-                </div>
-                <div class="card-info">
-                    <span class="card-title">CHECKLIST DIÁRIO</span>
-                    <span class="card-desc">Controlo de missões e passes diários</span>
-                </div>
-            </a>
-
-            <!-- True Digivice -->
-            <a href="true_digivice.html" class="hub-card digivice">
-                <div class="card-icon-box">
-                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/True_Digivice.png" alt="Digivice" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Kaiser_Goggles.png'">
-                </div>
-                <div class="card-info">
-                    <span class="card-title">TRUE DIGIVICE</span>
-                    <span class="card-desc">Passos e requisitos de evolução</span>
-                </div>
-            </a>
-
-            <!-- Four Holy Beast Ring -->
-            <a href="four_holy_beast.html" class="hub-card beast">
-                <div class="card-icon-box">
-                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Brilliant_Kindness_Earring.png" alt="Holy Beast Ring" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Kaiser_Goggles.png'">
-                </div>
-                <div class="card-info">
-                    <span class="card-title">FOUR HOLY BEAST</span>
-                    <span class="card-desc">Guia de Evolução e Materiais de Craft</span>
-                </div>
-            </a>
-
-            <!-- Tamer's Goggles -->
-            <a href="tamer_goggles.html" class="hub-card goggles">
-                <div class="card-icon-box">
-                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Kaiser_Goggles.png" alt="Goggles" onerror="this.style.display='none'">
-                </div>
-                <div class="card-info">
-                    <span class="card-title">TAMER'S GOGGLES</span>
-                    <span class="card-desc">Guia de Evolução e Materiais de Craft</span>
-                </div>
-            </a>
-
-            <!-- Spiral Key Ring -->
-            <a href="spiral_key.html" class="hub-card spiral">
-                <div class="card-icon-box">
-                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png" alt="Spiral Key" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Kaiser_Goggles.png'">
-                </div>
-                <div class="card-info">
-                    <span class="card-title">SPIRAL KEY RING</span>
-                    <span class="card-desc">Guia de Evolução e Materiais de Craft</span>
-                </div>
-            </a>
-            
-             <!-- D-ARK Digivice -->
-            <a href="dark_digivice.html" class="hub-card spiral">
-                <div class="card-icon-box">
-                    <img src="https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Spiral_Key_Ring_Lv.6+.png" alt="Spiral Key" onerror="this.src='https://raw.githubusercontent.com/jmigrade/GalaxyDMO/main/Icons/Kaiser_Goggles.png'">
-                </div>
-                <div class="card-info">
-                    <span class="card-title">D-ARK Digivice</span>
-                    <span class="card-desc">Guia de Evolução e Materiais de Craft</span>
-                </div>
-            </a>
-
         </div>
-    </div>
+    </header>
 
-    <!-- MODAL AGENDA DO JOGO -->
-    <div class="modal-overlay" id="agendaModal" onclick="closeAgendaModal(event)">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <div class="modal-header">
-                <h2>📅 Agenda de hoje no Game</h2>
-                <button class="close-btn" onclick="closeAgendaModal()">&times;</button>
+    <!-- Main Content Grid -->
+    <main class="max-w-6xl mx-auto px-4 py-8 flex-1 w-full grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- Card: Agenda Quick View -->
+        <div class="bg-galaxy-800/50 border border-slate-800 rounded-2xl p-6 glow-box flex flex-col justify-between">
+            <div>
+                <div class="flex justify-between items-start mb-4">
+                    <div class="p-3 bg-indigo-500/10 rounded-xl text-indigo-400">
+                        <i class="fa-solid fa-clock text-2xl"></i>
+                    </div>
+                    <span class="px-3 py-1 bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 rounded-full text-xs font-semibold">
+                        Acesso Rápido
+                    </span>
+                </div>
+                <h2 class="text-xl font-bold text-white mb-2">Agenda de Buffs & Eventos</h2>
+                <p class="text-sm text-slate-400 mb-6">
+                    Acompanhe todos os bónus e eventos do jogo ajustados com suporte ao fuso horário de Portugal (WET/WEST) e Brasil (BRT).
+                </p>
             </div>
-            <div class="timezone-info">
-                <span>Horários convertidos automaticamente para: <strong>Portugal Continental (WET/WEST)</strong></span>
-                <span style="color: var(--color-agenda);">Base original: BRT (UTC-3)</span>
+            <button onclick="openModal('agendaModal')" class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-indigo-600/20 flex justify-center items-center gap-2">
+                <i class="fa-solid fa-list-check"></i>
+                <span>Abrir Horários Completos</span>
+            </button>
+        </div>
+
+        <!-- Card: Candy Calculator Quick View -->
+        <div class="bg-galaxy-800/50 border border-slate-800 rounded-2xl p-6 glow-box-cyan flex flex-col justify-between">
+            <div>
+                <div class="flex justify-between items-start mb-4">
+                    <div class="p-3 bg-cyan-500/10 rounded-xl text-cyan-400">
+                        <i class="fa-solid fa-calculator text-2xl"></i>
+                    </div>
+                    <span class="px-3 py-1 bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 rounded-full text-xs font-semibold">
+                        Ferramentas
+                    </span>
+                </div>
+                <h2 class="text-xl font-bold text-white mb-2">Calculadora de Candy Craft</h2>
+                <p class="text-sm text-slate-400 mb-6">
+                    Calcule instantaneamente a quantidade exata de ingredientes necessários para fabricar seus Best Handmade Candies.
+                </p>
             </div>
-            <div class="agenda-table-container">
-                <table class="agenda-table">
-                    <thead>
-                        <tr>
-                            <th>Início</th>
-                            <th>Fim</th>
-                            <th>Evento</th>
-                            <th>Bónus</th>
-                        </tr>
-                    </thead>
-                    <tbody id="agendaTableBody">
-                        <!-- Preenchido via JavaScript com conversão de fuso -->
-                    </tbody>
-                </table>
+            <button onclick="openModal('candyModal')" class="w-full py-3 bg-cyan-600 hover:bg-cyan-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-cyan-600/20 flex justify-center items-center gap-2">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <span>Calcular Materiais</span>
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800/80 bg-galaxy-900 py-6 text-center text-xs text-slate-500">
+        <p>Digimon Galaxy Hub &copy; 2026 - Ferramenta criada para a comunidade de Digimon Masters Online.</p>
+    </footer>
+
+    <!-- MODAL 1: Agenda de Horários -->
+    <div id="agendaModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-galaxy-800 border border-slate-700 rounded-2xl max-w-4xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+            <!-- Modal Header -->
+            <div class="p-5 border-b border-slate-700/80 flex justify-between items-center bg-galaxy-900/50">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-calendar-days text-indigo-400 text-xl"></i>
+                    <div>
+                        <h3 class="text-lg font-bold text-white">Agenda de Horários dos Eventos</h3>
+                        <p class="text-xs text-slate-400">Horários base BRT (UTC-3) adaptados para Portugal (WET/WEST)</p>
+                    </div>
+                </div>
+                <button onclick="closeModal('agendaModal')" class="w-8 h-8 rounded-lg bg-slate-700/50 hover:bg-slate-700 text-slate-300 flex items-center justify-center transition-colors">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Modal Body Table -->
+            <div class="p-6 overflow-y-auto flex-1">
+                <div class="overflow-x-auto rounded-xl border border-slate-700/60 bg-galaxy-900/40">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-slate-700 bg-galaxy-800 text-xs font-semibold text-slate-300 uppercase tracking-wider">
+                                <th class="p-3">Horário (BRT / Brasil)</th>
+                                <th class="p-3 text-indigo-300">Horário (PT / Portugal)</th>
+                                <th class="p-3">Evento / Buff</th>
+                                <th class="p-3 text-right">Multiplicador / Bónus</th>
+                            </tr>
+                        </thead>
+                        <tbody id="agendaTableBody" class="divide-y divide-slate-800/60 text-sm">
+                            <!-- Populated dynamically by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="p-4 border-t border-slate-700/80 bg-galaxy-900/50 flex justify-end">
+                <button onclick="closeModal('agendaModal')" class="px-5 py-2 bg-slate-700 hover:bg-slate-600 text-white font-medium rounded-xl transition-all">
+                    Fechar
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- MODAL CALCULADORA DE CANDY -->
-    <div class="modal-overlay" id="candyModal" onclick="closeCandyModal(event)">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <div class="modal-header">
-                <h2>🍬 Candy Craft Calculator</h2>
-                <button class="close-btn" onclick="closeCandyModal()">&times;</button>
+    <!-- MODAL 2: Candy Calculator -->
+    <div id="candyModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-galaxy-800 border border-slate-700 rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+            <!-- Modal Header -->
+            <div class="p-5 border-b border-slate-700/80 flex justify-between items-center bg-galaxy-900/50">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-calculator text-cyan-400 text-xl"></i>
+                    <div>
+                        <h3 class="text-lg font-bold text-white">Calculadora Candy Craft</h3>
+                        <p class="text-xs text-slate-400">Calcule as quantidades necessárias para os seus doces</p>
+                    </div>
+                </div>
+                <button onclick="closeModal('candyModal')" class="w-8 h-8 rounded-lg bg-slate-700/50 hover:bg-slate-700 text-slate-300 flex items-center justify-center transition-colors">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
             </div>
 
-            <div class="calc-form">
-                <div class="form-group">
-                    <label>Best Handmade Candy pretendidos:</label>
-                    <input type="number" id="targetBest" value="250" min="1" oninput="calculateCandy()">
+            <!-- Modal Body Forms and Calculation -->
+            <div class="p-6 overflow-y-auto space-y-6">
+                <!-- Inputs Section -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">
+                            Target Best Handmade Candy
+                        </label>
+                        <input type="number" id="targetBestHandmade" value="250" min="0" 
+                            class="w-full px-3 py-2 bg-galaxy-900 border border-slate-700 rounded-xl text-white focus:outline-none focus:border-cyan-500 transition-colors">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">
+                            Owned Handmade Candy
+                        </label>
+                        <input type="number" id="ownedHandmade" value="0" min="0" 
+                            class="w-full px-3 py-2 bg-galaxy-900 border border-slate-700 rounded-xl text-white focus:outline-none focus:border-cyan-500 transition-colors">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">
+                            Owned Candy
+                        </label>
+                        <input type="number" id="ownedCandy" value="0" min="0" 
+                            class="w-full px-3 py-2 bg-galaxy-900 border border-slate-700 rounded-xl text-white focus:outline-none focus:border-cyan-500 transition-colors">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">
+                            Owned High-quality Candy
+                        </label>
+                        <input type="number" id="ownedHighQualityCandy" value="0" min="0" 
+                            class="w-full px-3 py-2 bg-galaxy-900 border border-slate-700 rounded-xl text-white focus:outline-none focus:border-cyan-500 transition-colors">
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label>Handmade Candy que já possui:</label>
-                    <input type="number" id="ownedHandmade" value="0" min="0" oninput="calculateCandy()">
-                </div>
-
-                <div class="form-group">
-                    <label>Candy que possui no inventário (opcional):</label>
-                    <input type="number" id="ownedCandy" value="0" min="0" oninput="calculateCandy()">
-                </div>
-
-                <div class="form-group">
-                    <label>High-quality Candy no inventário (opcional):</label>
-                    <input type="number" id="ownedHQ" value="0" min="0" oninput="calculateCandy()">
-                </div>
-
-                <div class="results-box">
-                    <h3>Totais de Materiais Necessários:</h3>
+                <!-- Results Section -->
+                <div class="bg-galaxy-900/80 border border-cyan-500/20 rounded-xl p-5 space-y-3">
+                    <h4 class="text-sm font-bold text-cyan-400 border-b border-slate-800 pb-2 uppercase tracking-wider">
+                        Resultado do Cálculo
+                    </h4>
                     
-                    <div class="result-item">
-                        <span>Handmade Candy a fabricar:</span>
-                        <span class="result-value" id="resToCraftHandmade">250</span>
-                    </div>
-
-                    <div class="result-item">
-                        <span>Total de Candy necessário:</span>
-                        <span class="result-value" id="resTotalCandy">1000</span>
-                    </div>
-
-                    <div class="result-item">
-                        <span>Total de High-quality Candy necessário:</span>
-                        <span class="result-value" id="resTotalHQ">750</span>
-                    </div>
-
-                    <div class="result-item" style="margin-top: 6px; font-weight: bold; color: var(--color-candy);">
-                        <span>Faltam no seu inventário:</span>
-                        <span class="result-value" id="resMissingInfo" style="color: #f87171;">-</span>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                        <div class="flex justify-between items-center p-2 rounded-lg bg-galaxy-800/40">
+                            <span class="text-slate-400">Handmade Candy Necessário:</span>
+                            <span id="resHandmadeNeeded" class="font-bold text-white">0</span>
+                        </div>
+                        <div class="flex justify-between items-center p-2 rounded-lg bg-galaxy-800/40">
+                            <span class="text-slate-400">Total Candy Necessário:</span>
+                            <span id="resTotalCandyNeeded" class="font-bold text-white">0</span>
+                        </div>
+                        <div class="flex justify-between items-center p-2 rounded-lg bg-galaxy-800/40">
+                            <span class="text-slate-400">Total HQ Candy Necessário:</span>
+                            <span id="resTotalHQNeeded" class="font-bold text-white">0</span>
+                        </div>
+                        <div class="flex justify-between items-center p-2 rounded-lg bg-cyan-950/40 border border-cyan-500/30">
+                            <span class="text-cyan-300 font-medium">Candy em Falta:</span>
+                            <span id="resMissingCandy" class="font-bold text-cyan-400">0</span>
+                        </div>
+                        <div class="flex justify-between items-center p-2 rounded-lg bg-cyan-950/40 border border-cyan-500/30 sm:col-span-2">
+                            <span class="text-cyan-300 font-medium">High-quality Candy em Falta:</span>
+                            <span id="resMissingHQ" class="font-bold text-cyan-400">0</span>
+                        </div>
                     </div>
                 </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="p-4 border-t border-slate-700/80 bg-galaxy-900/50 flex justify-end">
+                <button onclick="closeModal('candyModal')" class="px-5 py-2 bg-slate-700 hover:bg-slate-600 text-white font-medium rounded-xl transition-all">
+                    Fechar
+                </button>
             </div>
         </div>
     </div>
 
+    <!-- JavaScript Logic -->
     <script>
-        // Dados originais da agenda em horário BRT (UTC-3)
-        const rawAgendaData = [
-            { start: "00:00", end: "00:10", event: "Bits dos monstros", bonus: "x1.5" },
-            { start: "01:00", end: "01:10", event: "Drop de fragmentos e materiais", bonus: "x1.5" },
-            { start: "02:00", end: "02:10", event: "Fadiga recupera mais rápido", bonus: "x2" },
-            { start: "03:00", end: "03:10", event: "Drop de scan data", bonus: "x1.5" },
-            { start: "04:00", end: "04:15", event: "Craft com menos material", bonus: "-10%" },
-            { start: "05:00", end: "05:30", event: "Chance de chocagem", bonus: "x2" },
-            { start: "06:00", end: "06:10", event: "Fadiga enche mais devagar", bonus: "x2" },
-            { start: "07:00", end: "07:10", event: "Drop de selos", bonus: "x2" },
-            { start: "08:00", end: "08:10", event: "Drop de digiclone", bonus: "x1.5" },
-            { start: "09:00", end: "10:00", event: "EXP (Digimon e Tamer)", bonus: "x5" },
-            { start: "10:00", end: "10:10", event: "Drop de ovos", bonus: "x1.5" },
-            { start: "11:00", end: "11:10", event: "Quantidade de drop", bonus: "x1.5" },
-            { start: "12:00", end: "12:10", event: "Bits dos monstros", bonus: "x1.5" },
-            { start: "13:00", end: "13:15", event: "Chance de drop (todos os itens)", bonus: "x1.5" },
-            { start: "14:00", end: "14:10", event: "Drop de fragmentos e materiais", bonus: "x1.5" },
-            { start: "15:00", end: "16:00", event: "EXP (Digimon e Tamer)", bonus: "x5" },
-            { start: "16:00", end: "16:10", event: "Recompensa do scanner", bonus: "x1.5" },
-            { start: "17:00", end: "17:10", event: "Drop dentro de dungeon", bonus: "x1.5" },
-            { start: "18:00", end: "18:10", event: "Bits dos monstros", bonus: "x1.5" },
-            { start: "19:00", end: "19:30", event: "Chance de enchant", bonus: "x2" },
-            { start: "20:00", end: "20:15", event: "Chance de drop (todos os itens)", bonus: "x1.5" },
-            { start: "21:00", end: "22:00", event: "EXP (Digimon e Tamer)", bonus: "x5" },
-            { start: "22:00", end: "22:10", event: "Drop de ovos", bonus: "x1.5" },
-            { start: "22:15", end: "22:25", event: "Invasão de monstros", bonus: "—" },
-            { start: "23:00", end: "23:10", event: "Quantidade de drop", bonus: "x1.5" }
+        // Modal helpers
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            if (modal) {
+                modal.classList.remove('hidden');
+            }
+        }
+
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            if (modal) {
+                modal.classList.add('hidden');
+            }
+        }
+
+        // Close modal when clicking outside content
+        window.addEventListener('click', function(e) {
+            ['agendaModal', 'candyModal'].forEach(id => {
+                const modal = document.getElementById(id);
+                if (e.target === modal) {
+                    closeModal(id);
+                }
+            });
+        });
+
+        // Agenda Event Data
+        const agendaEvents = [
+            { brt: "00:00 - 00:10", startH: 0, startM: 0, endH: 0, endM: 10, title: "Bits dos monstros", bonus: "x1.5" },
+            { brt: "01:00 - 01:10", startH: 1, startM: 0, endH: 1, endM: 10, title: "Drop de fragmentos e materiais", bonus: "x1.5" },
+            { brt: "02:00 - 02:10", startH: 2, startM: 0, endH: 2, endM: 10, title: "Fadiga recupera mais rápido", bonus: "x2" },
+            { brt: "03:00 - 03:10", startH: 3, startM: 0, endH: 3, endM: 10, title: "Drop de scan data", bonus: "x1.5" },
+            { brt: "04:00 - 04:15", startH: 4, startM: 0, endH: 4, endM: 15, title: "Craft com menos material", bonus: "-10%" },
+            { brt: "05:00 - 05:30", startH: 5, startM: 0, endH: 5, endM: 30, title: "Chance de chocagem", bonus: "x2" },
+            { brt: "06:00 - 06:10", startH: 6, startM: 0, endH: 6, endM: 10, title: "Fadiga enche mais devagar", bonus: "x2" },
+            { brt: "07:00 - 07:10", startH: 7, startM: 0, endH: 7, endM: 10, title: "Drop de selos", bonus: "x2" },
+            { brt: "08:00 - 08:10", startH: 8, startM: 0, endH: 8, endM: 10, title: "Drop de digiclone", bonus: "x1.5" },
+            { brt: "09:00 - 10:00", startH: 9, startM: 0, endH: 10, endM: 0, title: "EXP (Digimon e Tamer)", bonus: "x5" },
+            { brt: "10:00 - 10:10", startH: 10, startM: 0, endH: 10, endM: 10, title: "Drop de ovos", bonus: "x1.5" },
+            { brt: "11:00 - 11:10", startH: 11, startM: 0, endH: 11, endM: 10, title: "Quantidade de drop", bonus: "x1.5" },
+            { brt: "12:00 - 12:10", startH: 12, startM: 0, endH: 12, endM: 10, title: "Bits dos monstros", bonus: "x1.5" },
+            { brt: "13:00 - 13:15", startH: 13, startM: 0, endH: 13, endM: 15, title: "Chance de drop (todos os itens)", bonus: "x1.5" },
+            { brt: "14:00 - 14:10", startH: 14, startM: 0, endH: 14, endM: 10, title: "Drop de fragmentos e materiais", bonus: "x1.5" },
+            { brt: "15:00 - 16:00", startH: 15, startM: 0, endH: 16, endM: 0, title: "EXP (Digimon e Tamer)", bonus: "x5" },
+            { brt: "16:00 - 16:10", startH: 16, startM: 0, endH: 16, endM: 10, title: "Recompensa do scanner", bonus: "x1.5" },
+            { brt: "17:00 - 17:10", startH: 17, startM: 0, endH: 17, endM: 10, title: "Drop dentro de dungeon", bonus: "x1.5" },
+            { brt: "18:00 - 18:10", startH: 18, startM: 0, endH: 18, endM: 10, title: "Bits dos monstros", bonus: "x1.5" },
+            { brt: "19:00 - 19:30", startH: 19, startM: 0, endH: 19, endM: 30, title: "Chance de enchant", bonus: "x2" },
+            { brt: "20:00 - 20:15", startH: 20, startM: 0, endH: 20, endM: 15, title: "Chance de drop (todos os itens)", bonus: "x1.5" },
+            { brt: "21:00 - 22:00", startH: 21, startM: 0, endH: 22, endM: 0, title: "EXP (Digimon e Tamer)", bonus: "x5" },
+            { brt: "22:00 - 22:10", startH: 22, startM: 0, endH: 22, endM: 10, title: "Drop de ovos", bonus: "x1.5" },
+            { brt: "22:15 - 22:25", startH: 22, startM: 15, endH: 22, endM: 25, title: "Invasão de monstros", bonus: "—" },
+            { brt: "23:00 - 23:10", startH: 23, startM: 0, endH: 23, endM: 10, title: "Quantidade de drop", bonus: "x1.5" }
         ];
 
-        // Função para converter hora "HH:MM" de BRT (UTC-3) para o fuso de Portugal (Europe/Lisbon)
-        function convertTimeToPortugal(timeStr) {
-            const [hours, minutes] = timeStr.split(':').map(Number);
-            
-            // Cria uma data base (hoje) UTC e define a hora em BRT (UTC-3)
-            const now = new Date();
-            const year = now.getUTCFullYear();
-            const month = now.getUTCMonth();
-            const day = now.getUTCDate();
+        function convertBRTToPortugal(h, m) {
+            // Helper to get Portugal offset vs BRT dynamically or +3 / +4 hours depending on PT Daylight Saving Time
+            // BRT is always UTC-3. Portugal is UTC+0 (WET) or UTC+1 (WEST).
+            // Difference is 3 hours during winter (WET), 4 hours during summer (WEST).
+            const today = new Date();
+            // Create BRT Date object for standard reference
+            const year = today.getFullYear();
+            const month = today.getMonth();
+            const day = today.getDate();
 
-            // BRT é UTC-3. Logo, o timestamp UTC correspondente é hours + 3
-            const utcHours = hours + 3;
-            const dateUTC = new Date(Date.UTC(year, month, day, utcHours, minutes));
+            // Construct ISO String for America/Sao_Paulo baseline
+            const dateBRT = new Date(Date.UTC(year, month, day, h + 3, m)); // UTC value for BRT time
 
-            // Formata para o fuso de Portugal (Europe/Lisbon)
-            return new Intl.DateTimeFormat('pt-PT', {
+            // Format directly into Portugal timezone
+            const ptTimeStr = new Intl.DateTimeFormat('pt-PT', {
                 timeZone: 'Europe/Lisbon',
                 hour: '2-digit',
                 minute: '2-digit',
                 hour12: false
-            }).format(dateUTC);
+            }).format(dateBRT);
+
+            return ptTimeStr;
         }
 
-        // Preenche a tabela da agenda com horários convertidos
-        function populateAgendaTable() {
+        function populateAgenda() {
             const tbody = document.getElementById('agendaTableBody');
-            tbody.innerHTML = '';
+            if (!tbody) return;
 
-            rawAgendaData.forEach(item => {
-                const ptStart = convertTimeToPortugal(item.start);
-                const ptEnd = convertTimeToPortugal(item.end);
+            tbody.innerHTML = agendaEvents.map(ev => {
+                const ptStart = convertBRTToPortugal(ev.startH, ev.startM);
+                const ptEnd = convertBRTToPortugal(ev.endH, ev.endM);
+                const ptRange = `${ptStart} - ${ptEnd}`;
 
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td style="font-weight: 600; color: #60a5fa;">${ptStart}</td>
-                    <td style="font-weight: 600; color: #93c5fd;">${ptEnd}</td>
-                    <td>${item.event}</td>
-                    <td><span class="badge-bonus">${item.bonus}</span></td>
+                return `
+                    <tr class="hover:bg-slate-800/40 transition-colors">
+                        <td class="p-3 text-slate-400 font-mono text-xs">${ev.brt}</td>
+                        <td class="p-3 text-indigo-400 font-semibold font-mono text-xs">${ptRange}</td>
+                        <td class="p-3 text-white font-medium">${ev.title}</td>
+                        <td class="p-3 text-right font-bold text-cyan-400">${ev.bonus}</td>
+                    </tr>
                 `;
-                tbody.appendChild(row);
-            });
-        }
-
-        function openAgendaModal() {
-            populateAgendaTable();
-            document.getElementById('agendaModal').classList.add('active');
-        }
-
-        function closeAgendaModal(event) {
-            if (!event || event.target.id === 'agendaModal' || event.target.classList.contains('close-btn')) {
-                document.getElementById('agendaModal').classList.remove('active');
-            }
-        }
-
-        function openCandyModal() {
-            document.getElementById('candyModal').classList.add('active');
-            calculateCandy();
-        }
-
-        function closeCandyModal(event) {
-            if (!event || event.target.id === 'candyModal' || event.target.classList.contains('close-btn')) {
-                document.getElementById('candyModal').classList.remove('active');
-            }
+            }).join('');
         }
 
         function calculateCandy() {
-            const target = parseInt(document.getElementById('targetBest').value) || 0;
-            const ownedHandmade = parseInt(document.getElementById('ownedHandmade').value) || 0;
-            const ownedCandy = parseInt(document.getElementById('ownedCandy').value) || 0;
-            const ownedHQ = parseInt(document.getElementById('ownedHQ').value) || 0;
+            const targetBest = Math.max(0, parseInt(document.getElementById('targetBestHandmade').value) || 0);
+            const ownedHandmade = Math.max(0, parseInt(document.getElementById('ownedHandmade').value) || 0);
+            const ownedCandy = Math.max(0, parseInt(document.getElementById('ownedCandy').value) || 0);
+            const ownedHQ = Math.max(0, parseInt(document.getElementById('ownedHighQualityCandy').value) || 0);
 
-            const neededHandmadeToCraft = Math.max(0, target - ownedHandmade);
+            // Calculations
+            let handmadeNeeded = targetBest - ownedHandmade;
+            if (handmadeNeeded < 0) handmadeNeeded = 0;
 
-            const directCandy = target * 2;
-            const directHQ = target * 2;
-
-            const craftCandy = neededHandmadeToCraft * 2;
-            const craftHQ = neededHandmadeToCraft * 1;
-
-            const totalCandyNeeded = directCandy + craftCandy;
-            const totalHQNeeded = directHQ + craftHQ;
+            const totalCandyNeeded = (targetBest * 2) + (handmadeNeeded * 2);
+            const totalHQNeeded = (targetBest * 2) + (handmadeNeeded * 1);
 
             const missingCandy = Math.max(0, totalCandyNeeded - ownedCandy);
             const missingHQ = Math.max(0, totalHQNeeded - ownedHQ);
 
-            document.getElementById('resToCraftHandmade').innerText = neededHandmadeToCraft;
-            document.getElementById('resTotalCandy').innerText = totalCandyNeeded;
-            document.getElementById('resTotalHQ').innerText = totalHQNeeded;
-
-            if (ownedCandy > 0 || ownedHQ > 0) {
-                document.getElementById('resMissingInfo').innerText = `${missingCandy} Candy / ${missingHQ} High-quality`;
-            } else {
-                document.getElementById('resMissingInfo').innerText = `${totalCandy` + `Needed} Candy / ${totalHQNeeded} High-quality`;
-            }
+            // Update DOM
+            document.getElementById('resHandmadeNeeded').textContent = handmadeNeeded.toLocaleString();
+            document.getElementById('resTotalCandyNeeded').textContent = totalCandyNeeded.toLocaleString();
+            document.getElementById('resTotalHQNeeded').textContent = totalHQNeeded.toLocaleString();
+            document.getElementById('resMissingCandy').textContent = missingCandy.toLocaleString();
+            document.getElementById('resMissingHQ').textContent = missingHQ.toLocaleString();
         }
+
+        // Initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fill agenda table
+            populateAgenda();
+
+            // Bind inputs for live calculator update
+            const inputs = ['targetBestHandmade', 'ownedHandmade', 'ownedCandy', 'ownedHighQualityCandy'];
+            inputs.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.addEventListener('input', calculateCandy);
+                    el.addEventListener('change', calculateCandy);
+                }
+            });
+
+            // Initial calculation run
+            calculateCandy();
+        });
     </script>
 </body>
 </html>
