@@ -319,7 +319,7 @@
     </div>
 
     <!-- ELEMENTO DE ÁUDIO COM O FICHEIRO DO DIGIVICE -->
-    <audio id="digivice-audio" preload="auto">
+    <audio id="Digivice" preload="auto">
         <source src="digivice-sound.mp4" type="audio/mp4">
         <source src="digivice-sound.mp3" type="audio/mpeg">
     </audio>
@@ -359,7 +359,7 @@
         // Desbloqueia a permissão de som no primeiro clique do utilizador na página
         function unlockAudio() {
             if (!audioUnlocked) {
-                const audio = document.getElementById('digivice-audio');
+                const audio = document.getElementById('Digivice');
                 if (audio) {
                     audio.volume = 1.0;
                     audio.play().then(() => {
@@ -416,7 +416,7 @@
         // Toca o ficheiro de áudio com fallback
         function playBeep() {
             unlockAudio();
-            const audio = document.getElementById('digivice-audio');
+            const audio = document.getElementById('Digivice');
             if (audio) {
                 audio.currentTime = 0;
                 audio.volume = 1.0;
